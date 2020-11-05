@@ -1,6 +1,6 @@
 {
-  "name": "rif-id-manager",
-  "version": "0.1.0",
+  "name": "rif-identity-manager",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "react": "^17.0.1",
