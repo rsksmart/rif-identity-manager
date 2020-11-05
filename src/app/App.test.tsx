@@ -1,19 +1,18 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import App from './App'
+import { wrap } from 'module'
 
-describe('App test', () => {
+describe('Screen: App', () => {
   it('renders the component', () => {
     const wrapper = shallow(<App />)
     expect(wrapper).toBeDefined()
   })
 
-  it('loads the SVG image without character issues', () => {
+  it('renders the login screen initially', () => {
     const wrapper = shallow(<App />)
-    const image = wrapper.find('.app-header').find('img')
-
-    expect(image.props().alt).toBe('RIF identity Manager')
-    expect(image.props().src).toBe('rif-id-manager.svg')
+    expect(wrapper.find('LoginScreen')).toBeDefined()
+    expect(wrapper.find('.app').props().className).toBe('app login')
   })
 
   it('loads the footer text', () => {
