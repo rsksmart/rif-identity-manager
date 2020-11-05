@@ -1,0 +1,28 @@
+// variables
+$black: #282c34;
+$blue: #008ff7;
+$turquoise: #47C4E1;
+$white: #ffffff;
+$gray: #919191;
+
+$breakpoint-phone: 480px;
+
+html, body {
+  height: 100%;
+  min-height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100vh;
+}
+
+@import 'layout';
+@import 'grid';
+@import 'typography';
+@import 'components/button';
+@import 'components/header';
+
+@import 'screens/login-screen'
+

@@ -1,0 +1,17 @@
+.container {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.column {
+  flex: 1;
+  padding: 10px 20px;
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .container {
+    flex-direction: column; 
+  }
+}

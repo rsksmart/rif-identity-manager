@@ -1,42 +1,21 @@
 <p align="middle">
   <img src="https://www.rifos.org/assets/img/logo.svg" alt="logo" height="100" >
 </p>
-<h3 align="middle"><code>react-app-rif-template</code></h3>
+<h3 align="middle"><code>RIF Identity Manager</code></h3>
 <p align="middle">
-  React.js template with Typescript, Eslint, Enzyme and CircleCI
+  Allows users to manager self sovereign identity and persona information.
 </p>
 <p align="middle">
-  <a href="https://circleci.com/gh/rsksmart/react-app-rif-template">
-    <img src="https://img.shields.io/circleci/build/github/rsksmart/react-app-rif-template?label=CircleCI" alt="npm" />
+  <a href="https://circleci.com/gh/rsksmart/rif-identity-manager">
+    <img src="https://img.shields.io/circleci/build/github/rsksmart/rif-identity-manager?label=CircleCI" alt="npm" />
   </a>
-  <a href="https://lgtm.com/projects/g/rsksmart/react-app-rif-template/alerts/">
-    <img src="https://img.shields.io/lgtm/alerts/github/rsksmart/react-app-rif-template" alt="Alerts">
+  <a href="https://lgtm.com/projects/g/rsksmart/rif-identity-manager/alerts/">
+    <img src="https://img.shields.io/lgtm/alerts/github/rsksmart/rif-identity-manager" alt="Alerts">
   </a>
-  <a href="https://lgtm.com/projects/g/rsksmart/react-app-rif-template/context:javascript">
-    <img src="https://img.shields.io/lgtm/grade/javascript/github/rsksmart/react-app-rif-template" alt="Code Quality">
+  <a href="https://lgtm.com/projects/g/rsksmart/rif-identity-manager/context:javascript">
+    <img src="https://img.shields.io/lgtm/grade/javascript/github/rsksmart/rif-identity-manager" alt="Code Quality">
   </a>
 </p>
-
-Use this template to create a [`create-react-app`](https://es.reactjs.org/docs/create-a-new-react-app.html) with configuration ready for:
-- [Typescript](https://www.typescriptlang.org/) - static type definitions for JavaScript
-- [Sass](https://sass-lang.com/) - CSS pre-processor
-- [Enzyme](https://enzymejs.github.io/enzyme/) - JavaScript Testing utility for React*
-- [ESLint](https://eslint.org/) - linter tool for identifying and reporting on patterns in JavaScript
-- [CircleCI](https://circleci.com/) - continuous integration and delivery platform
-
-## Usage
-
-This repo is to be used as a tempalte. It has setup for the tools mentioned above, cinluding CircleCI flow
-
-1. Create a new repo using this one as a template
-
-  ![Update Shield URLs](../main/docs/use-template-button.jpg)
-  
-2. Update the shields on the header to point your urls
-
-  ![Update Shield URLs](../main/docs/update-badge-urls.jpg)
-  
-3. Start coding!
 
 ## Available Scripts
 
