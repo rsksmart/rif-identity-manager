@@ -1,24 +1,23 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.scss'
+import './assets/scss/_index.scss'
+import logo from './assets/images/rif-id-manager.svg'
+import powered from './assets/images/powered-by-iov.svg'
+import { version } from '../package.json'
 
-function App () {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="app-header">
+        <img src={logo} alt="RIF identity Manager" />
       </header>
+      <div className="app-content">
+        <p style={{ textAlign: 'center' }}>Hello RIF!</p>
+      </div>
+      <footer className="app-footer">
+        <img src={powered} alt="Powered By IOV" />
+        <p>Copyright &copy; 2020 IOV Labs. All rights reserved.</p>
+        <p>Version {version}</p>
+      </footer>
     </div>
   )
 }

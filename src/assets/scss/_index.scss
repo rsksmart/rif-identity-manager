@@ -1,0 +1,22 @@
+// variables
+$black: #282c34;
+$blue: #008ff7;
+$turquoise: #47C4E1;
+$white: #ffffff;
+
+$breakpoint-phone: 480px;
+
+html, body {
+  height: 100%;
+  min-height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+body { 
+  background-color: rgba(174,247,216,1);
+  background-image: linear-gradient(rgba(1,144,247,1), rgba(174,247,216,1));
+  background-repeat: no-repeat;
+}
+
+@import 'layout';
