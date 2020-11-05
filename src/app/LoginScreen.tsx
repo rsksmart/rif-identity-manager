@@ -8,9 +8,7 @@ interface LoginScreenInterface {
 
 const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => (
   <div className="login-screen">
-    <header>
-      <img src={logo} alt="RIF identity Manager" />
-    </header>
+    <img src={logo} alt="RIF identity Manager" />
     <h1>Sign in</h1>
     <BaseButton className="blue" onClick={handleLogin}>Connect your wallet</BaseButton>
     <p>

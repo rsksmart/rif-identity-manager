@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import LoginScreen from './LoginScreen'
-import { wrap } from 'module'
 
 describe('Screen: Login', () => {
   it('renders the component', () => {

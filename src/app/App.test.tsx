@@ -1,7 +1,6 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import App from './App'
-import { wrap } from 'module'
 
 describe('Screen: App', () => {
   it('renders the component', () => {

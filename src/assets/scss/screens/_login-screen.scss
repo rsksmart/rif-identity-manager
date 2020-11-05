@@ -1,0 +1,39 @@
+// Parent container, this is the background graident and footer colors
+.app.login {
+  background-color: rgba(174,247,216,1);
+  background-image: linear-gradient(rgba(1,144,247,1), rgba(174,247,216,1));
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100%;
+
+  color: $white;
+  
+  footer.app-footer {
+    color: $white;
+  }
+}
+
+// The login screen component
+.login-screen {
+  padding: 115px 0 25px 0;
+  text-align: center;
+
+  img {
+    max-width: 200px;
+  }
+
+  button {
+    margin: 15px 0;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .login-screen {
+    padding-top: 25px;
+  }
+}
