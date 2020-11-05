@@ -13,12 +13,4 @@ describe('Screen: App', () => {
     expect(wrapper.find('LoginScreen')).toBeDefined()
     expect(wrapper.find('.app').props().className).toBe('app login')
   })
-
-  it('loads the footer text', () => {
-    const wrapper = shallow(<App />)
-    const footer = wrapper.find('footer')
-
-    expect(footer.find('img').props().src).toBe('powered-by-iov.svg')
-    expect(footer.find('p').at(0).text()).toBe('Copyright © 2020 IOV Labs. All rights reserved.')
-  })
 })
