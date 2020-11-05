@@ -3,7 +3,7 @@
 </p>
 <h3 align="middle"><code>RIF Identity Manager</code></h3>
 <p align="middle">
-  React.js template with Typescript, Eslint, Enzyme and CircleCI
+  Allows users to manager self sovereign identity and persona information.
 </p>
 <p align="middle">
   <a href="https://circleci.com/gh/rsksmart/rif-identity-manager">

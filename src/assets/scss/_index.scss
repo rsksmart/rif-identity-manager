@@ -3,6 +3,7 @@ $black: #282c34;
 $blue: #008ff7;
 $turquoise: #47C4E1;
 $white: #ffffff;
+$gray: #919191;
 
 $breakpoint-phone: 480px;
 
@@ -13,10 +14,10 @@ html, body {
   padding: 0;
 }
 
-body { 
-  background-color: rgba(174,247,216,1);
-  background-image: linear-gradient(rgba(1,144,247,1), rgba(174,247,216,1));
-  background-repeat: no-repeat;
+#root {
+  height: 100vh;
 }
 
 @import 'layout';
+@import 'typography';
+@import 'button';

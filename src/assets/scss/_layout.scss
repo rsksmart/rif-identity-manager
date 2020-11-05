@@ -1,16 +1,26 @@
 .app {
-  width: 100%;
+  flex-grow: 1;
+  overflow: auto;
 
   * {
     font-family: 'Roboto', sans-serif;
   }
 
-  header.app-header {
-    margin: 115px 0 25px 0;
+  .login-screen {
+    padding: 115px 0 25px 0;
     text-align: center;
 
     img {
       max-width: 200px;
+    }
+
+    button {
+      margin: 15px 0;
+    }
+
+    a {
+      color: $blue;
+      text-decoration: none;
     }
   }
 
@@ -22,7 +32,7 @@
 
   footer.app-footer {
     margin: 75px 0 25px 0;
-    color: $white;
+    color: $gray;
     text-align: center;
 
     img {
@@ -36,5 +46,19 @@
       padding: 0;
       font-family: 'Rubik', sans-serif;
     }
+  }
+}
+
+.app.login {
+  background-color: rgba(174,247,216,1);
+  background-image: linear-gradient(rgba(1,144,247,1), rgba(174,247,216,1));
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100%;
+
+  color: $white;
+  
+  footer.app-footer {
+    color: $white;
   }
 }
