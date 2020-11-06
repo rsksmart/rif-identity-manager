@@ -3,6 +3,7 @@ import { BaseButton } from '../components/Buttons'
 import logo from '../assets/images/rif-id-manager.svg'
 import RLogin from 'jesse-rlogin'
 import Alert from '../components/Alert/Alert'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 
 interface LoginScreenInterface {
   handleLogin: () => void
@@ -15,8 +16,19 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
     setIsError(null)
     const rLogin = new RLogin({
       cachedProvider: false,
-      providerOptions: {},
-      supportedChains: [30, 31]
+      providerOptions: {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            rpc: {
+              1: 'https://mainnet.infura.io/v3/8043bb2cf99347b1bfadfb233c5325c0',
+              30: 'https://public-node.rsk.co',
+              31: 'https://public-node.testnet.rsk.co'
+            }
+          }
+        }
+      },
+      supportedChains: [1, 30, 31]
     })
 
     console.log('connecting', rLogin)
