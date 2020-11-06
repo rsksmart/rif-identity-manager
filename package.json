@@ -42,6 +42,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-standard": "^4.0.1",
+    "jesse-rlogin": "^0.0.3",
     "node-sass": "4.14.1",
     "styled-components": "^5.2.1",
     "ts-jest": "^26.4.3",
