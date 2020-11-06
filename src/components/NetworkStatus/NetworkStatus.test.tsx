@@ -14,4 +14,9 @@ describe('Component: Button', () => {
     const wrapper = shallow(<NetworkStatus connected={false} name="RSK Mainnet" />)
     expect(wrapper.props().className).toBe('disconnected')
   })
+
+  it('takes a chainId instead of a name', () => {
+    const wrapper = shallow(<NetworkStatus connected chainId={31} />)
+    expect(wrapper.text()).toBe('RSK Testnet')
+  })
 })
