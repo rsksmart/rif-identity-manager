@@ -4,7 +4,7 @@ import { version } from '../../package.json'
 import LoginScreen from './LoginScreen'
 import DashboardScreen from './DashboardScreen'
 import RifFooter from '../components/RifFooter/RifFooter'
-import { AppContextProvider, AppContextInterface } from '../providerContext'
+import { Web3ProviderElement } from '../providerContext'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -17,15 +17,8 @@ const App = () => {
     localStorage.clear() // for development
   }
 
-  const [val, setVal] = useState<string>('Using React Context Yo ;-)')
-  // @TODO
-  const sampleAppContext: AppContextInterface = {
-    name: val,
-    setName: (value: string) => setVal(value)
-  }
-
   return (
-    <AppContextProvider value={sampleAppContext}>
+    <Web3ProviderElement>
       <div className={isLoggedIn ? 'app loggedin' : 'app login'}>
         {isLoggedIn
           ? <DashboardScreen handleLoginOut={handleLogOut} />
@@ -33,7 +26,7 @@ const App = () => {
         }
         <RifFooter isLoggedIn={isLoggedIn} version={version} />
       </div>
-    </AppContextProvider>
+    </Web3ProviderElement>
   )
 }
 

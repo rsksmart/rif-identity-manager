@@ -4,14 +4,14 @@ import logo from '../assets/images/rif-id-manager.svg'
 import RLogin from 'jesse-rlogin'
 import Alert from '../components/Alert/Alert'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { Context } from '../providerContext'
+import { Web3ProviderContext } from '../providerContext'
 
 interface LoginScreenInterface {
   handleLogin: () => void
 }
 
 const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
-  const context = useContext(Context)
+  const context = useContext(Web3ProviderContext)
   const [isError, setIsError] = useState<string | null>(null)
 
   const handleConnect = () => {
@@ -35,16 +35,11 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
     console.log('connecting', rLogin)
     rLogin.connect().then((provider: any) => { // @TODO FIX : any!
       console.log('provider', provider)
-      context?.setName('We are connected ;-)')
+      context?.setProvider(provider)
       handleLogin()
     }).catch((err: string) => {
       setIsError(err)
     })
-  }
-
-  const updateContext = () => {
-    console.log('update Context')
-    context?.setName('update manually')
   }
 
   console.log('here! context', context)
@@ -53,10 +48,7 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
       <div className="column">
         <img src={logo} alt="RIF identity Manager" />
         <h1>Sign in</h1>
-        <p>{context?.name}</p>
         <BaseButton className="blue" onClick={handleConnect}>Connect your wallet</BaseButton>
-
-        <BaseButton onClick={updateContext}>Update Context</BaseButton>
         <p>
           {'Don\'t have a wallet? '}
           <a href="https://developers.rsk.co/wallet/use/" target="_blank" rel="noopener noreferrer">
