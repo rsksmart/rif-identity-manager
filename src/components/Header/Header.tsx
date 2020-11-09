@@ -6,11 +6,13 @@ import { getAccounts, getNetwork } from '../../helpers'
 
 const Header = () => {
   const [persona, setPersona] = useState<string>('')
-  const [chainId, setChainId] = useState<number>(30)
+  const [chainId, setChainId] = useState<number | null>(null)
 
   const context = useContext(Web3ProviderContext)
-  getAccounts(context?.provider).then((accounts: string[]) => { setPersona(accounts[0]) })
-  getNetwork(context?.provider).then((res: number) => { setChainId(res) })
+  if (context && context.provider) {
+    getAccounts(context.provider).then((accounts: string[]) => { setPersona(accounts[0]) })
+    getNetwork(context.provider).then((res: number) => { setChainId(res) })
+  }
 
   return (
     <header className="container">
@@ -19,7 +21,7 @@ const Header = () => {
         <span>{persona}</span>
       </div>
       <div className="column network">
-        <NetworkStatus connected chainId={chainId} />
+        {chainId && <NetworkStatus connected chainId={chainId} />}
       </div>
     </header>
   )
