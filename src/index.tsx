@@ -1,11 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './app/App'
+import { Web3ProviderElement } from './providerContext'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Web3ProviderElement>
+      <App />
+    </Web3ProviderElement>
   </React.StrictMode>,
   document.getElementById('root')
 )

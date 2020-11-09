@@ -1,19 +1,14 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { BaseButton } from '../components/Buttons'
 import logo from '../assets/images/rif-id-manager.svg'
 import RLogin from 'jesse-rlogin'
-import Alert from '../components/Alert/Alert'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { Web3ProviderContext } from '../providerContext'
 
 interface LoginScreenInterface {
-  handleLogin: () => void
+  handleLogin: (provider: any) => void
 }
 
 const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
-  const context = useContext(Web3ProviderContext)
-  const [isError, setIsError] = useState<string | null>(null)
-
   const handleConnect = () => {
     const rLogin = new RLogin({
       cachedProvider: false,
@@ -32,17 +27,10 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
       supportedChains: [1, 30, 31]
     })
 
-    console.log('connecting', rLogin)
-    rLogin.connect().then((provider: any) => { // @TODO FIX : any!
-      console.log('provider', provider)
-      context?.setProvider(provider)
-      handleLogin()
-    }).catch((err: string) => {
-      setIsError(err)
-    })
+    rLogin.connect().then((provider: any) => handleLogin(provider))
+      .catch((err: string) => console.log(err))
   }
 
-  console.log('here! context', context)
   return (
     <div className="container login-screen">
       <div className="column">
@@ -55,7 +43,6 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
             Download here
           </a>
         </p>
-        {isError && <Alert title="Error" description={isError} />}
       </div>
     </div>
   )

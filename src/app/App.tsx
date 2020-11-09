@@ -1,32 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import '../assets/scss/_index.scss'
 import { version } from '../../package.json'
 import LoginScreen from './LoginScreen'
 import DashboardScreen from './DashboardScreen'
 import RifFooter from '../components/RifFooter/RifFooter'
-import { Web3ProviderElement } from '../providerContext'
+import { Web3ProviderContext } from '../providerContext'
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
-  const handleLogin = () => {
-    setIsLoggedIn(true)
+  const context = useContext(Web3ProviderContext)
+  const handleLogin = (provider: any) => {
+    context?.setProvider(provider)
   }
 
   const handleLogOut = () => {
-    setIsLoggedIn(false)
-    localStorage.clear() // for development
+    context?.setProvider(null)
+    localStorage.clear()
   }
 
+  const isLoggedIn = context?.provider
   return (
-    <Web3ProviderElement>
-      <div className={isLoggedIn ? 'app loggedin' : 'app login'}>
-        {isLoggedIn
-          ? <DashboardScreen handleLoginOut={handleLogOut} />
-          : <LoginScreen handleLogin={handleLogin} />
-        }
-        <RifFooter isLoggedIn={isLoggedIn} version={version} />
-      </div>
-    </Web3ProviderElement>
+    <div className={isLoggedIn ? 'app loggedin' : 'app login'}>
+      {isLoggedIn
+        ? <DashboardScreen handleLoginOut={handleLogOut} />
+        : <LoginScreen handleLogin={handleLogin} />
+      }
+      <RifFooter isLoggedIn={isLoggedIn} version={version} />
+    </div>
   )
 }
 
