@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 import Panel from '../../../components/Panel/Panel'
+import { displayIdentity } from '../../../helpers'
 
-const IdentityInformationPanel = () => {
+interface IdentityInformationPanelI {
+  address: string | null
+  chainId: number | null
+  update: () => void
+}
+
+const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId, update }) => {
   const [isAdvanced, setIsAdvanced] = useState<boolean>(false)
   const advancedToggle = <button className="advancedToggle" onClick={() => setIsAdvanced(!isAdvanced)}>{isAdvanced ? 'Basic' : 'Advanced'}</button>
+  if (!address || !chainId) return <button onClick={update}>Update</button>
 
   return (
     <div className="container">
@@ -16,7 +24,7 @@ const IdentityInformationPanel = () => {
           <div className="container">
             <div className="column">
               <h2>Identity Address</h2>
-              <p className="value">Value</p>
+              <p className="value">{displayIdentity(address, chainId)}</p>
             </div>
             {isAdvanced && (
               <>

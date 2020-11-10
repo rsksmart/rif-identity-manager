@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom'
 import App from './app/App'
 import { Web3ProviderElement } from './providerContext'
 import reportWebVitals from './reportWebVitals'
+import { Provider } from 'react-redux'
+import configureStore from './app/redux/configureStore'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Web3ProviderElement>
-      <App />
-    </Web3ProviderElement>
+    <Provider store={configureStore()}>
+      <Web3ProviderElement>
+        <App />
+      </Web3ProviderElement>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../components/Header/Header'
-import IdentityInformationPanel from './components/IdentityInformation'
+import HeaderContainer from '../../components/Header/HeaderContainer'
+import IdentityInformationContainer from './containers/IdentityInformationContainer'
 
 interface DashboardScreenInterface {
   handleLoginOut: () => void
@@ -9,7 +9,7 @@ interface DashboardScreenInterface {
 const DashboardScreen: React.FC<DashboardScreenInterface> = ({ handleLoginOut }) => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <div className="content dashboard">
         <div className="container">
           <div className="column">
@@ -21,7 +21,7 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({ handleLoginOut })
             </ul>
           </div>
         </div>
-        <IdentityInformationPanel />
+        <IdentityInformationContainer />
       </div>
     </>
   )
