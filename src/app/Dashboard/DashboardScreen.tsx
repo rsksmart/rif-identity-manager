@@ -1,26 +1,16 @@
 import React from 'react'
 import HeaderContainer from '../../components/Header/HeaderContainer'
+import Navigation from '../../components/Navigation/Navigation'
 import IdentityInformationContainer from './containers/IdentityInformationContainer'
 
-interface DashboardScreenInterface {
-  handleLoginOut: () => void
-}
+interface DashboardScreenInterface {}
 
-const DashboardScreen: React.FC<DashboardScreenInterface> = ({ handleLoginOut }) => {
+const DashboardScreen: React.FC<DashboardScreenInterface> = () => {
   return (
     <>
       <HeaderContainer />
       <div className="content dashboard">
-        <div className="container">
-          <div className="column">
-            <ul className="navigation">
-              <li className="active">Dashboard</li>
-              <li>Data Vault</li>
-              <li>Request Credentials</li>
-              <li>My Dapps</li>
-            </ul>
-          </div>
-        </div>
+        <Navigation />
         <IdentityInformationContainer />
       </div>
     </>

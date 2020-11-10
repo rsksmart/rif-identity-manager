@@ -13,11 +13,4 @@ describe('Component: Panel', () => {
     const wrapper = render(<Panel title="hello">Hello Panel</Panel>)
     expect(wrapper.find('.panel-header').text()).toBe('hello')
   })
-
-  it('has a custom classname', () => {
-    const cta = <p>call to action</p>
-    const wrapper = render(<Panel headerRight={cta}>Hello Panel</Panel>)
-    expect(wrapper.find('.panel-right')).toBeDefined()
-    expect(wrapper.find('.panel-right').text()).toBe('call to action')
-  })
 })

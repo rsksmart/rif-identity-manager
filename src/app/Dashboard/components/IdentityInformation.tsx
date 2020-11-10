@@ -5,13 +5,12 @@ import { displayIdentity } from '../../../helpers'
 interface IdentityInformationPanelI {
   address: string | null
   chainId: number | null
-  update: () => void
 }
 
-const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId, update }) => {
+const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId }) => {
   const [isAdvanced, setIsAdvanced] = useState<boolean>(false)
   const advancedToggle = <button className="advancedToggle" onClick={() => setIsAdvanced(!isAdvanced)}>{isAdvanced ? 'Basic' : 'Advanced'}</button>
-  if (!address || !chainId) return <button onClick={update}>Update</button>
+  if (!address || !chainId) return <></>
 
   return (
     <div className="container">

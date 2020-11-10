@@ -38,20 +38,18 @@ interface PanelInterface {
   children: ReactNode
 }
 
-const Panel: React.FC<PanelInterface> = ({ title, headerRight, children, className }) => {
-  return (
-    <PanelWrapper className={`panel ${className}`}>
-      {title && (
-        <PanelHeader className="panel-header">
-          <PanelTitle className="panel-title">{title}</PanelTitle>
-          {headerRight && <PanelRight className="panel-right">{headerRight}</PanelRight>}
-        </PanelHeader>
-      )}
-      <PanelContent className="panel-content">
-        {children}
-      </PanelContent>
-    </PanelWrapper>
-  )
-}
+const Panel: React.FC<PanelInterface> = ({ title, headerRight, children, className }) => (
+  <PanelWrapper className={`panel ${className}`}>
+    {title && (
+      <PanelHeader className="panel-header">
+        <PanelTitle className="panel-title">{title}</PanelTitle>
+        {headerRight && <PanelRight className="panel-right">{headerRight}</PanelRight>}
+      </PanelHeader>
+    )}
+    <PanelContent className="panel-content">
+      {children}
+    </PanelContent>
+  </PanelWrapper>
+)
 
 export default Panel

@@ -8,16 +8,12 @@ import { Web3ProviderContext } from '../providerContext'
 
 const App = () => {
   const context = useContext(Web3ProviderContext)
-  const handleLogOut = () => {
-    context?.setProvider(null)
-    localStorage.clear()
-  }
-
   const isLoggedIn = context?.provider
+
   return (
     <div className={isLoggedIn ? 'app loggedin' : 'app login'}>
       {isLoggedIn
-        ? <DashboardScreen handleLoginOut={handleLogOut} />
+        ? <DashboardScreen />
         : <LoginScreenContainer context={context} />
       }
       <RifFooter isLoggedIn={isLoggedIn} version={version} />
