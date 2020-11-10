@@ -1,0 +1,32 @@
+.dashboard {
+  .identity-information {
+    .advancedToggle {
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: $blue;
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 14px;
+      font-weight: 500 !important;
+      color: $gray;
+      text-transform: uppercase;
+    }
+
+    p.value {
+      font-size: 18px;
+      color: $black;
+      font-size: 18px;
+    }
+    ul.value {
+      margin: 10px 0;
+      padding: 0;
+      list-style-type: none;
+      li {
+        color: $black;
+      }
+    }
+  }
+}
