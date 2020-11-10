@@ -3,14 +3,17 @@
   background-color: rgba(174,247,216,1);
   background-image: linear-gradient(rgba(1,144,247,1), rgba(174,247,216,1));
   background-repeat: no-repeat;
-  height: 100%;
-  min-height: 100%;
-
   color: $white;
   
   footer.app-footer {
     color: $white;
   }
+}
+
+.app {
+  background-color: #faf9f9;
+  height: 100%;
+  min-height: 100%;
 }
 
 // The login screen component

@@ -1,0 +1,27 @@
+ul.navigation {
+  margin: 40px 20px 40px 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    display: inline-block;
+    font-size: 18px;
+    margin-right: 35px;
+  }
+  
+  li.active {
+    color: $turquoise;
+    border-bottom: 2px solid $turquoise;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  ul.navigation {
+    margin: 20px;
+
+    li {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+}
