@@ -1,4 +1,4 @@
-import RLogin from 'jesse-rlogin'
+import RLogin from '@rsksmart/rlogin'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 export const rLogin = new RLogin({

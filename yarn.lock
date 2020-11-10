@@ -1474,6 +1474,16 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@rsksmart/rlogin@0.0.1-beta.1":
+  version "0.0.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@rsksmart/rlogin/-/rlogin-0.0.1-beta.1.tgz#44ed0979413b31bef955dcba892d8df5edf60343"
+  integrity sha512-C0EudQ+vW+xyojhX69d4yb29p4x41snOtujEVWbaRbmKaVnazYs5Rcs5nrHEPjEyVP6e+IncrhPMuUcxft3tkg==
+  dependencies:
+    "@types/styled-components" "^5.1.3"
+    axios "^0.20.0"
+    web3-eth-personal "^1.3.0"
+    web3modal "^1.9.1"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
@@ -7502,16 +7512,6 @@ istanbul-reports@^3.0.2:
   dependencies:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
-
-jesse-rlogin@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/jesse-rlogin/-/jesse-rlogin-0.0.3.tgz#da3de93d190cd7227fc5b7a1a202dfcd981fd179"
-  integrity sha512-/T9vOJ4RVW7UDVQn+QD0gKtZKSXQaEenn4RZ5Ce4gdsKPjy1wNWxKefNEECkl2kgw7PjIAQ2CJ4y7KGgoJmSCg==
-  dependencies:
-    "@types/styled-components" "^5.1.3"
-    axios "^0.20.0"
-    web3-eth-personal "^1.3.0"
-    web3modal "^1.9.1"
 
 jest-changed-files@^26.6.2:
   version "26.6.2"
