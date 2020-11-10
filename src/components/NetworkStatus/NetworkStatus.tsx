@@ -33,13 +33,25 @@ const NetworkLight = styled.div<{connected: boolean}>`
 
 export interface NetworkStatusInterface {
   connected: boolean;
-  name: string;
+  name?: string;
+  chainId?: number;
 }
 
-const NetworkStatus: React.FC<NetworkStatusInterface> = ({ connected, name }) => {
+export const chainIdToName = (chainId: number) => {
+  switch (chainId) {
+    case 1: return 'Ethereum'
+    case 30: return 'RSK Mainnet'
+    case 31: return 'RSK Testnet'
+    default: return `Network Id ${chainId.toString()}`
+  }
+}
+
+const NetworkStatus: React.FC<NetworkStatusInterface> = ({ connected, name, chainId }) => {
   return (
     <NetworkStatusWrapper className={connected ? 'connected' : 'disconnected'}>
-      <NetworkLight connected={connected}>{name}</NetworkLight>
+      <NetworkLight connected={connected}>
+        {chainId ? chainIdToName(chainId) : name}
+      </NetworkLight>
     </NetworkStatusWrapper>
   )
 }
