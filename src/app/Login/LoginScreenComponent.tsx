@@ -1,12 +1,12 @@
 import React from 'react'
-import { BaseButton } from '../components/Buttons'
-import logo from '../assets/images/rif-id-manager.svg'
+import { BaseButton } from '../../components/Buttons'
+import logo from '../../assets/images/rif-id-manager.svg'
 
 interface LoginScreenInterface {
   handleLogin: () => void
 }
 
-const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
+const LoginScreenComponent: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
   return (
     <div className="container login-screen">
       <div className="column">
@@ -24,4 +24,4 @@ const LoginScreen: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
   )
 }
 
-export default LoginScreen
+export default LoginScreenComponent
