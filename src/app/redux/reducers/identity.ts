@@ -5,11 +5,11 @@ export interface IdentityState {
   chainId: number | null
 }
 
-interface ReceiveIdentityPayload {
+interface ChangeAccountPayload {
   address: string
 }
 
-interface ReceiveChainIdPayload {
+interface ChangeChainIdPayload {
   chainId: number
 }
 
@@ -22,15 +22,15 @@ const identitySlice = createSlice({
   name: 'identity',
   initialState,
   reducers: {
-    receiveIdentity (state: IdentityState, { payload: { address } }: PayloadAction<ReceiveIdentityPayload>) {
+    changeAccount (state: IdentityState, { payload: { address } }: PayloadAction<ChangeAccountPayload>) {
       state.address = address
     },
-    receiveChainId (state: IdentityState, { payload: { chainId } }: PayloadAction<ReceiveChainIdPayload>) {
+    changeChainId (state: IdentityState, { payload: { chainId } }: PayloadAction<ChangeChainIdPayload>) {
       state.chainId = chainId
     }
   }
 })
 
-export const { receiveIdentity, receiveChainId } = identitySlice.actions
+export const { changeAccount, changeChainId } = identitySlice.actions
 
 export default identitySlice.reducer
