@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { getAccounts, getNetwork } from '../../../helpers'
+import { getAccounts, getNetwork } from '../../../ethrpc'
 import { rLogin } from '../../../rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
