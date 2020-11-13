@@ -1,12 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import identityReducer, { IdentityStateInterface } from './identity/reducer'
+import identityReducer, { IdentityState } from './reducers/identity'
 
 const middleware = [thunk, createLogger()]
 
 export interface stateInterface {
-  identity: IdentityStateInterface
+  identity: IdentityState
 }
 
 const rootReducer = combineReducers({
