@@ -1,6 +1,12 @@
+// handle nifty
+const providerRPC = (provider: any, args: any) => {
+  if (provider.isNiftyWallet) return provider.send(args.method, args.params)
+  return provider.request(args)
+}
+
 // json rpc methods
-export const getAccounts = (provider: any) => provider.send({ method: 'eth_accounts' })
-export const getNetwork = (provider: any) => provider.send({ method: 'net_version' }).then(parseInt)
+export const getAccounts = (provider: any) => providerRPC(provider, { method: 'eth_accounts' })
+export const getNetwork = (provider: any) => providerRPC(provider, { method: 'net_version' }).then(parseInt)
 
 export const displayIdentity = (address: string, chainId?: number) => {
   const addr = `${address.slice(0, 6)}...${address.slice(address.length - 4)}`
