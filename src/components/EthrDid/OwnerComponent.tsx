@@ -67,7 +67,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
         <div className="change-owner">
           <p>Be aware that once you transfer the identity, you will lose ownership and can no longer manage the identity.</p>
           <p>
-            Transfer to
+            <strong>Transfer to: </strong>
             <input
               type="text"
               value={newOwner}

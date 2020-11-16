@@ -16,7 +16,6 @@
     }
 
     p.value {
-      font-size: 18px;
       color: $black;
       font-size: 18px;
     }
@@ -25,6 +24,7 @@
       padding: 0;
       list-style-type: none;
       li {
+        font-size: 18px;
         color: $black;
       }
     }

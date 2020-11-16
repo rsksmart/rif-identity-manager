@@ -64,7 +64,7 @@ const ModalCloseButton = styled.button`
 
 const ModalContent = styled.div`
   background: #ffffff;
-  padding-bottom: 15px;
+  padding: 0 20px 15px 20px;
 `
 
 interface PanelInterface {

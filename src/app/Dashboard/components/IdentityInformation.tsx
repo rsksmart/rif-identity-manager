@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import DelegateContainer from '../../../components/EthrDid/DelegateContainer'
 import OwnerContainer from '../../../components/EthrDid/OwnerContainer'
 import Panel from '../../../components/Panel/Panel'
 import { displayIdentity } from '../../../helpers'
@@ -29,12 +30,7 @@ const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address
             {isAdvanced && (
               <>
                 <OwnerContainer />
-                <div className="column">
-                  <h2>Controllers</h2>
-                  <ul className="value">
-                    <li>address</li>
-                  </ul>
-                </div>
+                <DelegateContainer />
               </>
             )}
           </div>

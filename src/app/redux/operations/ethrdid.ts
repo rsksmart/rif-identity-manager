@@ -1,11 +1,13 @@
 import { Dispatch } from 'react'
 import EthrDID from '@rsksmart/ethr-did'
 import { getAccountAndNetwork } from '../../../ethrpc'
-import { changeOwner, resolveDid } from '../reducers/ethrdid'
+import { changeOwner, resolveDid, addDelegate as addDelegateS } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
 import { getSetting, SETTINGS } from '../../../config/getConfig'
 import { createDidFormat } from '../../../helpers'
+
+const Secp256k1VerificationKey2018 = '0x73696741757468'
 
 /**
  * Returns the owner of a DID from the Ethr DID Registry
@@ -59,3 +61,22 @@ export const resolve = (provider: any) => (dispatch: Dispatch<any>) => {
     didResolver.resolve(did).then((data: DIDDocument) => dispatch(resolveDid({ data })))
   })
 }
+
+export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispatch<any>) =>
+  new Promise((resolve, reject) => {
+    getAccountAndNetwork(provider).then(([address, chainId]) =>
+      new EthrDID({
+        address: address,
+        provider,
+        registry: getSetting(parseInt(chainId), SETTINGS.ETHR_DID_CONTRACT)
+      })
+        .addDelegate(delegate, {
+          delegateType: Secp256k1VerificationKey2018
+        })
+        .then((response: any) => {
+          dispatch(addDelegateS({ delegate }))
+          resolve(response)
+        })
+        .catch((err: Error) => reject(err))
+    )
+  })
