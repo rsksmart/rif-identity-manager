@@ -21,6 +21,28 @@ export const lookupOwner = (provider: any) => (dispatch: Dispatch<any>) =>
       .lookupOwner(address).then((owner: string) => dispatch(changeOwner({ owner })))
   })
 
+/**
+ * Set the owner in the DID Registry. Can only be set by the owner.
+ * @param provider web3 provider
+ * @param newOwner new owner of the DID
+ */
+export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispatch<any>) =>
+  new Promise((resolve) => {
+    getAccountAndNetwork(provider).then(([address, chainId]) =>
+      new EthrDID({
+        address: address,
+        provider,
+        registry: getSetting(parseInt(chainId), SETTINGS.ETHR_DID_CONTRACT)
+      })
+        .changeOwner(newOwner.toLowerCase())
+        .then(() => resolve(dispatch(changeOwner({ owner: newOwner }))))
+    )
+  })
+
+/**
+ * Reolve a DID
+ * @param provider web3 provider
+ */
 export const resolve = (provider: any) => (dispatch: Dispatch<any>) => {
   getAccountAndNetwork(provider).then(([address, chainId]) => {
     const providerConfig = {
