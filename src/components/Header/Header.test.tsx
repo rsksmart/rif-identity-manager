@@ -3,7 +3,7 @@ import { render, shallow } from 'enzyme'
 import Header from './HeaderComponent'
 
 describe('Component: Header', () => {
-  const wrapper = render(<Header address="0x1234567890123456789" chainId={31} />)
+  const wrapper = render(<Header did="did:rsk:testnet:0x1234567890123456789" chainId={31} />)
   it('renders, is defined', () => {
     expect(wrapper).toBeDefined()
   })
@@ -14,7 +14,7 @@ describe('Component: Header', () => {
   })
 
   it('loads image', () => {
-    const shallowWrapper = shallow(<Header address="0x1234567890123456789" chainId={31} />)
+    const shallowWrapper = shallow(<Header did="did:rsk:testnet:0x1234567890123456789" chainId={31} />)
     expect(shallowWrapper.find('img').props().src).toBe('rif-id-manager-gray.svg')
     expect(shallowWrapper.find('img').props().alt).toBe('RIF Id Manager')
   })

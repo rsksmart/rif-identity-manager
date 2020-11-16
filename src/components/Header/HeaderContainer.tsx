@@ -3,7 +3,7 @@ import { stateInterface } from '../../app/redux/configureStore'
 import HeaderComponent from './HeaderComponent'
 
 const mapStateToProps = (state: stateInterface) => ({
-  address: state.identity.address,
+  did: state.ethrdid.resolve?.id,
   chainId: state.identity.chainId
 })
 
