@@ -10,10 +10,11 @@ export const rLogin = new RLogin({
         rpc: {
           1: 'https://mainnet.infura.io/v3/8043bb2cf99347b1bfadfb233c5325c0',
           30: 'https://public-node.rsk.co',
-          31: 'https://public-node.testnet.rsk.co'
+          31: 'https://public-node.testnet.rsk.co',
+          5777: 'http://127.0.0.1'
         }
       }
     }
   },
-  supportedChains: [1, 30, 31]
+  supportedChains: [1, 30, 31, 5777]
 })

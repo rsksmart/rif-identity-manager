@@ -3,6 +3,7 @@ import { getAccounts, getNetwork } from '../../../ethrpc'
 import { rLogin } from '../../../rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
+import { lookupOwner, resolve } from './ethrdid'
 
 /**
  * Login into web3 provider via rLogin
@@ -14,6 +15,10 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     context.setProvider(provider)
 
     getAccounts(provider).then((accounts: string[]) => dispatch(changeAccount({ address: accounts[0] })))
-    getNetwork(provider).then((chainId: number) => dispatch(changeChainId({ chainId })))
+    getNetwork(provider).then((chainId: string) => dispatch(changeChainId({ chainId: parseInt(chainId) })))
+
+    // dispatch(loginScript(provider))
+    dispatch(lookupOwner(provider))
+    dispatch(resolve(provider))
   })
     .catch((err: string) => console.log('rLogin Error', err))
