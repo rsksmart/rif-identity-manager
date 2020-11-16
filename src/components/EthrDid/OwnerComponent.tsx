@@ -3,6 +3,7 @@ import { truncateAddressDid } from '../../helpers'
 import { Web3ProviderContext } from '../../providerContext'
 import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
+import Modal from '../Modal/Modal'
 
 interface OwnerComponentInterface {
   owner?: string | null
@@ -48,6 +49,13 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
       })
   }
 
+  const handleClose = () => {
+    if (!isLoading) {
+      setEdit(false)
+      resetState()
+    }
+  }
+
   return (
     <div className="column">
       <h2>Owner</h2>
@@ -55,13 +63,24 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
 
       {isOwner && <BaseButton onClick={() => setEdit(!edit)}>Change Owner</BaseButton>}
 
-      {edit && (
+      <Modal show={edit} title="Transfer Identity" onClose={handleClose}>
         <div className="change-owner">
-          <input type="text" value={newOwner} onChange={evt => setNewOwner(evt.target.value)} />
-          <BaseButton disabled={isLoading} onClick={handleSetOwner}>Set New Owner</BaseButton>
+          <p>Be aware that once you transfer the identity, you will lose ownership and can no longer manage the identity.</p>
+          <p>
+            Transfer to
+            <input
+              type="text"
+              value={newOwner}
+              onChange={evt => setNewOwner(evt.target.value)}
+              placeholder="address"
+              className="line"
+              disabled={isLoading}
+            />
+          </p>
+          <BaseButton className="blue" disabled={isLoading} onClick={handleSetOwner}>Transfer</BaseButton>
           {isError && <p>{isError}</p>}
         </div>
-      )}
+      </Modal>
     </div>
   )
 }

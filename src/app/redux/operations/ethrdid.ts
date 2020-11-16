@@ -27,7 +27,7 @@ export const lookupOwner = (provider: any) => (dispatch: Dispatch<any>) =>
  * @param newOwner new owner of the DID
  */
 export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispatch<any>) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     getAccountAndNetwork(provider).then(([address, chainId]) =>
       new EthrDID({
         address: address,
@@ -36,6 +36,7 @@ export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispa
       })
         .changeOwner(newOwner.toLowerCase())
         .then(() => resolve(dispatch(changeOwner({ owner: newOwner }))))
+        .catch((err: Error) => reject(err))
     )
   })
 

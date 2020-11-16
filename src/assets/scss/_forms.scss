@@ -1,0 +1,17 @@
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder {
+  text-align: center;
+}
+
+input[type=text].line {
+  margin-left: 5px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid $gray;
+  font-size: 16px;
+}
+
