@@ -17,7 +17,6 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     getAccounts(provider).then((accounts: string[]) => dispatch(changeAccount({ address: accounts[0] })))
     getNetwork(provider).then((chainId: string) => dispatch(changeChainId({ chainId: parseInt(chainId) })))
 
-    // dispatch(loginScript(provider))
     dispatch(lookupOwner(provider))
     dispatch(resolve(provider))
   })
