@@ -3,7 +3,7 @@ import { DIDDocument } from 'did-resolver'
 
 export interface EtherdidState {
   owner: string | null,
-  resolve: DIDDocument | null
+  resolve: DIDDocument
 }
 
 interface ChangeOwnerPayload {
@@ -20,7 +20,11 @@ interface AddDelegatePayload {
 
 export const initialState: EtherdidState = {
   owner: null,
-  resolve: null
+  resolve: {
+    '@context': 'https://w3id.org/did/v1',
+    id: '',
+    publicKey: []
+  }
 }
 
 const ethrDidSlice = createSlice({
@@ -34,16 +38,14 @@ const ethrDidSlice = createSlice({
       state.resolve = data
     },
     addDelegate (state: EtherdidState, { payload: { delegate } }: PayloadAction<AddDelegatePayload>) {
-      if (state.resolve && state.resolve.authentication) {
-        if (!state.resolve.authentication) { state.resolve.authentication = [] }
-        state.resolve.authentication = [
-          ...state.resolve?.authentication,
-          {
-            publicKey: delegate,
-            type: 'Secp256k1SignatureAuthentication2018'
-          }
-        ]
-      }
+      if (!state.resolve.authentication) { state.resolve.authentication = [] }
+      state.resolve.authentication = [
+        ...state.resolve?.authentication,
+        {
+          publicKey: delegate,
+          type: 'Secp256k1SignatureAuthentication2018'
+        }
+      ]
     }
   }
 })
