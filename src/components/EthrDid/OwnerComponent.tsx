@@ -4,6 +4,7 @@ import { Web3ProviderContext } from '../../providerContext'
 import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import Modal from '../Modal/Modal'
+import ToolTip from '../Tooltip/Tooltip'
 
 interface OwnerComponentInterface {
   owner?: string | null
@@ -59,7 +60,9 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
   return (
     <div className="column">
       <h2>Owner</h2>
-      <p className="value">{owner ? truncateAddressDid(owner) : 'loading...'}</p>
+      <p className="value">
+        {owner && <ToolTip hoverContent={owner}>{truncateAddressDid(owner)}</ToolTip>}
+      </p>
 
       {isOwner && <BaseButton onClick={() => setEdit(!edit)}>Change Owner</BaseButton>}
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DelegateContainer from '../../../components/EthrDid/DelegateContainer'
 import OwnerContainer from '../../../components/EthrDid/OwnerContainer'
 import Panel from '../../../components/Panel/Panel'
+import ToolTip from '../../../components/Tooltip/Tooltip'
 import { displayIdentity } from '../../../helpers'
 
 interface IdentityInformationPanelI {
@@ -25,7 +26,9 @@ const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address
           <div className="container">
             <div className="column">
               <h2>Identity Address</h2>
-              <p className="value">{displayIdentity(address, chainId)}</p>
+              <p className="value">
+                <ToolTip hoverContent={address}>{displayIdentity(address, chainId)}</ToolTip>
+              </p>
             </div>
             {isAdvanced && (
               <>

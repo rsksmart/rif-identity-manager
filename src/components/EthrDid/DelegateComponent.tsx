@@ -5,6 +5,7 @@ import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import Modal from '../Modal/Modal'
 import { truncateAddressDid } from '../../helpers'
+import ToolTip from '../Tooltip/Tooltip'
 
 interface DelegateComponentInterface {
   delegates?: Authentication[] | null
@@ -62,7 +63,9 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
       <ul className="value">
         {delegates?.map((delegate: Authentication) =>
           <li key={delegate.publicKey}>
-            {truncateAddressDid(delegate.publicKey.slice(delegate.publicKey.lastIndexOf(':') + 1, delegate.publicKey.indexOf('#')))}
+            <ToolTip hoverContent={delegate.publicKey}>
+              {truncateAddressDid(delegate.publicKey.slice(delegate.publicKey.lastIndexOf(':') + 1, delegate.publicKey.indexOf('#')))}
+            </ToolTip>
           </li>)
         }
       </ul>
