@@ -1,10 +1,10 @@
-import { getSetting, SETTINGS } from '../config/getConfig'
+import { getDIDRegistryAddress, getRPCUrl } from '../config/getConfig'
 
 export const resolverProviderConfig = {
   networks: [
-    { name: 'mainnet', registry: getSetting(1, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(1, SETTINGS.RPC_URL) },
-    { name: 'rsk', registry: getSetting(30, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(30, SETTINGS.RPC_URL) },
-    { name: 'rsk:testnet', registry: getSetting(31, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(31, SETTINGS.RPC_URL) },
-    { name: 'development', registry: getSetting(5777, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(5777, SETTINGS.RPC_URL) }
+    { name: 'mainnet', registry: getDIDRegistryAddress(1), rpcUrl: getRPCUrl(1) },
+    { name: 'rsk', registry: getDIDRegistryAddress(30), rpcUrl: getRPCUrl(30) },
+    { name: 'rsk:testnet', registry: getDIDRegistryAddress(31), rpcUrl: getRPCUrl(31) },
+    { name: 'development', registry: getDIDRegistryAddress(5777), rpcUrl: getRPCUrl(5777) }
   ]
 }

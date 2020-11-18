@@ -9,7 +9,7 @@ export enum SETTINGS {
   RPC_URL = 'rpcUrl'
 }
 
-export const getSetting = (chainId: number, setting: SETTINGS) => {
+const getSetting = (chainId: number, setting: SETTINGS) => {
   switch (chainId) {
     case 1: return Ethereum[setting]
     case 30: return Mainnet[setting]
@@ -18,3 +18,6 @@ export const getSetting = (chainId: number, setting: SETTINGS) => {
     default: throw new Error(`No setting for chainId ${chainId}`)
   }
 }
+
+export const getDIDRegistryAddress = (chainId: number) => getSetting(chainId, SETTINGS.ETHR_DID_CONTRACT)
+export const getRPCUrl = (chainId: number) => getSetting(chainId, SETTINGS.RPC_URL)

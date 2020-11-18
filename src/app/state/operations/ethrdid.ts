@@ -4,7 +4,7 @@ import { getAccountAndNetwork } from '../../../ethrpc'
 import { resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
-import { getSetting, SETTINGS } from '../../../config/getConfig'
+import { getDIDRegistryAddress, getRPCUrl } from '../../../config/getConfig'
 import { createDidFormat } from '../../../helpers'
 import { resolverProviderConfig } from '../../../features/resolverConfig'
 
@@ -21,7 +21,7 @@ export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispa
       new EthrDID({
         address: address,
         provider,
-        registry: getSetting(parseInt(chainId), SETTINGS.ETHR_DID_CONTRACT)
+        registry: getDIDRegistryAddress(parseInt(chainId))
       })
         .changeOwner(newOwner.toLowerCase())
         .then(() => resolve(dispatch(resolveDidDocument(provider))))
@@ -49,7 +49,7 @@ export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispa
       new EthrDID({
         address: address,
         provider,
-        registry: getSetting(parseInt(chainId), SETTINGS.ETHR_DID_CONTRACT)
+        registry: getDIDRegistryAddress(parseInt(chainId))
       })
         .addDelegate(delegate, {
           delegateType: Secp256k1VerificationKey2018
