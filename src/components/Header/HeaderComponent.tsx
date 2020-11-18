@@ -2,7 +2,7 @@ import React from 'react'
 import rifIdManager from '../../assets/images/rif-id-manager-gray.svg'
 import NetworkStatus from '../NetworkStatus/NetworkStatus'
 import ToolTip from '../Tooltip/Tooltip'
-import { truncateAddressDid } from '../../helpers'
+import { truncateAddressDid } from '../../formatters'
 
 interface HeaderComponentInterface {
   did: string | null

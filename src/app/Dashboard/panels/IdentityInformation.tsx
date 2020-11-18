@@ -2,7 +2,7 @@ import { Authentication } from 'did-resolver'
 import React, { useState } from 'react'
 import Panel from '../../../components/Panel/Panel'
 import ToolTip from '../../../components/Tooltip/Tooltip'
-import { displayIdentity } from '../../../helpers'
+import { displayIdentity } from '../../../formatters'
 import DelegateComponent from '../../../components/EthrDid/DelegateComponent'
 import OwnerComponent from '../../../components/EthrDid/OwnerComponent'
 

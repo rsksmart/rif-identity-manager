@@ -1,4 +1,4 @@
-import { createDidFormat, displayIdentity, truncateAddressDid } from './helpers'
+import { createDidFormat, displayIdentity, truncateAddressDid } from './formatters'
 
 describe('helpers.js', () => {
   const address = '0x3Dd03d7d6c3137f1Eb7582Ba5957b8A2e26f304A'

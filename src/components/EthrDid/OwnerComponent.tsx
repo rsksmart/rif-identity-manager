@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { truncateAddressDid } from '../../helpers'
+import { truncateAddressDid } from '../../formatters'
 import { Web3ProviderContext } from '../../providerContext'
 import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'

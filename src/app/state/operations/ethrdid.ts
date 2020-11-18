@@ -5,7 +5,7 @@ import { resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
 import { getDIDRegistryAddress } from '../../../config/getConfig'
-import { createDidFormat } from '../../../helpers'
+import { createDidFormat } from '../../../formatters'
 import { resolverProviderConfig } from '../../../features/resolverConfig'
 
 const Secp256k1VerificationKey2018 = '0x73696741757468'

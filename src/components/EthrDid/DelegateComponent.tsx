@@ -4,7 +4,7 @@ import { Web3ProviderContext } from '../../providerContext'
 import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import Modal from '../Modal/Modal'
-import { truncateAddressDid } from '../../helpers'
+import { truncateAddressDid } from '../../formatters'
 import ToolTip from '../Tooltip/Tooltip'
 
 interface DelegateComponentInterface {
