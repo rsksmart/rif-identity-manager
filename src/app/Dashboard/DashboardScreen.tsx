@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderComponent from '../../components/Header/HeaderComponent'
 import Navigation from '../../components/Navigation/Navigation'
-import IdentityInformationComponent from './components/IdentityInformation'
+import IdentityInformationComponent from './panels/IdentityInformation'
 import { Authentication } from 'did-resolver'
 
 interface DashboardScreenInterface {
