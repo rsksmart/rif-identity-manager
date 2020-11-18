@@ -9,7 +9,7 @@ describe('Component: Header', () => {
   })
 
   it('sets the DID from the address and chainId', () => {
-    expect(wrapper.find('h1').text()).toBe('did:rsk:testnet:0x1234...6789')
+    expect(wrapper.find('h1').find('.hover-content').text()).toBe('did:rsk:testnet:0x1234567890123456789')
     expect(wrapper.find('.network').text()).toBe('RSK Testnet')
   })
 

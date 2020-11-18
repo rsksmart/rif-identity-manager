@@ -1,18 +1,24 @@
+import { Authentication } from 'did-resolver'
 import React, { useState } from 'react'
-import DelegateContainer from '../../Components/EthrDid/DelegateContainer'
-import OwnerContainer from '../../Components/EthrDid/OwnerContainer'
 import Panel from '../../../components/Panel/Panel'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import { displayIdentity } from '../../../helpers'
+import DelegateComponent from '../../../components/EthrDid/DelegateComponent'
+import OwnerComponent from '../../../components/EthrDid/OwnerComponent'
 
 interface IdentityInformationPanelI {
-  address: string | null
-  chainId: number | null
+  address?: string | null
+  chainId?: number | null
+  owner?: string | null
+  delegates?: Authentication[]
+  changeOwner: (provider: any, newOwner: string) => any
+  addDelegate: (provider: any, delegateAddr: string) => any
 }
 
-const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId }) => {
+const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId, owner, delegates, changeOwner, addDelegate }) => {
   const [isAdvanced, setIsAdvanced] = useState<boolean>(false)
   const advancedToggle = <button className="advancedToggle" onClick={() => setIsAdvanced(!isAdvanced)}>{isAdvanced ? 'Basic' : 'Advanced'}</button>
+  const isOwner = address?.toLowerCase() === owner?.toLowerCase()
   if (!address || !chainId) return <></>
 
   return (
@@ -32,8 +38,8 @@ const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address
             </div>
             {isAdvanced && (
               <>
-                <OwnerContainer />
-                <DelegateContainer />
+                {owner && <OwnerComponent isOwner={isOwner} owner={owner} changeOwner={changeOwner} />}
+                {delegates && <DelegateComponent isOwner={isOwner} delegates={delegates} addDelegate={addDelegate} />}
               </>
             )}
           </div>

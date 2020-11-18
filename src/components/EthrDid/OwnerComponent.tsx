@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { truncateAddressDid } from '../../../helpers'
-import { Web3ProviderContext } from '../../../providerContext'
-import { BaseButton } from '../../../components/Buttons'
+import { truncateAddressDid } from '../../helpers'
+import { Web3ProviderContext } from '../../providerContext'
+import { BaseButton } from '../Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../../../components/Modal/Modal'
-import ToolTip from '../../../components/Tooltip/Tooltip'
+import Modal from '../Modal/Modal'
+import ToolTip from '../Tooltip/Tooltip'
 
 interface OwnerComponentInterface {
   owner?: string | null
