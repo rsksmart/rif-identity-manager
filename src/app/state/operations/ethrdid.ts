@@ -4,7 +4,7 @@ import { getAccountAndNetwork } from '../../../ethrpc'
 import { resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
-import { getDIDRegistryAddress, getRPCUrl } from '../../../config/getConfig'
+import { getDIDRegistryAddress } from '../../../config/getConfig'
 import { createDidFormat } from '../../../helpers'
 import { resolverProviderConfig } from '../../../features/resolverConfig'
 
