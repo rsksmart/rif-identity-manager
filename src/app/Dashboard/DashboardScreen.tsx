@@ -1,5 +1,5 @@
 import React from 'react'
-import HeaderContainer from '../../components/Header/HeaderContainer'
+import HeaderContainer from '../Components/Header/HeaderContainer'
 import Navigation from '../../components/Navigation/Navigation'
 import IdentityInformationContainer from './containers/IdentityInformationContainer'
 

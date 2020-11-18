@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import DelegateContainer from '../../../components/EthrDid/DelegateContainer'
-import OwnerContainer from '../../../components/EthrDid/OwnerContainer'
+import DelegateContainer from '../../Components/EthrDid/DelegateContainer'
+import OwnerContainer from '../../Components/EthrDid/OwnerContainer'
 import Panel from '../../../components/Panel/Panel'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import { displayIdentity } from '../../../helpers'

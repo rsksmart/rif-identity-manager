@@ -1,7 +1,7 @@
 import React from 'react'
-import rifIdManager from '../../assets/images/rif-id-manager-gray.svg'
-import NetworkStatus from '../NetworkStatus/NetworkStatus'
-import { truncateAddressDid } from '../../helpers'
+import rifIdManager from '../../../assets/images/rif-id-manager-gray.svg'
+import NetworkStatus from '../../../components/NetworkStatus/NetworkStatus'
+import { truncateAddressDid } from '../../../helpers'
 
 interface HeaderComponentInterface {
   did?: string | null

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { stateInterface } from '../../app/state/configureStore'
+import { stateInterface } from '../../state/configureStore'
 import HeaderComponent from './HeaderComponent'
 
 const mapStateToProps = (state: stateInterface) => ({

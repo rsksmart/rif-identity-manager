@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Authentication } from 'did-resolver'
-import { Web3ProviderContext } from '../../providerContext'
-import { BaseButton } from '../Buttons'
+import { Web3ProviderContext } from '../../../providerContext'
+import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../Modal/Modal'
-import { truncateAddressDid } from '../../helpers'
-import ToolTip from '../Tooltip/Tooltip'
+import Modal from '../../../components/Modal/Modal'
+import { truncateAddressDid } from '../../../helpers'
+import ToolTip from '../../../components/Tooltip/Tooltip'
 
 interface DelegateComponentInterface {
   delegates?: Authentication[] | null
