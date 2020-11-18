@@ -37,6 +37,12 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
       resetState()
       return setIsError('Checksum is incorrect.')
     }
+
+    if (delegates?.filter(item => item.publicKey.indexOf(newDelegate) !== -1).length !== 0) {
+      resetState()
+      return setIsError('This address is already a delegate.')
+    }
+
     setIsLoading(true)
     addDelegate(context?.provider, newDelegate)
       .then(() => {

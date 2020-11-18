@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { stateInterface } from '../../app/redux/configureStore'
-import { setDidOwner } from '../../app/redux/operations/ethrdid'
+import { stateInterface } from '../../app/state/configureStore'
+import { setDidOwner } from '../../app/state/operations/ethrdid'
 import OwnerComponent from './OwnerComponent'
 
 const mapStateToProps = (state: stateInterface) => ({

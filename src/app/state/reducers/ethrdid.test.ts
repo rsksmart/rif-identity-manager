@@ -53,18 +53,21 @@ describe('ethrdid slice', () => {
 
     test('addDelegate', () => {
       store.dispatch(addDelegate({ delegate: '0x1234567890' }))
-      expect(store.getState()).toEqual({
-        ...initialState,
-        resolve: {
-          ...data,
-          authentication: [
-            {
-              publicKey: '0x1234567890',
-              type: 'Secp256k1SignatureAuthentication2018'
-            }
-          ]
+      expect(store.getState().didDocument.authentication).toEqual([
+        {
+          publicKey: '0x1234567890#delegate-1',
+          type: 'Secp256k1SignatureAuthentication2018'
         }
-      })
+      ])
+    })
+
+    test('add multiple delegates', () => {
+      store.dispatch(addDelegate({ delegate: '0x1234567890' }))
+      store.dispatch(addDelegate({ delegate: '0x3547890156' }))
+      expect(store.getState().didDocument.authentication).toEqual([
+        { publicKey: '0x1234567890#delegate-1', type: 'Secp256k1SignatureAuthentication2018' },
+        { publicKey: '0x3547890156#delegate-2', type: 'Secp256k1SignatureAuthentication2018' }
+      ])
     })
   })
 })

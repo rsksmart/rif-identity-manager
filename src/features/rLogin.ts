@@ -1,5 +1,6 @@
 import RLogin from '@rsksmart/rlogin'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { getSetting, SETTINGS } from '../config/getConfig'
 
 export const rLogin = new RLogin({
   cachedProvider: false,
@@ -8,10 +9,10 @@ export const rLogin = new RLogin({
       package: WalletConnectProvider,
       options: {
         rpc: {
-          1: 'https://mainnet.infura.io/v3/8043bb2cf99347b1bfadfb233c5325c0',
-          30: 'https://public-node.rsk.co',
-          31: 'https://public-node.testnet.rsk.co',
-          5777: 'http://127.0.0.1'
+          1: getSetting(1, SETTINGS.RPC_URL),
+          30: getSetting(30, SETTINGS.RPC_URL),
+          31: getSetting(31, SETTINGS.RPC_URL),
+          5777: getSetting(5777, SETTINGS.RPC_URL)
         }
       }
     }

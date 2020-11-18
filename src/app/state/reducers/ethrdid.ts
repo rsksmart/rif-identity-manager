@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { DIDDocument } from 'did-resolver'
 
 export interface EtherdidState {
-  owner: string | null,
-  resolve: DIDDocument
+  owner: string,
+  didDocument: DIDDocument
 }
 
 interface ChangeOwnerPayload {
@@ -14,16 +14,13 @@ interface ResolveDidPayload {
   data: DIDDocument
 }
 
-interface AddDelegatePayload {
-  delegate: string
-}
-
 export const initialState: EtherdidState = {
-  owner: null,
-  resolve: {
+  owner: '',
+  didDocument: {
     '@context': 'https://w3id.org/did/v1',
     id: '',
-    publicKey: []
+    publicKey: [],
+    authentication: []
   }
 }
 
@@ -35,21 +32,11 @@ const ethrDidSlice = createSlice({
       state.owner = owner
     },
     resolveDid (state: EtherdidState, { payload: { data } }: PayloadAction<ResolveDidPayload>) {
-      state.resolve = data
-    },
-    addDelegate (state: EtherdidState, { payload: { delegate } }: PayloadAction<AddDelegatePayload>) {
-      if (!state.resolve.authentication) { state.resolve.authentication = [] }
-      state.resolve.authentication = [
-        ...state.resolve?.authentication,
-        {
-          publicKey: delegate,
-          type: 'Secp256k1SignatureAuthentication2018'
-        }
-      ]
+      state.didDocument = data
     }
   }
 })
 
-export const { changeOwner, resolveDid, addDelegate } = ethrDidSlice.actions
+export const { changeOwner, resolveDid } = ethrDidSlice.actions
 
 export default ethrDidSlice.reducer

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import LoginScreenComponent from './LoginScreenComponent'
-import { login } from '../redux/operations/identity'
+import { login } from '../state/operations/identity'
 
 const mapDispatchToProps = (dispatch: any) => ({
   handleLogin: (context: any) => dispatch(login(context))

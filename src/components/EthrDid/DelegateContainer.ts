@@ -2,12 +2,12 @@ import { Authentication } from 'did-resolver'
 import { connect } from 'react-redux'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { stateInterface } from '../../app/redux/configureStore'
-import { addDelegate } from '../../app/redux/operations/ethrdid'
+import { stateInterface } from '../../app/state/configureStore'
+import { addDelegate } from '../../app/state/operations/ethrdid'
 import DelegateComponent from './DelegateComponent'
 
 const mapStateToProps = (state: stateInterface) => ({
-  delegates: state.ethrdid.resolve?.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller')),
+  delegates: state.ethrdid.didDocument.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller')),
   chainId: state.identity.chainId
 })
 

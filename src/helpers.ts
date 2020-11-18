@@ -21,7 +21,7 @@ export const displayIdentity = (address: string, chainId?: number) => {
  */
 export const createDidFormat = (address: string, chainId: number, includeEthr?: boolean) => {
   switch (chainId) {
-    case 1: return `did:eth:${address}`
+    case 1: return `did:${includeEthr ? 'ethr:' : ''}mainnet:${address}`
     case 30: return `did:${includeEthr ? 'ethr:' : ''}rsk:${address}`
     case 31: return `did:${includeEthr ? 'ethr:' : ''}rsk:testnet:${address}`
     case 5777: return `did:${includeEthr ? 'ethr:' : ''}development:${address}`

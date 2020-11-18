@@ -1,11 +1,12 @@
 import { Dispatch } from 'react'
 import EthrDID from '@rsksmart/ethr-did'
 import { getAccountAndNetwork } from '../../../ethrpc'
-import { changeOwner, resolveDid, addDelegate as addDelegateS } from '../reducers/ethrdid'
+import { changeOwner, resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
 import { getSetting, SETTINGS } from '../../../config/getConfig'
 import { createDidFormat } from '../../../helpers'
+import { resolverProviderConfig } from '../../../features/resolverConfig'
 
 const Secp256k1VerificationKey2018 = '0x73696741757468'
 
@@ -46,16 +47,9 @@ export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispa
  * Reolve a DID
  * @param provider web3 provider
  */
-export const resolve = (provider: any) => (dispatch: Dispatch<any>) => {
+export const resolveDidDocument = (provider: any) => (dispatch: Dispatch<any>) => {
   getAccountAndNetwork(provider).then(([address, chainId]) => {
-    const providerConfig = {
-      networks: [
-        { name: 'rsk', registry: getSetting(30, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(30, SETTINGS.RPC_URL) },
-        { name: 'rsk:testnet', registry: getSetting(31, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(31, SETTINGS.RPC_URL) },
-        { name: 'development', registry: getSetting(5777, SETTINGS.ETHR_DID_CONTRACT), rpcUrl: getSetting(5777, SETTINGS.RPC_URL) }
-      ]
-    }
-    const didResolver = new Resolver(getResolver(providerConfig))
+    const didResolver = new Resolver(getResolver(resolverProviderConfig))
 
     const did = createDidFormat(address, chainId, true)
     didResolver.resolve(did).then((data: DIDDocument) => dispatch(resolveDid({ data })))
@@ -74,7 +68,7 @@ export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispa
           delegateType: Secp256k1VerificationKey2018
         })
         .then((response: any) => {
-          dispatch(addDelegateS({ delegate }))
+          dispatch(resolveDidDocument(provider))
           resolve(response)
         })
         .catch((err: Error) => reject(err))

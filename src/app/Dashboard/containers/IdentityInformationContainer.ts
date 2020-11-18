@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { stateInterface } from '../../redux/configureStore'
+import { stateInterface } from '../../state/configureStore'
 import IdentityInformationPanel from '../components/IdentityInformation'
 
 const mapStateToProps = (state: stateInterface) => ({
