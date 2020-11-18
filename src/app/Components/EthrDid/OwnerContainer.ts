@@ -7,7 +7,7 @@ import OwnerComponent from './OwnerComponent'
 
 const mapStateToProps = (state: stateInterface) => ({
   owner: state.ethrdid.owner,
-  isOwner: state.ethrdid.owner === state.identity.address,
+  isOwner: state.ethrdid.owner.toLowerCase() === state.identity.address?.toLowerCase(),
   chainId: state.identity.chainId
 })
 
