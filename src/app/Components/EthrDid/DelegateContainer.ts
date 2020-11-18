@@ -5,9 +5,11 @@ import { ThunkDispatch } from 'redux-thunk'
 import { stateInterface } from '../../state/configureStore'
 import { addDelegate } from '../../state/operations/ethrdid'
 import DelegateComponent from './DelegateComponent'
+import { getOwnerFromDidDoc } from './helpers'
 
 const mapStateToProps = (state: stateInterface) => ({
   delegates: state.ethrdid.didDocument.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller')),
+  isOwner: getOwnerFromDidDoc(state.ethrdid.didDocument)?.toLowerCase() === state.identity.address?.toLowerCase(),
   chainId: state.identity.chainId
 })
 

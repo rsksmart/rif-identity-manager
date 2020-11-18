@@ -4,10 +4,11 @@ import { ThunkDispatch } from 'redux-thunk'
 import { stateInterface } from '../../state/configureStore'
 import { setDidOwner } from '../../state/operations/ethrdid'
 import OwnerComponent from './OwnerComponent'
+import { getOwnerFromDidDoc } from './helpers'
 
 const mapStateToProps = (state: stateInterface) => ({
-  owner: state.ethrdid.owner,
-  isOwner: state.ethrdid.owner.toLowerCase() === state.identity.address?.toLowerCase(),
+  owner: getOwnerFromDidDoc(state.ethrdid.didDocument),
+  isOwner: getOwnerFromDidDoc(state.ethrdid.didDocument)?.toLowerCase() === state.identity.address?.toLowerCase(),
   chainId: state.identity.chainId
 })
 

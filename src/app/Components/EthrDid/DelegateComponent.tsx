@@ -11,9 +11,10 @@ interface DelegateComponentInterface {
   delegates?: Authentication[] | null
   chainId?: number | null
   addDelegate: (provider: any, delegate: string) => any
+  isOwner: boolean
 }
 
-const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, chainId, addDelegate }) => {
+const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, chainId, addDelegate, isOwner }) => {
   const [add, setAdd] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [newDelegate, setNewDelegate] = useState<string>('')
@@ -76,7 +77,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
         }
       </ul>
 
-      <BaseButton onClick={() => setAdd(true)}>Add Delegate</BaseButton>
+      {isOwner && <BaseButton onClick={() => setAdd(true)}>Add Delegate</BaseButton>}
       <Modal show={add} title="Delegate Identity" onClose={handleClose}>
         <div className="delegate-identity">
           <p>Controllers can manage the identity but they are not the owners. Only the owners can transfer identities.</p>
