@@ -16,11 +16,12 @@ describe('helpers.js', () => {
 
   describe('function: createDidFormat', () => {
     it('creates correct formats', () => {
-      expect(createDidFormat(address, 1)).toBe(`did:eth:${address}`)
+      expect(createDidFormat(address, 1)).toBe(`did:mainnet:${address}`)
       expect(createDidFormat(address, 30)).toBe(`did:rsk:${address}`)
     })
 
     it('creates correct format with eth when requested', () => {
+      expect(createDidFormat(address, 1, true)).toBe(`did:ethr:mainnet:${address}`)
       expect(createDidFormat(address, 30, true)).toBe(`did:ethr:rsk:${address}`)
       expect(createDidFormat(address, 31, true)).toBe(`did:ethr:rsk:testnet:${address}`)
       expect(createDidFormat(address, 5777, true)).toBe(`did:ethr:development:${address}`)
