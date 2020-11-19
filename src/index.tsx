@@ -4,7 +4,7 @@ import App from './app/App'
 import { Web3ProviderElement } from './providerContext'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-import configureStore from './app/redux/configureStore'
+import configureStore from './app/state/configureStore'
 
 ReactDOM.render(
   <React.StrictMode>

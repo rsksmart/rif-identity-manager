@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface IdentityState {
-  address: string | null
+  address: string
   chainId: number | null
 }
 
@@ -14,7 +14,7 @@ interface ChangeChainIdPayload {
 }
 
 export const initialState: IdentityState = {
-  address: null,
+  address: '',
   chainId: null
 }
 

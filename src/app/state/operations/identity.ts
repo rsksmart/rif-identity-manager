@@ -1,8 +1,9 @@
 import { Dispatch } from 'react'
 import { getAccounts, getNetwork } from '../../../ethrpc'
-import { rLogin } from '../../../rLogin'
+import { rLogin } from '../../../features/rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
+import { resolveDidDocument } from './ethrdid'
 
 /**
  * Login into web3 provider via rLogin
@@ -14,6 +15,8 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     context.setProvider(provider)
 
     getAccounts(provider).then((accounts: string[]) => dispatch(changeAccount({ address: accounts[0] })))
-    getNetwork(provider).then((chainId: number) => dispatch(changeChainId({ chainId })))
+    getNetwork(provider).then((chainId: string) => dispatch(changeChainId({ chainId: parseInt(chainId) })))
+
+    dispatch(resolveDidDocument(provider))
   })
     .catch((err: string) => console.log('rLogin Error', err))
