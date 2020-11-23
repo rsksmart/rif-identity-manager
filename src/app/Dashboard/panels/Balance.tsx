@@ -13,7 +13,7 @@ interface BalanceInterface {
 }
 
 const needHover = (original: number | null | undefined) => {
-  if (!original) { return '' }
+  if (!original) { return original }
   const rounded = parseFloat(original.toFixed(8))
   return rounded === original ? original : <ToolTip hoverContent={original}>{rounded}</ToolTip>
 }
