@@ -33,6 +33,8 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
   const context = useContext(Web3ProviderContext)
   const addToken = () => {
     setIsLoading(true)
+    setIsError(null)
+
     if (!isValidAddress(newAddress)) {
       setIsLoading(false)
       return setIsError('Not a valid address!')
@@ -41,6 +43,10 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
       .then(() => {
         setIsLoading(false)
         setIsAdding(false)
+      })
+      .catch((err: Error) => {
+        setIsLoading(false)
+        setIsError(err.message)
       })
   }
 

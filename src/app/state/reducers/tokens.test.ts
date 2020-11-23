@@ -61,5 +61,16 @@ describe('token slide', () => {
         ]
       })
     })
+
+    test('ignores adding tokens with same address', () => {
+      store.dispatch(addToken({ address: '0x123' }))
+      store.dispatch(addToken({ address: '0x123' }))
+
+      expect(store.getState()).toEqual({
+        tokens: [
+          { address: '0x123', balance: null, name: null, symbol: null, conversion: null }
+        ]
+      })
+    })
   })
 })

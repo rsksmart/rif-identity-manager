@@ -25,7 +25,9 @@ const tokensSlice = createSlice({
   initialState,
   reducers: {
     addToken (state: TokenState, { payload: { address } }: PayloadAction<{ address: string }>) {
-      state.tokens.push({ address, name: null, symbol: null, balance: null, conversion: null })
+      if (state.tokens.filter((item: Token) => item.address === address).length === 0) {
+        state.tokens.push({ address, name: null, symbol: null, balance: null, conversion: null })
+      }
     },
     addTokenData (state: TokenState, { payload: { data } }: PayloadAction<addTokenDataPayload>) {
       state.tokens = state.tokens.map((item: Token) =>
