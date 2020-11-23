@@ -5,28 +5,33 @@ import Panel from '../../../components/Panel/Panel'
 import { Web3ProviderContext } from '../../../providerContext'
 import { Token } from '../../state/reducers/tokens'
 import { isValidAddress } from 'rskjs-util'
+import ToolTip from '../../../components/Tooltip/Tooltip'
 
 interface BalanceInterface {
   tokens?: Token[]
   addCustomToken: (provider: any, tokenAddress: string) => any
 }
 
+const needHover = (original: number | null | undefined) => {
+  if (!original) { return '' }
+  const rounded = parseFloat(original.toFixed(8))
+  return rounded === original ? original : <ToolTip hoverContent={original}>{rounded}</ToolTip>
+}
+
 const SingleToken: React.FC<{ token: Token, key: any }> = ({ token }) => (
   <div className="token">
     <div className="heading-symbol">{token.name}</div>
     <div>
-      <span className="balance">{token.balance}</span>
+      <span className="balance">{needHover(token.balance)}</span>
       <span className="symbol">{token.symbol}</span>
       <span className="conversion">{token.conversion}</span>
     </div>
   </div>
 )
 
-const DoCTestnet = '0xcb46c0ddc60d18efeb0e586c17af6ea36452dae0'
-
 const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
-  const [newAddress, setNewAddress] = useState<string>(DoCTestnet)
+  const [newAddress, setNewAddress] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
 
@@ -54,7 +59,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
     <Panel
       title="Identity Balance"
       className="identity-balance"
-      headerRight={<button onClick={() => setIsAdding(true)}>[+]</button>}
+      headerRight={<button onClick={() => setIsAdding(true)} className="circle-plus">+</button>}
     >
       {tokens?.map((token: Token) => <SingleToken key={token.address} token={token} />)}
 

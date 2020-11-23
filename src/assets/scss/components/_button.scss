@@ -11,3 +11,21 @@ button.blue:disabled, button[disabled].blue {
   background-color: gray !important;
   cursor: not-allowed;
 }
+
+button.circle-plus {
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  position: relative;
+  margin: 4px;
+  display: inline-block;
+  vertical-align: middle;
+  background: $lightGray;
+  border: 1px solid $gray;
+  cursor: pointer;
+}
+
+button.circle-plus:hover {
+  background-color: $turquoise;
+  color: $white;
+}

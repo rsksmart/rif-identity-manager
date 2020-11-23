@@ -31,6 +31,11 @@
   }
 
   .identity-balance {
+    button.circle-plus {
+      margin-top: -10px;
+      margin-right: -10px;
+    }
+
     .token {
       padding-bottom: 20px;
 
@@ -42,6 +47,10 @@
       .balance {
         color: $turquoise;
         font-size: 50px;
+
+        .hover-content {
+          font-size: 16px;
+        }
       }
       .symbol {
         color: $turquoise;
