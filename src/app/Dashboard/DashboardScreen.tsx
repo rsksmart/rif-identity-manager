@@ -14,9 +14,12 @@ interface DashboardScreenInterface {
   tokens?: Token[]
   changeOwner: (provider: any, newOwner: string) => any
   addDelegate: (provider: any, delegateAddr: string) => any
+  addCustomToken: (provider: any, tokenAddr: string) => any
 }
 
-const DashboardScreen: React.FC<DashboardScreenInterface> = ({ chainId, address, owner, delegates, tokens, changeOwner, addDelegate }) => {
+const DashboardScreen: React.FC<DashboardScreenInterface> = ({
+  chainId, address, owner, delegates, tokens, changeOwner, addDelegate, addCustomToken
+}) => {
   return (
     <>
       <HeaderComponent chainId={chainId} did={address} />
@@ -32,7 +35,7 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({ chainId, address,
         />
         <div className="container">
           <div className="column">
-            <Balance tokens={tokens} />
+            <Balance tokens={tokens} addCustomToken={addCustomToken} />
           </div>
           <div className="column">&nbsp;</div>
         </div>

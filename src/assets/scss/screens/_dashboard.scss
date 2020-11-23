@@ -32,11 +32,12 @@
 
   .identity-balance {
     .token {
-      text-transform: uppercase;
+      padding-bottom: 20px;
 
-    .heading-symbol {
-      color: $gray;
-      font-size: 14px;
+      .heading-symbol {
+        color: $gray;
+        font-size: 14px;
+        text-transform: uppercase;
       }
       .balance {
         color: $turquoise;

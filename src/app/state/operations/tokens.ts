@@ -18,19 +18,42 @@ export const getToken = (provider: any, address: string) => (dispatch: Dispatch<
   const eth = new Eth(provider)
   const token = eth.contract(erc720).at(address)
 
-  dispatch(addToken({ address }))
+  console.log('eth???', eth)
 
-  token.symbol().then((symbol: string[]) => symbol[0])
-    .then((symbol: string) => dispatch(addTokenData({ data: { address, symbol } })))
+  eth.getCode(address)
+    .then((result: string) => {
+      if (result !== '0x0') {
+        dispatch(addToken({ address }))
 
-  token.name().then((name: string) => name[0])
-    .then((name: string) => dispatch(addTokenData({ data: { address, name } })))
+        token.symbol().then((symbol: string[]) => symbol[0])
+          .then((symbol: string) => dispatch(addTokenData({ data: { address, symbol } })))
+          .catch((err: Error) => console.log('symbol error', err))
 
-  getAccounts(provider).then((accounts: string[]) => {
-    token.decimals().then((decimals: any) => {
-      token.balanceOf(accounts[0]).then((balance: any) =>
-        dispatch(addTokenData({ data: { address, balance: balance[0].toString() / Math.pow(10, decimals[0].toNumber()) } }))
-      )
+        token.name().then((name: string) => name[0])
+          .then((name: string) => dispatch(addTokenData({ data: { address, name } })))
+          .catch((err: Error) => console.log('name error', err))
+
+        getAccounts(provider).then((accounts: string[]) => {
+          token.decimals().then((decimals: any) => {
+            token.balanceOf(accounts[0])
+              .then((balance: any) =>
+                dispatch(addTokenData(
+                  { data: { address, balance: balance[0].toString() / Math.pow(10, decimals[0].toNumber()) } }
+                ))
+              )
+              .catch((error: Error) => {
+                console.log('!!!!', error)
+                return error
+              })
+          })
+        })
+      }
     })
-  })
 }
+
+export const addCustomToken = (provider: any, address: string) => (dispatch: Dispatch<any>) =>
+  new Promise((resolve, reject) => {
+    console.log('adding custom token:', address)
+    dispatch(getToken(provider, address))
+    resolve()
+  })

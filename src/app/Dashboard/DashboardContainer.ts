@@ -5,6 +5,7 @@ import DasboardScreen from './DashboardScreen'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { setDidOwner, addDelegate } from '../state/operations/ethrdid'
+import { addCustomToken } from '../state/operations/tokens'
 
 const getOwnerFromDidDoc = (didDocument: DIDDocument) => {
   const controller = didDocument.publicKey.filter((pk: PublicKey) => pk.id.endsWith('#controller'))[0]
@@ -21,7 +22,8 @@ const mapStateToProps = (state: stateInterface) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
   changeOwner: (provider: any, newOwner: string) => dispatch(setDidOwner(provider, newOwner)),
-  addDelegate: (provider: any, newDelegate: string) => dispatch(addDelegate(provider, newDelegate))
+  addDelegate: (provider: any, newDelegate: string) => dispatch(addDelegate(provider, newDelegate)),
+  addCustomToken: (provider: any, tokenAddr: string) => dispatch(addCustomToken(provider, tokenAddr))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DasboardScreen)
