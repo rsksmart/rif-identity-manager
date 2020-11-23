@@ -14,6 +14,7 @@ const getOwnerFromDidDoc = (didDocument: DIDDocument) => {
 const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
+  tokens: state.tokens.tokens,
   owner: getOwnerFromDidDoc(state.ethrdid.didDocument),
   delegates: state.ethrdid.didDocument.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller'))
 })

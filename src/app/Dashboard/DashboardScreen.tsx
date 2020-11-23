@@ -3,17 +3,20 @@ import HeaderComponent from '../../components/Header/HeaderComponent'
 import Navigation from '../../components/Navigation/Navigation'
 import IdentityInformationComponent from './panels/IdentityInformation'
 import { Authentication } from 'did-resolver'
+import Balance from './panels/Balance'
+import { Token } from '../state/reducers/tokens'
 
 interface DashboardScreenInterface {
   chainId?: number | null
   address: string | null
   owner?: string | null
   delegates?: Authentication[]
+  tokens?: Token[]
   changeOwner: (provider: any, newOwner: string) => any
   addDelegate: (provider: any, delegateAddr: string) => any
 }
 
-const DashboardScreen: React.FC<DashboardScreenInterface> = ({ chainId, address, owner, delegates, changeOwner, addDelegate }) => {
+const DashboardScreen: React.FC<DashboardScreenInterface> = ({ chainId, address, owner, delegates, tokens, changeOwner, addDelegate }) => {
   return (
     <>
       <HeaderComponent chainId={chainId} did={address} />
@@ -27,6 +30,12 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({ chainId, address,
           changeOwner={changeOwner}
           addDelegate={addDelegate}
         />
+        <div className="container">
+          <div className="column">
+            <Balance tokens={tokens} />
+          </div>
+          <div className="column">&nbsp;</div>
+        </div>
       </div>
     </>
   )

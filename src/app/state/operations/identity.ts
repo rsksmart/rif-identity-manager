@@ -4,6 +4,7 @@ import { rLogin } from '../../../features/rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
+import { getTokenList } from './tokens'
 
 /**
  * Login into web3 provider via rLogin
@@ -18,5 +19,6 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     getNetwork(provider).then((chainId: string) => dispatch(changeChainId({ chainId: parseInt(chainId) })))
 
     dispatch(resolveDidDocument(provider))
+    dispatch(getTokenList(provider))
   })
     .catch((err: string) => console.log('rLogin Error', err))

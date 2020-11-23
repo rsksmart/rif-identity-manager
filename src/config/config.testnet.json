@@ -1,4 +1,5 @@
 {
   "ethrDid": "0xdca7ef03e98e0dc2b855be647c39abe984fcf21b",
-  "rpcUrl": "https://did.testnet.rsk.co:4444"
+  "rpcUrl": "https://did.testnet.rsk.co:4444",
+  "tokens": [ "0x19f64674d8a5b4e652319f5e239efd3bc969a1fe" ]
 }
