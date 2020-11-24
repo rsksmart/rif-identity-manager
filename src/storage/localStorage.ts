@@ -17,5 +17,5 @@ export const getValueFromLocalStorage = (chainId: string, key: string) => {
   if (!settings) { return null }
 
   const json = JSON.parse(settings)
-  return json[key]
+  return json[key] || null
 }
