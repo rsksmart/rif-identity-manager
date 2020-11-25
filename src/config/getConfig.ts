@@ -6,7 +6,8 @@ import Local from './config.local.json'
 
 export enum SETTINGS {
   ETHR_DID_CONTRACT = 'ethrDid',
-  RPC_URL = 'rpcUrl'
+  RPC_URL = 'rpcUrl',
+  TOKENS = 'tokens'
 }
 
 const getSetting = (chainId: number, setting: SETTINGS) => {
@@ -21,3 +22,4 @@ const getSetting = (chainId: number, setting: SETTINGS) => {
 
 export const getDIDRegistryAddress = (chainId: number) => getSetting(chainId, SETTINGS.ETHR_DID_CONTRACT)
 export const getRPCUrl = (chainId: number) => getSetting(chainId, SETTINGS.RPC_URL)
+export const getTokens = (chainId: number) => getSetting(chainId, SETTINGS.TOKENS)
