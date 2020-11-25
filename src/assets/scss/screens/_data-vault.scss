@@ -1,0 +1,31 @@
+.data-vault {
+  .add-declarative {
+    p.title {
+      font-weight: 700 !important;
+    }
+
+    input.type {
+      margin-top: 21px;
+    }
+
+    textarea.content {
+      height: 38px;
+      width: 100%
+    }
+
+    .submit {
+      margin-top: 52px;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .data-vault {
+    .add-declarative {
+      input.type, .submit {
+        margin-top: 0;
+      }
+    }
+  }
+}
+

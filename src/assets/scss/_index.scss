@@ -5,6 +5,8 @@ $turquoise: #47C4E1;
 $white: #ffffff;
 $gray: #919191;
 $lightGray: #E1E1E1;
+$red: #F28282;
+$deepRed: #952c2c;
 
 $breakpoint-phone: 480px;
 
@@ -23,9 +25,11 @@ html, body {
 @import 'grid';
 @import 'typography';
 @import 'forms';
+@import 'components/alert';
 @import 'components/button';
 @import 'components/header';
 @import 'components/navigation';
 
 @import 'screens/login-screen';
 @import 'screens/dashboard';
+@import 'screens/data-vault';
