@@ -20,7 +20,7 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
       dispatch(changeChainId({ chainId: parseInt(chainId) }))
 
       dispatch(resolveDidDocument(provider))
-      dispatch(getTokenList(provider, chainId))
+      dispatch(getTokenList(provider, chainId, address))
     })
   })
     .catch((err: string) => console.log('rLogin Error', err))

@@ -5,11 +5,17 @@ export interface Token {
   name?: string | null,
   symbol?: string | null,
   balance?: number | null
-  conversion?: number | null,
+}
+
+export const tokenInitialState: Token = {
+  address: '',
+  name: null,
+  symbol: null,
+  balance: 0
 }
 
 export interface TokenState {
-  tokens: any
+  tokens: Token[]
 }
 
 export const initialState = {
@@ -24,18 +30,18 @@ const tokensSlice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {
-    addToken (state: TokenState, { payload: { address } }: PayloadAction<{ address: string }>) {
-      if (state.tokens.filter((item: Token) => item.address === address).length === 0) {
-        state.tokens.push({ address, name: null, symbol: null, balance: null, conversion: null })
-      }
-    },
     addTokenData (state: TokenState, { payload: { data } }: PayloadAction<addTokenDataPayload>) {
-      state.tokens = state.tokens.map((item: Token) =>
-        (item.address === data.address) ? { ...item, ...data } : item)
+      const formattedPayload = { ...data, address: data.address.toLowerCase() }
+      if (state.tokens.filter((item: Token) => item.address === formattedPayload.address).length === 0) {
+        state.tokens.push({ ...tokenInitialState, ...formattedPayload })
+      } else {
+        state.tokens = state.tokens.map((item: Token) =>
+          (item.address === formattedPayload.address) ? { ...item, ...formattedPayload } : item)
+      }
     }
   }
 })
 
-export const { addToken, addTokenData } = tokensSlice.actions
+export const { addTokenData } = tokensSlice.actions
 
 export default tokensSlice.reducer

@@ -23,7 +23,14 @@ const mapStateToProps = (state: stateInterface) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
   changeOwner: (provider: any, newOwner: string) => dispatch(setDidOwner(provider, newOwner)),
   addDelegate: (provider: any, newDelegate: string) => dispatch(addDelegate(provider, newDelegate)),
-  addCustomToken: (provider: any, tokenAddr: string) => dispatch(addCustomToken(provider, tokenAddr))
+  addCustomToken: (provider: any, userAddr: string, tokenAddr: string, chainId: number) => dispatch(addCustomToken(provider, userAddr, tokenAddr, chainId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DasboardScreen)
+const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+  addCustomToken: (provider: any, tokenAddr: string) => dispatchProps.addCustomToken(provider, stateProps.address, tokenAddr, stateProps.chainId)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(DasboardScreen)

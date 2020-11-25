@@ -6,6 +6,7 @@ import { Web3ProviderContext } from '../../../providerContext'
 import { Token } from '../../state/reducers/tokens'
 import { isValidAddress } from 'rskjs-util'
 import ToolTip from '../../../components/Tooltip/Tooltip'
+import { truncateAddressDid } from '../../../formatters'
 
 interface BalanceInterface {
   tokens?: Token[]
@@ -20,11 +21,11 @@ const needHover = (original: number | null | undefined) => {
 
 const SingleToken: React.FC<{ token: Token, key: any }> = ({ token }) => (
   <div className="token">
-    <div className="heading-symbol">{token.name}</div>
+    <div className="heading-symbol">
+      {token.name || `Custom token: ${truncateAddressDid(token.address)}`}</div>
     <div>
       <span className="balance">{needHover(token.balance)}</span>
       <span className="symbol">{token.symbol}</span>
-      <span className="conversion">{token.conversion}</span>
     </div>
   </div>
 )
@@ -36,6 +37,12 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
   const [isError, setIsError] = useState<string | null>(null)
 
   const context = useContext(Web3ProviderContext)
+
+  const togglePopup = () => {
+    setIsAdding(!isAdding)
+    setNewAddress('')
+  }
+
   const addToken = () => {
     setIsLoading(true)
     setIsError(null)
@@ -59,11 +66,11 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
     <Panel
       title="Identity Balance"
       className="identity-balance"
-      headerRight={<button onClick={() => setIsAdding(true)} className="circle-plus">+</button>}
+      headerRight={<button onClick={togglePopup} className="circle-plus">+</button>}
     >
       {tokens?.map((token: Token) => <SingleToken key={token.address} token={token} />)}
 
-      <Modal show={isAdding} title="Add token" onClose={() => setIsAdding(false)}>
+      <Modal show={isAdding} title="Add token" onClose={togglePopup}>
         <p>Add an ERC20 or ERC721 token to the dashboard.</p>
         <p>
           <strong>Token to Add:</strong>
