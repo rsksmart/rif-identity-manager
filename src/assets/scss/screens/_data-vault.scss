@@ -2,6 +2,9 @@
   .add-declarative {
     p.title {
       font-weight: 700 !important;
+      text-transform: uppercase;
+      color: $gray;
+      margin-bottom: 0;
     }
 
     input.type {
@@ -14,7 +17,15 @@
     }
 
     .submit {
-      margin-top: 52px;
+      margin-top: 33px;
+    }
+  }
+
+  .display {
+    table {
+      th.type {
+        width: 25%;
+      }
     }
   }
 }

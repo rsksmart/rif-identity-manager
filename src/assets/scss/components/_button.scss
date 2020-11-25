@@ -7,6 +7,16 @@ button.blue:hover {
   background-color: $turquoise;
 }
 
+button.turquoise {
+  background-color: $turquoise;
+}
+
+button.turquoise:hover {
+  color: $white;
+  background-color: $blue;
+}
+
+
 button.blue:disabled, button[disabled].blue {
   background-color: gray !important;
   cursor: not-allowed;
