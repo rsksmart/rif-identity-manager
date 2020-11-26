@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import HeaderComponent from '../../components/Header/HeaderComponent'
-import Navigation, { screens } from '../../components/Navigation/Navigation'
+import HeaderComponent from './components/HeaderComponent'
+import Navigation, { screens } from './components/Navigation'
 import DashboardContainer from '../Dashboard/DashboardContainer'
 import DataVaultContainer from '../DataVault/DataVaultContainer'
 
