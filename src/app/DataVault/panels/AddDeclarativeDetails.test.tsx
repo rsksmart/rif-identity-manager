@@ -23,7 +23,7 @@ describe('Component: AddDeclarativeDetails.test', () => {
     expect(submitData).toBeCalledTimes(0)
   })
 
-  it('handles submit when content and type are submitted', () => {
+  it('handles submit when content and type are submitted', async () => {
     const submitData = jest.fn(() => new Promise((resolve) => resolve(true)))
 
     const wrapper = mount(<AddDeclarativeDetails submitData={submitData} />)
@@ -34,12 +34,11 @@ describe('Component: AddDeclarativeDetails.test', () => {
     expect(wrapper.find('input.type').props().value).toBe('email')
     expect(wrapper.find('textarea').props().value).toBe('an email address')
 
-    /*
     const button = wrapper.find('button.submit')
-    act(() => {
-      button.simulate('click')
+
+    await act(async () => {
+      await button.simulate('click')
       expect(submitData).toBeCalledWith('email', 'an email address')
     })
-    */
   })
 })

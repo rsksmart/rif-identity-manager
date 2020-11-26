@@ -58,7 +58,7 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ submi
             placeholder="Content"
           />
         </div>
-        <div className="column">
+        <div className="column submitColumn">
           <BaseButton className="submit turquoise" onClick={handleClick} disabled={isLoading}>Add Data</BaseButton>
         </div>
       </div>
