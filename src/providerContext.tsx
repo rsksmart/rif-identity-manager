@@ -3,12 +3,15 @@ import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 
 export interface Web3ProviderContextInterface {
   provider: any | null,
-  setProvider: (value: any) => void
+  setProvider?: (value: any) => void
   dvClient: DataVaultWebClient | null,
-  setDvClient: (client: DataVaultWebClient) => void
+  setDvClient?: (client: DataVaultWebClient) => void
 }
 
-export const Web3ProviderContext = React.createContext<Web3ProviderContextInterface | null>(null)
+export const Web3ProviderContext = React.createContext<Web3ProviderContextInterface>({
+  provider: null,
+  dvClient: null
+})
 
 interface Web3ProviderElementInterface {
   children: React.ReactNode,

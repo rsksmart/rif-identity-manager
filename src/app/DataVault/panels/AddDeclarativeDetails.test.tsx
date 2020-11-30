@@ -3,15 +3,15 @@ import { shallow, mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import AddDeclarativeDetails from './AddDeclarativeDetails'
 
-describe('Component: AddDeclarativeDetails.test', () => {
+describe('Component: AddDeclarativeDetails', () => {
   it('renders the component', () => {
-    const wrapper = shallow(<AddDeclarativeDetails submitData={jest.fn()} />)
+    const wrapper = shallow(<AddDeclarativeDetails addDeclarativeDetail={jest.fn()} />)
     expect(wrapper).toBeDefined()
   })
 
   it('adds handles errors if type and content is empty', () => {
     const submitData = jest.fn()
-    const wrapper = mount(<AddDeclarativeDetails submitData={submitData} />)
+    const wrapper = mount(<AddDeclarativeDetails addDeclarativeDetail={submitData} />)
     const button = wrapper.find('button.submit')
     button.simulate('click')
     expect(submitData).toBeCalledTimes(0)
@@ -26,7 +26,7 @@ describe('Component: AddDeclarativeDetails.test', () => {
   it('handles submit when content and type are submitted', async () => {
     const submitData = jest.fn(() => new Promise((resolve) => resolve(true)))
 
-    const wrapper = mount(<AddDeclarativeDetails submitData={submitData} />)
+    const wrapper = mount(<AddDeclarativeDetails addDeclarativeDetail={submitData} />)
 
     wrapper.find('input.type').simulate('change', { target: { value: 'email' } })
     wrapper.find('textarea').simulate('change', { target: { value: 'an email address' } })
@@ -37,8 +37,8 @@ describe('Component: AddDeclarativeDetails.test', () => {
     const button = wrapper.find('button.submit')
 
     await act(async () => {
-      await button.simulate('click')
-      expect(submitData).toBeCalledWith('email', 'an email address')
+      button.simulate('click')
+      expect(submitData).toBeCalled()
     })
   })
 })

@@ -27,7 +27,7 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDe
       return setIsError('Type and Content cannot be empty.')
     }
 
-    context?.dvClient && addDeclarativeDetail(context.dvClient, type, content)
+    context.dvClient && addDeclarativeDetail(context.dvClient, type, content)
       .then(() => {
         setIsLoading(false)
         setContent('')
