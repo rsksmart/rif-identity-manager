@@ -1,9 +1,10 @@
 import React from 'react'
-import DeclarativeDetailsDisplay, { DeclarativeDetailInterface } from './panels/DeclarativeDetailsDisplay'
+import DeclarativeDetailsDisplay from './panels/DeclarativeDetailsDisplay'
 import AddDeclarativeDetails from './panels/AddDeclarativeDetails'
+import { DataVaultKey } from '../state/reducers/datavault'
 
 interface DataVaultComponentProps {
-  declarativeDetails: DeclarativeDetailInterface[],
+  declarativeDetails: DataVaultKey[]
   addDeclarativeDetail: (key: string, content: string) => Promise<any>
 }
 

@@ -23,3 +23,7 @@ const getSetting = (chainId: number, setting: SETTINGS) => {
 export const getDIDRegistryAddress = (chainId: number) => getSetting(chainId, SETTINGS.ETHR_DID_CONTRACT)
 export const getRPCUrl = (chainId: number) => getSetting(chainId, SETTINGS.RPC_URL)
 export const getTokens = (chainId: number) => getSetting(chainId, SETTINGS.TOKENS)
+export const getDataVault = () => ({
+  serviceDid: 'did:ethr:rsk:testnet:0x285B30492a3F444d78f75261A35cB292Fc8F41A6',
+  serviceUrl: 'http://ec2-3-131-142-122.us-east-2.compute.amazonaws.com:5107'
+})

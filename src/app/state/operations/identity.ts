@@ -5,6 +5,8 @@ import { rLogin } from '../../../features/rLogin'
 import { changeAccount, changeChainId } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
 import { getTokenList } from './tokens'
+import { createClient, getDataVaultContent } from './datavault'
+import { createDidFormat } from '../../../formatters'
 
 /**
  * Login into web3 provider via rLogin
@@ -21,6 +23,10 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
 
       dispatch(resolveDidDocument(provider))
       dispatch(getTokenList(provider, chainId, address))
+
+      const dataVaultClient = createClient(provider, address, chainId)
+      context.setDvClient(dataVaultClient)
+      dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId, true)))
     })
   })
     .catch((err: string) => console.log('rLogin Error', err))

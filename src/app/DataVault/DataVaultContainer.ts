@@ -3,23 +3,9 @@ import { connect } from 'react-redux'
 import { stateInterface } from '../state/configureStore'
 import DataVaultComponent from './DataVaultComponent'
 import { AnyAction } from 'redux'
-import { DeclarativeDetailInterface } from './panels/DeclarativeDetailsDisplay'
-
-const mockDeclarativeDetials: DeclarativeDetailInterface[] = [
-  {
-    key: 'dasd189as04d58',
-    type: 'EMAIL',
-    content: 'jesse@iovlabs.org'
-  },
-  {
-    key: 'gdfsg09-9vbcxs',
-    type: 'NAME',
-    content: 'Jesse Clark'
-  }
-]
 
 const mapStateToProps = (state: stateInterface) => ({
-  declarativeDetails: mockDeclarativeDetials
+  declarativeDetails: state.datavault.data
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

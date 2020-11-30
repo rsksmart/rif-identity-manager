@@ -1,15 +1,10 @@
 import React from 'react'
 import Panel from '../../../components/Panel/Panel'
 import declarativeIcon from '../../../assets/images/icons/declarative-details.svg'
-
-export interface DeclarativeDetailInterface {
-  key: string;
-  type: string;
-  content: string;
-}
+import { DataVaultKey } from '../../state/reducers/datavault'
 
 interface DeclarativeDetailsDisplayInterface {
-  details?: DeclarativeDetailInterface[]
+  details?: DataVaultKey[]
 }
 
 const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details }) => {
@@ -24,10 +19,10 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
           </tr>
         </thead>
         <tbody>
-          {details?.map((item: DeclarativeDetailInterface) => (
+          {details?.map((item: DataVaultKey) => (
             <tr key={item.key}>
-              <td>{item.type}</td>
-              <td>{item.content}</td>
+              <td>{item.key}</td>
+              <td>{item.content.map((content: string) => <p key={content}>{content}</p>)}</td>
             </tr>
           ))}
         </tbody>

@@ -1,18 +1,17 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import DeclarativeDetailsDisplay, { DeclarativeDetailInterface } from './DeclarativeDetailsDisplay'
+import DeclarativeDetailsDisplay from './DeclarativeDetailsDisplay'
+import { DataVaultKey } from '../../state/reducers/datavault'
 
-describe('Component: DeclarativeDetailsDisplay.test', () => {
-  const mockDeclarativeDetials: DeclarativeDetailInterface[] = [
+describe('Component: DeclarativeDetailsDisplay', () => {
+  const mockDeclarativeDetials: DataVaultKey[] = [
     {
-      key: '0',
-      type: 'EMAIL',
-      content: 'jesse@iovlabs.org'
+      key: 'EMAIL',
+      content: ['jesse@iovlabs.org']
     },
     {
-      key: '1',
-      type: 'NAME',
-      content: 'Jesse Clark'
+      key: 'NAME',
+      content: ['Jesse Clark']
     }
   ]
 
