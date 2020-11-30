@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { BaseButton } from '../../../components/Buttons'
 import Panel from '../../../components/Panel/Panel'
 import uploadIcon from '../../../assets/images/icons/upload.svg'
+import { Web3ProviderContext } from '../../../providerContext'
+import LoadingComponent from '../../../components/Loading/LoadingComponent'
 
 interface AddDeclarativeDetailsInterface {
-  submitData: (key: string, content: string) => Promise<any>
+  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => Promise<any>
 }
 
-const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ submitData }) => {
+const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDeclarativeDetail }) => {
+  const context = useContext(Web3ProviderContext)
+
   const [type, setType] = useState('')
   const [content, setContent] = useState('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -22,7 +27,7 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ submi
       return setIsError('Type and Content cannot be empty.')
     }
 
-    submitData(type, content)
+    context?.dvClient && addDeclarativeDetail(context.dvClient, type, content)
       .then(() => {
         setIsLoading(false)
         setContent('')
@@ -67,6 +72,8 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ submi
           <div className="alert error">{isError}</div>
         </div>
       )}
+
+      {isLoading && <LoadingComponent />}
     </Panel>
   )
 }

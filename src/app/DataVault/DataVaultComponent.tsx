@@ -1,11 +1,12 @@
 import React from 'react'
+import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import DeclarativeDetailsDisplay from './panels/DeclarativeDetailsDisplay'
 import AddDeclarativeDetails from './panels/AddDeclarativeDetails'
 import { DataVaultKey } from '../state/reducers/datavault'
 
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey[]
-  addDeclarativeDetail: (key: string, content: string) => Promise<any>
+  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => any
 }
 
 const DataVaultComponent: React.FC<DataVaultComponentProps> = ({ addDeclarativeDetail, declarativeDetails }) => {
@@ -13,7 +14,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({ addDeclarativeD
     <div className="content data-vault">
       <div className="container">
         <div className="column">
-          <AddDeclarativeDetails submitData={addDeclarativeDetail} />
+          <AddDeclarativeDetails addDeclarativeDetail={addDeclarativeDetail} />
         </div>
       </div>
       <div className="container">

@@ -35,3 +35,13 @@ export const getDataVaultContent = (client: DataVaultWebClient, did: string) => 
           )
       )
     )
+
+/**
+ * Create Datavault content to an existing key or a new key
+ * @param client DataVault client
+ * @param key DV key
+ * @param content content to be inserted
+ */
+export const createDataVaultContent = (client: DataVaultWebClient, key: string, content: string) => (dispatch: Dispatch<any>) =>
+  client.create({ key, content })
+    .then(() => dispatch(receiveKeyData({ key, content: [content] })))

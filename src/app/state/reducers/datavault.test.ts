@@ -26,10 +26,19 @@ describe('dataVault slice', () => {
 
       expect(store.getState())
         .toEqual({
-          data: [
-            { key: 'MY_KEY', content: ['content', 'content2'] }
-          ]
+          data: [{ key: 'MY_KEY', content: ['content', 'content2'] }]
         })
+    })
+
+    test('add additional data to key', () => {
+      const singleKey = { key: 'MY_KEY', content: ['content'] }
+      store.dispatch(receiveKeyData(singleKey))
+
+      const newData = { key: 'MY_KEY', content: ['new_content'] }
+      store.dispatch(receiveKeyData(newData))
+
+      expect(store.getState())
+        .toEqual({ data: [{ key: 'MY_KEY', content: ['content', 'new_content'] }] })
     })
   })
 })

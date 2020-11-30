@@ -15,3 +15,6 @@ input[type=text].line, textarea.line {
   font-size: 16px;
 }
 
+input:disabled, textarea:disabled {
+  cursor: not-allowed;
+}

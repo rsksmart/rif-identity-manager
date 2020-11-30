@@ -18,7 +18,12 @@ const dataVaultSlice = createSlice({
   initialState,
   reducers: {
     receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<DataVaultKey>) {
-      state.data.push({ key, content })
+      if (state.data.filter((item: DataVaultKey) => item.key === key).length === 0) {
+        state.data.push({ key, content })
+      } else {
+        state.data = state.data.map((item: DataVaultKey) =>
+          item.key === key ? { key, content: [...item.content, ...content] } : item)
+      }
     }
   }
 })
