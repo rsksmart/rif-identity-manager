@@ -11,13 +11,16 @@ import { getDataVault } from '../../../config/getConfig'
  * @param chainId chainId of the network to create the DID
  */
 export const createClient = (provider: any, address: string, chainId: number) => {
-  const did = createDidFormat(address, chainId, true) // temp for now
-  const client = new DataVaultWebClient({
-    ...getDataVault(),
-    did,
-    rpcPersonalSign: (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
-  })
-  return client
+  const dataVaultConfig = <{serviceUrl: string, serviceDid: string} | null> getDataVault(chainId)
+
+  return dataVaultConfig
+    ? new DataVaultWebClient({
+      serviceUrl: dataVaultConfig.serviceUrl,
+      serviceDid: dataVaultConfig.serviceDid,
+      did: createDidFormat(address, chainId, true),
+      rpcPersonalSign: (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
+    })
+    : null
 }
 
 /**

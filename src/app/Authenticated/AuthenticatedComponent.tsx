@@ -7,15 +7,20 @@ import DataVaultContainer from '../DataVault/DataVaultContainer'
 interface AuthenticatedComponentInterface {
   chainId: number | null
   address: string | null
+  hasDataVault: boolean
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, hasDataVault }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
 
   return (
     <>
       <HeaderComponent chainId={chainId} did={address} />
-      <Navigation selected={screen} handleClick={(screen: screens) => setScreen(screen)} />
+      <Navigation
+        selected={screen}
+        handleClick={(screen: screens) => setScreen(screen)}
+        showDataVault={hasDataVault}
+      />
       {screen === screens.DASHBOARD && <DashboardContainer />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}
     </>

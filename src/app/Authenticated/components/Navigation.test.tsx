@@ -15,7 +15,7 @@ describe('Screen: Dashboard', () => {
 
   it('function clicks the correct item', () => {
     const onClick = jest.fn()
-    const wrapper = shallow(<Navigation selected={screens.DASHBOARD} handleClick={onClick} />)
+    const wrapper = shallow(<Navigation selected={screens.DASHBOARD} handleClick={onClick} showDataVault />)
     wrapper.find('button').at(1).simulate('click')
     expect(onClick).toBeCalledWith(screens.DATAVAULT)
   })
