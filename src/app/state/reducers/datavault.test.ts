@@ -1,15 +1,11 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, receiveHasDataVault, initialState } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
     test('receiveData', () => {
       expect(receiveKeyData({ key: 'KEY', content: ['hello'] }))
         .toEqual({ type: receiveKeyData.type, payload: { key: 'KEY', content: ['hello'] } })
-    })
-
-    test('hasDataVault', () => {
-      expect(receiveHasDataVault()).toEqual({ type: receiveHasDataVault.type })
     })
   })
 
@@ -22,11 +18,6 @@ describe('dataVault slice', () => {
 
     test('initial state', () => {
       expect(store.getState()).toEqual(initialState)
-    })
-
-    test('receiveHasDataVault', () => {
-      store.dispatch(receiveHasDataVault())
-      expect(store.getState().hasDataVault).toBeTruthy()
     })
 
     test('receiveData', () => {

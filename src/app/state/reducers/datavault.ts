@@ -6,12 +6,10 @@ export interface DataVaultKey {
 }
 
 export interface DataVaultState {
-  hasDataVault: boolean
   data: DataVaultKey[]
 }
 
 export const initialState: DataVaultState = {
-  hasDataVault: false,
   data: []
 }
 
@@ -19,9 +17,6 @@ const dataVaultSlice = createSlice({
   name: 'datavault',
   initialState,
   reducers: {
-    receiveHasDataVault (state: DataVaultState) {
-      state.hasDataVault = true
-    },
     receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<DataVaultKey>) {
       if (state.data.filter((item: DataVaultKey) => item.key === key).length === 0) {
         state.data.push({ key, content })
@@ -33,6 +28,6 @@ const dataVaultSlice = createSlice({
   }
 })
 
-export const { receiveHasDataVault, receiveKeyData } = dataVaultSlice.actions
+export const { receiveKeyData } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer
