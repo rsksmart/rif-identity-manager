@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -49,3 +49,13 @@ export const createDataVaultContent = (client: DataVaultWebClient, key: string, 
   client.create({ key, content })
     .then((result: CreateContentResponse) => result.id)
     .then((id: string) => dispatch(addContentToKey({ key, content: { id, content } })))
+
+/**
+ * Delete item from the datavault with its key and id
+ * @param client DataVault client
+ * @param key Key of the object
+ * @param id ID of the content
+ */
+export const deleteDataVaultContent = (client: DataVaultWebClient, key: string, id: string) => (dispatch: Dispatch<any>) =>
+  client.delete({ key, id })
+    .then(() => dispatch(removeContentfromKey({ key, id })))

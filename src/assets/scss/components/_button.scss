@@ -6,6 +6,10 @@ button:disabled {
   cursor: not-allowed;
 }
 
+button:focus{
+  outline: none;
+}
+
 button.blue {
   color: $white;
   background-color: $blue;
@@ -44,4 +48,20 @@ button.circle-plus {
 button.circle-plus:hover {
   background-color: $turquoise;
   color: $white;
+}
+
+button.icon {
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 5px;
+}
+
+button.icon:hover {
+  background-color: $lightGray;
+}
+
+button.icon:disabled {
+  opacity: .25;
 }

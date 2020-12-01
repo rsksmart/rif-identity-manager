@@ -15,4 +15,11 @@ describe('Component: Modal', () => {
     wrapper.find('button').simulate('click')
     expect(onClose).toBeCalledTimes(1)
   })
+
+  it('has custom classname', () => {
+    const onClose = jest.fn()
+    const wrapper = mount(<Modal show={true} onClose={onClose} className="my-modal">Hello Modal</Modal>)
+
+    expect(wrapper.props().className).toBe('my-modal')
+  })
 })

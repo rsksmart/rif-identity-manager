@@ -1,18 +1,14 @@
-import React, { useState, useContext } from 'react'
-import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
+import React, { useState } from 'react'
 import { BaseButton } from '../../../components/Buttons'
 import Panel from '../../../components/Panel/Panel'
 import uploadIcon from '../../../assets/images/icons/upload.svg'
-import { Web3ProviderContext } from '../../../providerContext'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
 
 interface AddDeclarativeDetailsInterface {
-  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => Promise<any>
+  addDeclarativeDetail: (key: string, content: string) => Promise<any>
 }
 
 const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDeclarativeDetail }) => {
-  const context = useContext(Web3ProviderContext)
-
   const [type, setType] = useState('')
   const [content, setContent] = useState('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -27,7 +23,7 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDe
       return setIsError('Type and Content cannot be empty.')
     }
 
-    context.dvClient && addDeclarativeDetail(context.dvClient, type, content)
+    addDeclarativeDetail(type, content)
       .then(() => {
         setIsLoading(false)
         setContent('')

@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -55,6 +55,25 @@ describe('dataVault slice', () => {
 
         expect(store.getState().data)
           .toEqual({ NEW_KEY: [{ id: '1', content: 'hello' }] })
+      })
+    })
+
+    describe('removeContentfromKey', () => {
+      beforeEach(() => {
+        const content = [{ id: '1', content: 'hello' }, { id: '2', content: 'hello' }]
+        store.dispatch(receiveKeyData({ key: 'MY_KEY', content }))
+      })
+
+      test('it deletes an item', () => {
+        store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
+        expect(store.getState().data).toEqual({ MY_KEY: [{ id: '1', content: 'hello' }] })
+      })
+
+      test('it deletes multiple items', () => {
+        store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '1' }))
+        store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
+
+        expect(store.getState().data).toEqual({ MY_KEY: [] })
       })
     })
   })
