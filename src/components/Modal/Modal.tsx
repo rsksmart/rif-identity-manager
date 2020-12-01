@@ -71,13 +71,14 @@ interface PanelInterface {
   children: ReactNode
   show: boolean
   title?: string
+  className?: string
   onClose: () => void
 }
 
-const Modal: React.FC<PanelInterface> = ({ children, show, title, onClose }) => (
+const Modal: React.FC<PanelInterface> = ({ children, show, title, className, onClose }) => (
   show
     ? (
-      <ModalLightbox show={show}>
+      <ModalLightbox show={show} className={className}>
         <ModalBody>
           <ModalTitle>
             {title}

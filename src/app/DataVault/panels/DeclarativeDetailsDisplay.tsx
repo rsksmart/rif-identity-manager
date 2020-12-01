@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Panel from '../../../components/Panel/Panel'
 import declarativeIcon from '../../../assets/images/icons/declarative-details.svg'
+import trashIcon from '../../../assets/images/icons/trash.svg'
 import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
+import BinaryModal from '../../../components/Modal/BinaryModal'
 
 interface DeclarativeDetailsDisplayInterface {
   details: DataVaultKey
@@ -9,19 +11,20 @@ interface DeclarativeDetailsDisplayInterface {
 }
 
 const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue }) => {
-  const title = <><img src={declarativeIcon} /> Declarative Details</>
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isDeleting, setIsDeleting] = useState<null | { key: string; id: string }>(null)
 
-  const handleDeleteItem = async (key: string, id: string) => {
+  const handleDeleteItem = async () => {
     setIsLoading(true)
-    const result = await deleteValue(key, id)
+    const result = isDeleting && await deleteValue(isDeleting.key, isDeleting.id)
     if (result) {
+      setIsDeleting(null)
       setIsLoading(false)
     }
   }
 
   return (
-    <Panel title={title} className="display">
+    <Panel title={<><img src={declarativeIcon} /> Declarative Details</>} className="display">
       <table>
         <thead>
           <tr>
@@ -42,8 +45,11 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
                           <p>{item.content}</p>
                         </div>
                         <div className="options">
-                          <button disabled={isLoading} className="icon" onClick={() => handleDeleteItem(key, item.id)}>
-                        delete
+                          <button
+                            disabled={isLoading}
+                            className="icon"
+                            onClick={() => setIsDeleting({ key, id: item.id })}>
+                            <img src={trashIcon} alt="Delete Item" />
                           </button>
                         </div>
                       </div>
@@ -56,6 +62,15 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
           )}
         </tbody>
       </table>
+
+      <BinaryModal
+        show={isDeleting !== null}
+        onClose={() => setIsDeleting(null)}
+        onConfirm={handleDeleteItem}
+        disabled={isLoading}
+        strings={{ text: 'Do you want to delete this item from the data vault?', confirm: 'Yes', deny: 'No' }}
+        className="delete-modal"
+      />
     </Panel>
   )
 }

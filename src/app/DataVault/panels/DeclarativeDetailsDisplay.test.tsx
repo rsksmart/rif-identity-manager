@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import DeclarativeDetailsDisplay from './DeclarativeDetailsDisplay'
 import { DataVaultKey } from '../../state/reducers/datavault'
 
@@ -34,10 +34,10 @@ describe('Component: DeclarativeDetailsDisplay', () => {
 
   it('handles delete click', () => {
     const deleteValue = jest.fn()
-    const wrapper = shallow(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} deleteValue={deleteValue} />)
+    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} deleteValue={deleteValue} />)
 
     wrapper.find('.content-row').at(0).find('button').simulate('click')
-
+    wrapper.find('.delete-modal').find('.column').at(1).find('button').simulate('click')
     expect(deleteValue).toBeCalledWith('EMAIL', '1')
   })
 })
