@@ -24,8 +24,8 @@ const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, ha
             <button onClick={() => handleClick(screens.DATAVAULT)}>Data Vault</button>
           </li>
         )}
-        <li>Request Credentials</li>
-        <li>My Dapps</li>
+        <li className="disabled">Request Credentials</li>
+        <li className="disabled">My Dapps</li>
       </ul>
     </div>
   </div>

@@ -28,6 +28,10 @@ ul.navigation {
       cursor: text;
     }
   }
+
+  li.disabled {
+    color: $lightGray;
+  }
 }
 
 @media screen and (max-width: $breakpoint-phone) {
