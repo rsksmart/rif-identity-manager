@@ -8,10 +8,10 @@ import { getTokens } from '../../../config/getConfig'
 import { saveToLocalStorage, getValueFromLocalStorage } from '../../../storage/localStorage'
 
 export const getTokenList = (provider: any, chainId: string, userAddress: string) => (dispatch: Dispatch<any>) => {
-  const tokens = getTokens(parseInt(chainId))
+  const tokens = <string[]> getTokens(parseInt(chainId))
   const localTokens = getValueFromLocalStorage(chainId, 'TOKEN') ? getValueFromLocalStorage(chainId, 'TOKEN') : []
 
-  const all = tokens.concat(localTokens)
+  const all = tokens?.concat(localTokens)
   Array.isArray(all) && all.map((address: string) => {
     dispatch(getToken(provider, address, userAddress))
   })

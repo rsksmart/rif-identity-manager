@@ -1,16 +1,33 @@
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 button.blue {
   color: $white;
   background-color: $blue;
 }
 
-button.blue:hover {
+button.blue:hover:not(:disabled) {
   background-color: $turquoise;
 }
 
 button.blue:disabled, button[disabled].blue {
   background-color: gray !important;
-  cursor: not-allowed;
 }
+
+button.turquoise {
+  background-color: $turquoise;
+}
+
+button.turquoise:hover:not(:disabled) {
+  color: $white;
+  background-color: $blue;
+}
+
 
 button.circle-plus {
   width: 22px;
@@ -22,7 +39,6 @@ button.circle-plus {
   vertical-align: middle;
   background: $lightGray;
   border: 1px solid $gray;
-  cursor: pointer;
 }
 
 button.circle-plus:hover {
