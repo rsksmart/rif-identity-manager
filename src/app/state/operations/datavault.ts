@@ -1,8 +1,9 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { receiveKeyData } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
+import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
 /**
  * Create DataVault Clinet
@@ -26,16 +27,15 @@ export const createClient = (provider: any, address: string, chainId: number) =>
 /**
  * Get all keys and data from the datavault
  * @param client DataVault client
- * @param did DID of the user, required for now
+ * @param did DID of the user, required for getting individual key content
  */
 export const getDataVaultContent = (client: DataVaultWebClient, did: string) => (dispatch: Dispatch<any>) =>
-  client.getKeys({ did })
+  client.getKeys()
     .then((keys: string[]) =>
       keys.forEach((key: string) =>
         client.get({ did, key })
-          .then((content: string[]) =>
-            dispatch(receiveKeyData({ key, content }))
-          )
+          .then((content: any) => content as DataVaultContent[])
+          .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content })))
       )
     )
 
@@ -47,4 +47,5 @@ export const getDataVaultContent = (client: DataVaultWebClient, did: string) => 
  */
 export const createDataVaultContent = (client: DataVaultWebClient, key: string, content: string) => (dispatch: Dispatch<any>) =>
   client.create({ key, content })
-    .then(() => dispatch(receiveKeyData({ key, content: [content] })))
+    .then((result: CreateContentResponse) => result.id)
+    .then((id: string) => dispatch(addContentToKey({ key, content: { id, content } })))

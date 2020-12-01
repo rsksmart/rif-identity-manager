@@ -4,19 +4,13 @@ import DeclarativeDetailsDisplay from './DeclarativeDetailsDisplay'
 import { DataVaultKey } from '../../state/reducers/datavault'
 
 describe('Component: DeclarativeDetailsDisplay', () => {
-  const mockDeclarativeDetials: DataVaultKey[] = [
-    {
-      key: 'EMAIL',
-      content: ['jesse@iovlabs.org']
-    },
-    {
-      key: 'NAME',
-      content: ['Jesse Clark']
-    }
-  ]
+  const mockDeclarativeDetials: DataVaultKey = {
+    EMAIL: [{ id: '1', content: 'jesse@iovlabs.org' }],
+    NAME: [{ id: '5', content: 'Jesse Clark' }]
+  }
 
   it('renders the component', () => {
-    const wrapper = shallow(<DeclarativeDetailsDisplay />)
+    const wrapper = shallow(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} />)
     expect(wrapper).toBeDefined()
   })
 

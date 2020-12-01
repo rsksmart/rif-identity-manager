@@ -5,7 +5,7 @@ import AddDeclarativeDetails from './panels/AddDeclarativeDetails'
 import { DataVaultKey } from '../state/reducers/datavault'
 
 interface DataVaultComponentProps {
-  declarativeDetails: DataVaultKey[]
+  declarativeDetails: DataVaultKey
   addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => any
 }
 

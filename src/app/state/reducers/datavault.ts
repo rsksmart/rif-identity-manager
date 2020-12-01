@@ -1,33 +1,40 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+export interface DataVaultContent {
+  id: string,
+  content: string
+}
+
 export interface DataVaultKey {
+  [key: string]: DataVaultContent[]
+}
+
+interface ReceivePayLoad {
   key: string,
-  content: string[]
+  content: DataVaultContent[]
 }
 
 export interface DataVaultState {
-  data: DataVaultKey[]
+  data: DataVaultKey
 }
 
 export const initialState: DataVaultState = {
-  data: []
+  data: {}
 }
 
 const dataVaultSlice = createSlice({
   name: 'datavault',
   initialState,
   reducers: {
-    receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<DataVaultKey>) {
-      if (state.data.filter((item: DataVaultKey) => item.key === key).length === 0) {
-        state.data.push({ key, content })
-      } else {
-        state.data = state.data.map((item: DataVaultKey) =>
-          item.key === key ? { key, content: [...item.content, ...content] } : item)
-      }
+    receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<ReceivePayLoad>) {
+      state.data[key] = content
+    },
+    addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
+      state.data[key] ? state.data[key].push(content) : state.data[key] = [content]
     }
   }
 })
 
-export const { receiveKeyData } = dataVaultSlice.actions
+export const { receiveKeyData, addContentToKey } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer
