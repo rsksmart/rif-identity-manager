@@ -17,7 +17,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({ addDeclarativeD
   const handleAdd = (key: string, content: string) =>
     context.dvClient && addDeclarativeDetail(context.dvClient, key, content)
   const handleDelete = (key: string, id: string) =>
-    context.dvClient && addDeclarativeDetail(context.dvClient, key, id)
+    context.dvClient && deleteValue(context.dvClient, key, id)
 
   return (
     <div className="content data-vault">
