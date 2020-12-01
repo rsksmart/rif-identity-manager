@@ -6,21 +6,22 @@ import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import BinaryModal from '../../../components/Modal/BinaryModal'
 
 interface DeclarativeDetailsDisplayInterface {
+  deleteValue: (key: string, id: string) => Promise<any>
   details: DataVaultKey
-  deleteValue: (key: string, id: string) => Promise<any> | null
 }
 
 const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue }) => {
+  interface DeleteItemI { key: string; id: string }
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isDeleting, setIsDeleting] = useState<null | { key: string; id: string }>(null)
+  const [isDeleting, setIsDeleting] = useState<null | DeleteItemI>(null)
 
-  const handleDeleteItem = async () => {
+  const handleDeleteItem = async (item: DeleteItemI) => {
     setIsLoading(true)
-    const result = isDeleting && await deleteValue(isDeleting.key, isDeleting.id)
-    if (result) {
-      setIsDeleting(null)
-      setIsLoading(false)
-    }
+    deleteValue(item.key, item.id)
+      .then(() => {
+        setIsDeleting(null)
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -66,7 +67,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
       <BinaryModal
         show={isDeleting !== null}
         onClose={() => setIsDeleting(null)}
-        onConfirm={handleDeleteItem}
+        onConfirm={() => isDeleting && handleDeleteItem(isDeleting)}
         disabled={isLoading}
         strings={{ text: 'Do you want to delete this item from the data vault?', confirm: 'Yes', deny: 'No' }}
         className="delete-modal"

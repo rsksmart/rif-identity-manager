@@ -11,8 +11,8 @@ const mapStateToProps = (state: stateInterface) => ({
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
-  addDeclarativeDetail: (client: DataVaultWebClient, type: string, content: string) =>
-    dispatch(createDataVaultContent(client, type, content)),
+  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) =>
+    dispatch(createDataVaultContent(client, key, content)),
   deleteValue: (client: DataVaultWebClient, key: string, id: string) =>
     dispatch(deleteDataVaultContent(client, key, id))
 })

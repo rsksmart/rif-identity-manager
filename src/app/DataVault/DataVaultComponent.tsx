@@ -8,20 +8,22 @@ import { Web3ProviderContext } from '../../providerContext'
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey
   addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => any
-  deleteValue: (client: DataVaultWebClient, key: string, id: string) => Promise<any>
+  deleteValue: (client: DataVaultWebClient, key: string, id: string) => any
 }
 
 const DataVaultComponent: React.FC<DataVaultComponentProps> = ({ addDeclarativeDetail, declarativeDetails, deleteValue }) => {
   const context = useContext(Web3ProviderContext)
 
+  const handleAdd = (key: string, content: string) =>
+    context.dvClient && addDeclarativeDetail(context.dvClient, key, content)
   const handleDelete = (key: string, id: string) =>
-    context.dvClient && deleteValue(context.dvClient, key, id)
+    context.dvClient && addDeclarativeDetail(context.dvClient, key, id)
 
   return (
     <div className="content data-vault">
       <div className="container">
         <div className="column">
-          <AddDeclarativeDetails addDeclarativeDetail={addDeclarativeDetail} />
+          <AddDeclarativeDetails addDeclarativeDetail={handleAdd} />
         </div>
       </div>
       <div className="container">
