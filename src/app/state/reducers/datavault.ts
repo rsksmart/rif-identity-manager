@@ -31,10 +31,13 @@ const dataVaultSlice = createSlice({
     },
     addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
       state.data[key] ? state.data[key].push(content) : state.data[key] = [content]
+    },
+    removeContentfromKey (state: DataVaultState, { payload: { key, id } }: PayloadAction<{ key: string, id: string }>) {
+      state.data[key] = state.data[key].filter((item: DataVaultContent) => item.id !== id)
     }
   }
 })
 
-export const { receiveKeyData, addContentToKey } = dataVaultSlice.actions
+export const { receiveKeyData, addContentToKey, removeContentfromKey } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer
