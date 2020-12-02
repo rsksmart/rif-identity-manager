@@ -22,4 +22,9 @@ describe('Component: Modal', () => {
 
     expect(wrapper.props().className).toBe('my-modal')
   })
+
+  it('displays an optional title', () => {
+    const wrapper = mount(<Modal show={true} onClose={jest.fn()} title="My Modal">Hello Modal</Modal>)
+    expect(wrapper.find('.modal-title').at(0).text()).toBe('My Modal')
+  })
 })
