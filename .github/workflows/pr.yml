@@ -1,6 +1,7 @@
 name: pr
 
-pull_request:
+on:
+  pull_request:
     branches:
       - develop
 
