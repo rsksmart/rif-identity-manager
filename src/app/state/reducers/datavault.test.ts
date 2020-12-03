@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultKey, DataVaultContent } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -74,6 +74,26 @@ describe('dataVault slice', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
 
         expect(store.getState().data).toEqual({ MY_KEY: [] })
+      })
+    })
+
+    describe('swapContentById', () => {
+      const initContent = [{ id: '1', content: 'hello' }, { id: '2', content: 'hello' }]
+
+      beforeEach(() => {
+        store.dispatch(receiveKeyData({ key: 'MY_KEY', content: initContent }))
+      })
+
+      test('it swaps content of existing key', () => {
+        store.dispatch(swapContentById({ id: '1', content: 'newContent', key: 'MY_KEY' }))
+
+        const id1 = store.getState().data.MY_KEY.filter((item: DataVaultContent) => item.id === '1')[0]
+        expect(id1.content).toBe('newContent')
+      })
+
+      test('it keeps content when id is invalid', () => {
+        store.dispatch(swapContentById({ id: '15', content: 'newContent', key: 'MY_KEY' }))
+        expect(store.getState().data.MY_KEY).toMatchObject(initContent)
       })
     })
   })
