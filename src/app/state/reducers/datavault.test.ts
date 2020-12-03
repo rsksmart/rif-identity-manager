@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultKey, DataVaultContent } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -7,6 +7,20 @@ describe('dataVault slice', () => {
       const content = [{ id: '1', content: 'hello' }]
       expect(receiveKeyData({ key: 'KEY', content }))
         .toEqual({ type: receiveKeyData.type, payload: { key: 'KEY', content } })
+    })
+
+    test('addContentToKey', () => {
+      const content = { key: 'KEY', content: { id: '1', content: 'hello' } }
+      expect(addContentToKey(content)).toEqual({ type: addContentToKey.type, payload: content })
+    })
+
+    test('removeContentfromKey', () => {
+      expect(removeContentfromKey({ key: 'KEY', id: '2' })).toEqual({ type: removeContentfromKey.type, payload: { key: 'KEY', id: '2' } })
+    })
+
+    test('swapContentById', () => {
+      const content = { key: 'KEY', id: '2', content: 'new' }
+      expect(swapContentById(content)).toEqual({ type: swapContentById.type, payload: content })
     })
   })
 
