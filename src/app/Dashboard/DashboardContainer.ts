@@ -18,7 +18,7 @@ const mapStateToProps = (state: stateInterface) => ({
   tokens: state.tokens.tokens,
   owner: getOwnerFromDidDoc(state.ethrdid.didDocument),
   delegates: state.ethrdid.didDocument.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller')),
-  storage: { used: 120, available: 180 } // @TODO: connect to router!
+  storage: state.datavault.storage
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

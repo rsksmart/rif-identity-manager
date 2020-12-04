@@ -4,12 +4,10 @@ import datavaultIcon from '../../../assets/images/icons/data-vault.svg'
 import { BaseButton } from '../../../components/Buttons'
 import ProgressBar from '../../../components/ProgressBar/ProgressBar'
 import ToolTip from '../../../components/Tooltip/Tooltip'
+import { DataVaultStorageState } from '../../state/reducers/datavault'
 
 interface DataVaultSummaryInterface {
-  storage?: {
-    available: number
-    used: number
-  }
+  storage?: DataVaultStorageState
   handleButton: () => void
 }
 

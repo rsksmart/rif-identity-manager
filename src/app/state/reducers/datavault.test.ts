@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent, receiveStorageInformation } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -21,6 +21,11 @@ describe('dataVault slice', () => {
     test('swapContentById', () => {
       const content = { key: 'KEY', id: '2', content: 'new' }
       expect(swapContentById(content)).toEqual({ type: swapContentById.type, payload: content })
+    })
+
+    test('receiveStorageInformation', () => {
+      const storage = { used: 150, available: 200 }
+      expect(receiveStorageInformation({ storage })).toEqual({ type: receiveStorageInformation.type, payload: { storage } })
     })
   })
 
@@ -108,6 +113,13 @@ describe('dataVault slice', () => {
       test('it keeps content when id is invalid', () => {
         store.dispatch(swapContentById({ id: '15', content: 'newContent', key: 'MY_KEY' }))
         expect(store.getState().data.MY_KEY).toMatchObject(initContent)
+      })
+    })
+
+    describe('receiveStorageInformation', () => {
+      test('it receives storage information', () => {
+        store.dispatch(receiveStorageInformation({ storage: { used: 10, available: 15 } }))
+        expect(store.getState().storage).toMatchObject({ used: 10, available: 15 })
       })
     })
   })

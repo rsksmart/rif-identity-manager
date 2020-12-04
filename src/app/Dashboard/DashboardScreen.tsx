@@ -5,6 +5,7 @@ import Balance from './panels/Balance'
 import { Token } from '../state/reducers/tokens'
 import DataVaultSummary from './panels/DataVaultSummary'
 import { screens } from '../Authenticated/components/Navigation'
+import { DataVaultStorageState } from '../state/reducers/datavault'
 
 interface DashboardScreenInterface {
   chainId?: number | null
@@ -12,7 +13,7 @@ interface DashboardScreenInterface {
   owner?: string | null
   delegates?: Authentication[]
   tokens?: Token[]
-  storage?: { available: number; used: number }
+  storage?: DataVaultStorageState
   changeOwner: (provider: any, newOwner: string) => any
   addDelegate: (provider: any, delegateAddr: string) => any
   addCustomToken: (provider: any, tokenAddr: string) => any
