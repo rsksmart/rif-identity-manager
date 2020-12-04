@@ -14,15 +14,17 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
+  const changeScreen = (screen: screens) => setScreen(screen)
+
   return (
     <>
       <HeaderComponent chainId={chainId} did={address} />
       <Navigation
         selected={screen}
-        handleClick={(screen: screens) => setScreen(screen)}
+        handleClick={changeScreen}
         showDataVault={!!context.dvClient}
       />
-      {screen === screens.DASHBOARD && <DashboardContainer />}
+      {screen === screens.DASHBOARD && <DashboardContainer changeScreen={changeScreen} />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}
     </>
   )

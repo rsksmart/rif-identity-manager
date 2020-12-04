@@ -4,6 +4,7 @@ import styled from 'styled-components'
 interface TooltipInterface {
   children: ReactNode
   hoverContent: string | ReactNode
+  className?: string
 }
 
 const HoverSpan = styled.span`
@@ -32,9 +33,9 @@ const HoverTrigger = styled.span`
   }
 `
 
-const ToolTip: React.FC<TooltipInterface> = ({ hoverContent, children }) => (
+const ToolTip: React.FC<TooltipInterface> = ({ hoverContent, children, className }) => (
   <>
-    <HoverTrigger>{children}</HoverTrigger>
+    <HoverTrigger className={className}>{children}</HoverTrigger>
     <HoverSpan className="hover-content">{hoverContent}</HoverSpan>
   </>
 )
