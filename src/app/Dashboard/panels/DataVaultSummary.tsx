@@ -15,11 +15,10 @@ const DataVaultSummary: React.FC<DataVaultSummaryInterface> = ({ storage, handle
   storage ? (
     <Panel title={<><img src={datavaultIcon} alt="DataVault" /> DataVault Summary</>} className="dataVault">
       <h2>Storage Usage</h2>
-
       <div className="container">
         <div className="columnDouble">
-          <ToolTip className="tooltip-progress" hoverContent={<p>{storage.used} of {storage.available}</p>}>
-            <ProgressBar total={storage.available} value={storage.used} />
+          <ToolTip className="tooltip-progress" hoverContent={<p>{storage.used} of {(storage.available + storage.used).toLocaleString()} bytes</p>}>
+            <ProgressBar total={(storage.available + storage.used)} value={storage.used} />
           </ToolTip>
         </div>
         <div className="column">

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -77,6 +77,5 @@ export const swapDataVaultContent = (client: DataVaultWebClient, key: string, co
  * @param client DataVault client
  */
 export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
-  dispatch((receiveStorageInformation({ storage: { used: 10, available: 150 } })))
-//   client.getStorageInformation()
-//    .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))
+  client.getStorageInformation()
+    .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))

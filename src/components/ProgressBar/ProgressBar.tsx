@@ -34,7 +34,7 @@ const BarProgress = styled.div`
 `
 
 const ProgressBar: React.FC<ProgressBarInterface> = ({ total, value }) => {
-  const width = value < total ? Math.round((value * 100) / total) : 100
+  const width = value < total ? Math.ceil((value * 100) / total) : 100
   return (
     <BarWrapper className="progress-wrapper">
       <BarProgress className="progress" style={{ width: `${width}%` }}></BarProgress>

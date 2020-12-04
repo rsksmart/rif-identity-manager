@@ -19,8 +19,8 @@ describe('Component: DataVaultSummary.test', () => {
   })
 
   it('displays numbers in tooltip', () => {
-    const props = { storage: { used: 150, available: 890 }, handleButton: jest.fn() }
+    const props = { storage: { used: 1000, available: 9000 }, handleButton: jest.fn() }
     const wrapper = mount(<DataVaultSummary {...props} />)
-    expect(wrapper.find('.hover-content').first().text()).toBe('150 of 890')
+    expect(wrapper.find('.hover-content').first().text()).toBe('1000 of 10,000 bytes')
   })
 })
