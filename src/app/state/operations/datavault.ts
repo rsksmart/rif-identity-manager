@@ -73,7 +73,6 @@ export const swapDataVaultContent = (client: DataVaultWebClient, key: string, co
 
 /**
  * Returns storage information from DataVault
- * @TODO - NOT IMPLEMENTED IN CLIENT YET
  * @param client DataVault client
  */
 export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
