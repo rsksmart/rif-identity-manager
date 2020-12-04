@@ -2,26 +2,51 @@ import React, { useState } from 'react'
 import Panel from '../../../components/Panel/Panel'
 import declarativeIcon from '../../../assets/images/icons/declarative-details.svg'
 import trashIcon from '../../../assets/images/icons/trash.svg'
+import pencilIcon from '../../../assets/images/icons/pencil.svg'
 import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import BinaryModal from '../../../components/Modal/BinaryModal'
+import EditValueModal from '../../../components/Modal/EditValueModal'
 
 interface DeclarativeDetailsDisplayInterface {
   deleteValue: (key: string, id: string) => Promise<any>
+  swapValue: (key: string, content: string, id: string) => Promise<any>
   details: DataVaultKey
 }
 
-const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue }) => {
+const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue, swapValue }) => {
   interface DeleteItemI { key: string; id: string }
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isDeleting, setIsDeleting] = useState<null | DeleteItemI>(null)
+  interface EditItemI { key: string; item: DataVaultContent }
 
-  const handleDeleteItem = async (item: DeleteItemI) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<null | string>(null)
+  const [isDeleting, setIsDeleting] = useState<null | DeleteItemI>(null)
+  const [isEditing, setIsEditing] = useState<null | EditItemI>(null)
+
+  const handleDeleteItem = (item: DeleteItemI) => {
     setIsLoading(true)
+    setIsError(null)
+
     deleteValue(item.key, item.id)
+      .then(() => setIsDeleting(null))
+      .catch((err: Error) => setIsError(err.message))
+      .finally(() => setIsLoading(false))
+  }
+
+  const handleEditItem = (newValue: string, existingItem: EditItemI) => {
+    if (newValue === existingItem.item.content) {
+      return setIsError('New value is the same as the old.')
+    }
+
+    setIsLoading(true)
+    setIsError(null)
+
+    swapValue(existingItem.key, newValue, existingItem.item.id)
       .then(() => {
-        setIsDeleting(null)
         setIsLoading(false)
+        setIsEditing(null)
       })
+      .catch((err: Error) => setIsError(err.message))
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -48,7 +73,14 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
                         <div className="options">
                           <button
                             disabled={isLoading}
-                            className="icon"
+                            className="icon edit"
+                            onClick={() => { setIsError(null); setIsEditing({ key, item }) }}
+                          >
+                            <img src={pencilIcon} alt="Edit item" />
+                          </button>
+                          <button
+                            disabled={isLoading}
+                            className="icon delete"
                             onClick={() => setIsDeleting({ key, id: item.id })}>
                             <img src={trashIcon} alt="Delete Item" />
                           </button>
@@ -63,6 +95,18 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
           )}
         </tbody>
       </table>
+
+      <EditValueModal
+        show={isEditing !== null}
+        onClose={() => setIsEditing(null)}
+        onConfirm={(value: string) => isEditing && handleEditItem(value, isEditing)}
+        disabled={isLoading}
+        strings={{ title: 'Edit value in the DataVault', label: 'New value', submit: 'Update' }}
+        className="edit-modal"
+        initValue={isEditing ? isEditing.item.content : ''}
+        inputType="textarea"
+        error={isError}
+      />
 
       <BinaryModal
         show={isDeleting !== null}

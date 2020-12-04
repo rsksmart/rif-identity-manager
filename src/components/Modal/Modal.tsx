@@ -80,9 +80,9 @@ const Modal: React.FC<PanelInterface> = ({ children, show, title, className, onC
     ? (
       <ModalLightbox show={show} className={className}>
         <ModalBody>
-          <ModalTitle>
+          <ModalTitle className="modal-title">
             {title}
-            <ModalCloseButton onClick={onClose} />
+            <ModalCloseButton className="close" onClick={onClose} />
           </ModalTitle>
           <ModalContent className="modal-content">
             {children}

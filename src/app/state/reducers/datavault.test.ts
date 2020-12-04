@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -7,6 +7,20 @@ describe('dataVault slice', () => {
       const content = [{ id: '1', content: 'hello' }]
       expect(receiveKeyData({ key: 'KEY', content }))
         .toEqual({ type: receiveKeyData.type, payload: { key: 'KEY', content } })
+    })
+
+    test('addContentToKey', () => {
+      const content = { key: 'KEY', content: { id: '1', content: 'hello' } }
+      expect(addContentToKey(content)).toEqual({ type: addContentToKey.type, payload: content })
+    })
+
+    test('removeContentfromKey', () => {
+      expect(removeContentfromKey({ key: 'KEY', id: '2' })).toEqual({ type: removeContentfromKey.type, payload: { key: 'KEY', id: '2' } })
+    })
+
+    test('swapContentById', () => {
+      const content = { key: 'KEY', id: '2', content: 'new' }
+      expect(swapContentById(content)).toEqual({ type: swapContentById.type, payload: content })
     })
   })
 
@@ -74,6 +88,26 @@ describe('dataVault slice', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
 
         expect(store.getState().data).toEqual({ MY_KEY: [] })
+      })
+    })
+
+    describe('swapContentById', () => {
+      const initContent = [{ id: '1', content: 'hello' }, { id: '2', content: 'hello' }]
+
+      beforeEach(() => {
+        store.dispatch(receiveKeyData({ key: 'MY_KEY', content: initContent }))
+      })
+
+      test('it swaps content of existing key', () => {
+        store.dispatch(swapContentById({ id: '1', content: 'newContent', key: 'MY_KEY' }))
+
+        const id1 = store.getState().data.MY_KEY.filter((item: DataVaultContent) => item.id === '1')[0]
+        expect(id1.content).toBe('newContent')
+      })
+
+      test('it keeps content when id is invalid', () => {
+        store.dispatch(swapContentById({ id: '15', content: 'newContent', key: 'MY_KEY' }))
+        expect(store.getState().data.MY_KEY).toMatchObject(initContent)
       })
     })
   })

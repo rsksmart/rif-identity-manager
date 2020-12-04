@@ -55,6 +55,21 @@
         flex: 1;
       }
     }
+
+    .edit-modal {
+      label {
+        display: block;
+        font-weight: bold;
+        padding-bottom: 5px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 35px;
+        border: 1px solid $lightGray;
+        padding: 5px;
+      }
+    }
   }
 }
 

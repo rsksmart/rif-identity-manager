@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -59,3 +59,7 @@ export const createDataVaultContent = (client: DataVaultWebClient, key: string, 
 export const deleteDataVaultContent = (client: DataVaultWebClient, key: string, id: string) => (dispatch: Dispatch<any>) =>
   client.delete({ key, id })
     .then(() => dispatch(removeContentfromKey({ key, id })))
+
+export const swapDataVaultContent = (client: DataVaultWebClient, key: string, content: string, id: string) => (dispatch: Dispatch<any>) =>
+  client.swap({ key, content, id })
+    .then(() => dispatch(swapContentById({ key, id, content })))
