@@ -5,13 +5,15 @@ import DashboardContainer from '../Dashboard/DashboardContainer'
 import DataVaultContainer from '../DataVault/DataVaultContainer'
 import { Web3ProviderContext } from '../../providerContext'
 import IdentityContainer from '../Identity/IdentityContainer'
+import { createDidFormat } from '../../formatters'
 
 interface AuthenticatedComponentInterface {
   chainId: number | null
   address: string | null
+  name?: string
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, name }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
@@ -19,7 +21,11 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
 
   return (
     <>
-      <HeaderComponent chainId={chainId} did={address} />
+      <HeaderComponent
+        chainId={chainId || undefined}
+        did={(address && chainId) ? createDidFormat(address, chainId) : undefined}
+        name={name}
+      />
       <Navigation
         selected={screen}
         handleClick={changeScreen}
