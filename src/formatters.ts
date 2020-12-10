@@ -2,14 +2,14 @@
  * Create Identity
  * @param address address for the did
  * @param chainId chainId
- * @param includeEthr include eth:, required for some did tools
+
  */
-export const createDidFormat = (address: string, chainId: number, includeEthr?: boolean) => {
+export const createDidFormat = (address: string, chainId: number) => {
   switch (chainId) {
-    case 1: return `did:${includeEthr ? 'ethr:' : ''}mainnet:${address}`
-    case 30: return `did:${includeEthr ? 'ethr:' : ''}rsk:${address}`
-    case 31: return `did:${includeEthr ? 'ethr:' : ''}rsk:testnet:${address}`
-    case 5777: return `did:${includeEthr ? 'ethr:' : ''}development:${address}`
+    case 1: return `did:ethr:mainnet:${address}`
+    case 30: return `did:ethr:rsk:${address}`
+    case 31: return `did:ethr:rsk:testnet:${address}`
+    case 5777: return `did:ethr:development:${address}`
     default: return address
   }
 }

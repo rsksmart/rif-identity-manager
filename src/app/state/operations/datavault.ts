@@ -18,7 +18,7 @@ export const createClient = (provider: any, address: string, chainId: number) =>
     ? new DataVaultWebClient({
       serviceUrl: dataVaultConfig.serviceUrl,
       serviceDid: dataVaultConfig.serviceDid,
-      did: createDidFormat(address, chainId, true),
+      did: createDidFormat(address, chainId),
       rpcPersonalSign: (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
     })
     : null

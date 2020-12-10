@@ -41,7 +41,7 @@ export const resolveDidDocument = (provider: any) => (dispatch: Dispatch<any>) =
     getAccountAndNetwork(provider).then(([address, chainId]) => {
       const didResolver = new Resolver(getResolver(resolverProviderConfig))
 
-      const did = createDidFormat(address, chainId, true)
+      const did = createDidFormat(address, chainId)
       didResolver.resolve(did).then((data: DIDDocument) => resolve(dispatch(resolveDid({ data }))))
     })
   })
