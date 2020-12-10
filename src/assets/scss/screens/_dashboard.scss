@@ -1,4 +1,11 @@
 .dashboard {
+  h2 {
+    font-size: 14px;
+    font-weight: 500 !important;
+    color: $gray;
+    text-transform: uppercase;
+  }
+
   .identity-information {
     .advancedToggle {
       border: none;
@@ -6,13 +13,6 @@
       cursor: pointer;
       color: $blue;
       font-size: 14px;
-    }
-
-    h2 {
-      font-size: 14px;
-      font-weight: 500 !important;
-      color: $gray;
-      text-transform: uppercase;
     }
 
     p.value {
@@ -64,4 +64,36 @@
       }
     }
   }
+
+  .dataVault {
+    .columnDouble {
+      padding: 0;
+
+      .tooltip-progress {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .column {
+      padding: 0;
+      text-align: right;
+
+      button {
+        padding: 10px 25px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .dashboard {
+    button.panel-cta {
+      display: block;
+      position: relative;
+      bottom: auto;
+      right: auto;
+      margin-top: 15px;
+  }
+}
 }

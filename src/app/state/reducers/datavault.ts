@@ -20,12 +20,19 @@ interface SwapPayLoad {
   content: string
 }
 
+export interface DataVaultStorageState {
+  used: number,
+  available: number,
+}
+
 export interface DataVaultState {
   data: DataVaultKey
+  storage?: DataVaultStorageState
 }
 
 export const initialState: DataVaultState = {
-  data: {}
+  data: {},
+  storage: undefined
 }
 
 const dataVaultSlice = createSlice({
@@ -43,10 +50,13 @@ const dataVaultSlice = createSlice({
     },
     swapContentById (state: DataVaultState, { payload: { key, id, content } }: PayloadAction<SwapPayLoad>) {
       state.data[key] = state.data[key].map((item: DataVaultContent) => item.id === id ? { ...item, content } : item)
+    },
+    receiveStorageInformation (state: DataVaultState, { payload: { storage } }: PayloadAction<{ storage: DataVaultStorageState }>) {
+      state.storage = storage
     }
   }
 })
 
-export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById } = dataVaultSlice.actions
+export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById, receiveStorageInformation } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer

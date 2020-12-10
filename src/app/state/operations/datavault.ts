@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -60,6 +60,21 @@ export const deleteDataVaultContent = (client: DataVaultWebClient, key: string, 
   client.delete({ key, id })
     .then(() => dispatch(removeContentfromKey({ key, id })))
 
+/**
+ * Swap content in the datavault by key, and Id
+ * @param client DataVault client
+ * @param key Key of object
+ * @param content New content
+ * @param id id of the content
+ */
 export const swapDataVaultContent = (client: DataVaultWebClient, key: string, content: string, id: string) => (dispatch: Dispatch<any>) =>
   client.swap({ key, content, id })
     .then(() => dispatch(swapContentById({ key, id, content })))
+
+/**
+ * Returns storage information from DataVault
+ * @param client DataVault client
+ */
+export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
+  client.getStorageInformation()
+    .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))

@@ -5,7 +5,7 @@ import { rLogin } from '../../../features/rLogin'
 import { changeAccount, changeChainId } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
 import { getTokenList } from './tokens'
-import { createClient, getDataVaultContent } from './datavault'
+import { createClient, getDataVaultContent, getStorageInformation } from './datavault'
 import { createDidFormat } from '../../../formatters'
 
 /**
@@ -28,6 +28,7 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
       context.setDvClient(dataVaultClient)
 
       dataVaultClient && dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId, true)))
+      dataVaultClient && dispatch(getStorageInformation(dataVaultClient))
     })
   })
     .catch((err: string) => console.log('rLogin Error', err))

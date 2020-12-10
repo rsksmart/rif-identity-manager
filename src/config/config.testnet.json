@@ -4,6 +4,6 @@
   "tokens": [ "0x19f64674d8a5b4e652319f5e239efd3bc969a1fe" ],
   "dataVault": {
     "serviceDid": "did:ethr:rsk:testnet:0x285B30492a3F444d78f75261A35cB292Fc8F41A6",
-    "serviceUrl": "http://ec2-3-131-142-122.us-east-2.compute.amazonaws.com:5107"
+    "serviceUrl": "https://identity.staging.rifcomputing.net"
   }
 }
