@@ -21,30 +21,34 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
   const [showModal, setShowModal] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
-  const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
+  const [values, setValues] = useState<{ name: string, email: string}>({
+    name: '',
+    email: ''
+  })
+
+  const changeInputValue = (evt: { target: HTMLInputElement }) =>
+    setValues({ ...values, [evt.target.id]: evt.target.value })
 
   useEffect(() => {
     setIsError(null)
     setIsLoading(false)
 
-    setName(initValue.DD_NAME[0].content)
-    setEmail(initValue.DD_EMAIL[0].content)
+    setValues({
+      name: initValue.DD_NAME[0].content,
+      email: initValue.DD_EMAIL[0].content
+    })
   }, [initValue])
-
-  const valueUpdate = (key: string, newContent: string) =>
-    (initValue[key][0].content !== newContent) ? [{ id: initValue[key][0].id, content: name }] : []
 
   const save = () => {
     setIsLoading(true)
     setIsError(null)
 
-    // update first item in array to send back to be modified
+    const valueDifferentFromInit = (key: string, content: string) =>
+      (initValue[key][0].content !== content) ? [{ ...initValue[key][0], content }] : []
+
     const prepareData = {
-      // DD_NAME: valueUpdate('DD_NAME', name),
-      // DD_EMAIL: valueUpdate('DD_EMAIL', email)
-      DD_NAME: initValue.DD_NAME[0].content !== name ? [{ id: initValue.DD_NAME[0].id, content: name }] : [],
-      DD_EMAIL: initValue.DD_EMAIL[0].content !== email ? [{ id: initValue.DD_EMAIL[0].id, content: email }] : []
+      DD_NAME: valueDifferentFromInit('DD_NAME', values.name),
+      DD_EMAIL: valueDifferentFromInit('DD_EMAIL', values.email)
     }
 
     updatePersona(prepareData)
@@ -57,6 +61,8 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
         setIsError(err.message)
       })
   }
+
+  const sharedProps = { type: 'text', className: 'line', onChange: changeInputValue, disabled: isLoading }
 
   return (
     <>
@@ -75,34 +81,9 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
           {truncateAddressDid(did)}
           <p>You can edit your personal that be saved in your data vault.</p>
 
-          <p>
-            <label>
-            Name:
-              <input
-                type="text"
-                id="name"
-                className="line"
-                value={name}
-                placeholder="Persona Name"
-                onChange={(evt) => setName(evt.target.value)}
-                disabled={isLoading}
-              />
-            </label>
-          </p>
-          <p>
-            <label>
-            Email:
-              <input
-                type="text"
-                id="email"
-                className="line"
-                value={email}
-                placeholder="Persona Email"
-                onChange={(evt) => setEmail(evt.target.value)}
-                disabled={isLoading}
-              />
-            </label>
-          </p>
+          <p><label>Name: <input id="name" value={values.name} {...sharedProps} placeholder="Persona Name" /></label></p>
+          <p><label>Email: <input id="email" value={values.email} {...sharedProps} placeholder="Persona Email" /></label></p>
+
           <p>
             <BaseButton
               className="save blue"

@@ -8,15 +8,19 @@ import { modifyMultipleItems } from '../state/operations/datavault'
 import { DataVaultKey } from '../state/reducers/datavault'
 
 /**
- * Get items that are specifically to edit the Persona
+ * Get items that are specifically to the Persona from the DataVault collection
  * @param data Data from the datavault
  */
-const getPersonaDeclarativeDetails = (data:any) => {
-  const emptyValue = [{ id: '', content: '' }]
-  return {
-    DD_NAME: data.DD_NAME && data.DD_NAME[0] ? data.DD_NAME : emptyValue,
-    DD_EMAIL: data.DD_EMAIL && data.DD_EMAIL[0] ? data.DD_EMAIL : emptyValue
-  }
+export const getPersonaDeclarativeDetails = (data: DataVaultKey) => {
+  const personaItems = ['DD_NAME', 'DD_EMAIL', 'DD_ADDRESS', 'DD_IDNUMBER', 'DD_PHONE', 'DD_BIRTHDATE']
+  const returnValueOrEmpty = (key: string) => data[key] && data[key][0] ? data[key] : [{ id: '', content: '' }]
+
+  const values: DataVaultKey = {}
+  personaItems.forEach((key: string) => {
+    values[key] = returnValueOrEmpty(key)
+  })
+
+  return values
 }
 
 const mapStateToProps = (state: stateInterface) => ({

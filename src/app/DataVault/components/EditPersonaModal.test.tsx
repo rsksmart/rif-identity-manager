@@ -48,8 +48,8 @@ describe('Component: EditPersonaModal.test', () => {
 
     wrapper.find('button').simulate('click')
 
-    wrapper.find('input#name').simulate('change', { target: { value: 'New Name' } })
-    wrapper.find('input#email').simulate('change', { target: { value: '' } })
+    wrapper.find('input#name').simulate('change', { target: { value: 'New Name', id: 'name' } })
+    wrapper.find('input#email').simulate('change', { target: { value: '', id: 'email' } })
 
     await act(async () => {
       await wrapper.find('.save').first().simulate('click')
