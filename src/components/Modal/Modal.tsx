@@ -70,7 +70,7 @@ const ModalContent = styled.div`
 interface PanelInterface {
   children: ReactNode
   show: boolean
-  title?: string
+  title?: string | ReactNode
   className?: string
   onClose: () => void
 }

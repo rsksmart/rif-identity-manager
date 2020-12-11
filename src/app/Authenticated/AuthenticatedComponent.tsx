@@ -6,14 +6,15 @@ import DataVaultContainer from '../DataVault/DataVaultContainer'
 import { Web3ProviderContext } from '../../providerContext'
 import IdentityContainer from '../Identity/IdentityContainer'
 import { createDidFormat } from '../../formatters'
+import { DataVaultKey } from '../state/reducers/datavault'
 
 interface AuthenticatedComponentInterface {
   chainId: number | null
   address: string | null
-  name?: string
+  persona: DataVaultKey
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, name }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
@@ -24,7 +25,8 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
       <HeaderComponent
         chainId={chainId || undefined}
         did={(address && chainId) ? createDidFormat(address, chainId) : undefined}
-        name={name}
+        persona={persona}
+        hasDataVault={!!context.dvClient}
       />
       <Navigation
         selected={screen}

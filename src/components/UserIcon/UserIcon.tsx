@@ -9,8 +9,9 @@ interface UserIconInterface {
 const UserIcon: React.FC<UserIconInterface> = ({ value, size }) => {
   const options = {
     format: 'svg',
-    background: [255, 255, 255, 255],
-    margin: '.2'
+    background: [71, 196, 225, 255],
+    margin: '.22',
+    saturation: '.8'
   }
 
   const circle = {

@@ -4,8 +4,13 @@ import Header from './HeaderComponent'
 
 describe('Component: Header', () => {
   const did = 'did:ethr:rsk:testnet:0x1234567890123456789'
-
-  const wrapper = mount(<Header did={did} chainId={31} />)
+  const initProps = {
+    did,
+    chainId: 31,
+    persona: {},
+    hasDataVault: true
+  }
+  const wrapper = mount(<Header {...initProps} />)
   it('renders, is defined', () => {
     expect(wrapper).toBeDefined()
   })
@@ -16,13 +21,13 @@ describe('Component: Header', () => {
   })
 
   it('loads image', () => {
-    const shallowWrapper = shallow(<Header did={did} chainId={31} />)
+    const shallowWrapper = shallow(<Header {...initProps} />)
     expect(shallowWrapper.find('img').props().src).toBe('rif-id-manager-gray.svg')
     expect(shallowWrapper.find('img').props().alt).toBe('RIF Id Manager')
   })
 
   it('shows the name instead of the DID if sent', () => {
-    const wrapper = mount(<Header did={did} chainId={1} name="My Name" />)
+    const wrapper = mount(<Header {...initProps} persona={{ DD_NAME: [{ id: '0156', content: 'My Name' }] }} />)
     expect(wrapper.find('h1.persona').find('div').text()).toBe('My Name')
   })
 })
