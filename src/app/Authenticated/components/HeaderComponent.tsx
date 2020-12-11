@@ -12,9 +12,10 @@ interface HeaderComponentInterface {
   chainId?: number
   persona: DataVaultKey
   hasDataVault: boolean
+  updatePersona: (items: DataVaultKey) => Promise<any>
 }
 
-const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, hasDataVault }) => (
+const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, hasDataVault, updatePersona }) => (
   <header className="container">
     <div className="columnDouble branding">
       <div className="logo">
@@ -24,7 +25,7 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
         {did && (
           <ToolTip hoverContent={did}>
             <UserIcon value={did} size={40} />
-            <div>{persona && persona.DD_NAME ? persona.DD_NAME[0].content : truncateAddressDid(did)}</div>
+            <div>{persona.DD_NAME[0].content !== '' ? persona.DD_NAME[0].content : truncateAddressDid(did)}</div>
           </ToolTip>
         )}
       </h1>
@@ -32,7 +33,7 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
         <EditPersonaModal
           did={did}
           initValue={persona}
-          updatePersona={(value: DataVaultKey) => new Promise(resolve => resolve(true))}
+          updatePersona={updatePersona}
         />
       )}
     </div>

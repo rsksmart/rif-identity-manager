@@ -10,7 +10,7 @@ import { DataVaultKey } from '../../state/reducers/datavault'
 interface EditPersonaModalInterface {
   did?: string
   initValue: DataVaultKey
-  updatePersona: (value: DataVaultKey) => Promise<any>
+  updatePersona: (items: DataVaultKey) => Promise<any>
 }
 
 const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue, updatePersona }) => {
@@ -22,12 +22,18 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
   const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>(initValue.DD_EMAIL ? initValue.DD_EMAIL[0].content : '')
+  const [email, setEmail] = useState<string>('')
 
   useEffect(() => {
-    initValue.DD_NAME && setName(initValue.DD_NAME[0].content)
-    initValue.DD_EMAIL && setEmail(initValue.DD_EMAIL[0].content)
+    setIsError(null)
+    setIsLoading(false)
+
+    setName(initValue.DD_NAME[0].content)
+    setEmail(initValue.DD_EMAIL[0].content)
   }, [initValue])
+
+  const valueUpdate = (key: string, newContent: string) =>
+    (initValue[key][0].content !== newContent) ? [{ id: initValue[key][0].id, content: name }] : []
 
   const save = () => {
     setIsLoading(true)
@@ -35,8 +41,10 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
 
     // update first item in array to send back to be modified
     const prepareData = {
-      DD_NAME: [{ id: initValue.DD_NAME[0].id, content: name }],
-      DD_EMAIL: [{ id: initValue.DD_EMAIL[0].id, content: email }]
+      // DD_NAME: valueUpdate('DD_NAME', name),
+      // DD_EMAIL: valueUpdate('DD_EMAIL', email)
+      DD_NAME: initValue.DD_NAME[0].content !== name ? [{ id: initValue.DD_NAME[0].id, content: name }] : [],
+      DD_EMAIL: initValue.DD_EMAIL[0].content !== email ? [{ id: initValue.DD_EMAIL[0].id, content: email }] : []
     }
 
     updatePersona(prepareData)

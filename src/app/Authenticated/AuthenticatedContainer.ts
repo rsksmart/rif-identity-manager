@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
+import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { stateInterface } from '../state/configureStore'
 import AuthenticatedComponent from './AuthenticatedComponent'
+import { modifyMultipleItems } from '../state/operations/datavault'
+import { DataVaultKey } from '../state/reducers/datavault'
 
 /**
  * Get items that are specifically to edit the Persona
@@ -9,8 +14,8 @@ import AuthenticatedComponent from './AuthenticatedComponent'
 const getPersonaDeclarativeDetails = (data:any) => {
   const emptyValue = [{ id: '', content: '' }]
   return {
-    DD_NAME: data.DD_NAME || emptyValue,
-    DD_EMAIL: data.DD_EMAIL || emptyValue
+    DD_NAME: data.DD_NAME && data.DD_NAME[0] ? data.DD_NAME : emptyValue,
+    DD_EMAIL: data.DD_EMAIL && data.DD_EMAIL[0] ? data.DD_EMAIL : emptyValue
   }
 }
 
@@ -20,4 +25,9 @@ const mapStateToProps = (state: stateInterface) => ({
   persona: getPersonaDeclarativeDetails(state.datavault.data)
 })
 
-export default connect(mapStateToProps)(AuthenticatedComponent)
+const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
+  modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) =>
+    dispatch(modifyMultipleItems(client, items))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedComponent)

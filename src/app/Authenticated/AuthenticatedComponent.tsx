@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import HeaderComponent from './components/HeaderComponent'
 import Navigation, { screens } from './components/Navigation'
 import DashboardContainer from '../Dashboard/DashboardContainer'
@@ -12,13 +13,15 @@ interface AuthenticatedComponentInterface {
   chainId: number | null
   address: string | null
   persona: DataVaultKey
+  modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
   const changeScreen = (screen: screens) => setScreen(screen)
+  const updatePersona = (items: DataVaultKey) => context.dvClient && modifyMultipleItems(context.dvClient, items)
 
   return (
     <>
@@ -27,6 +30,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
         did={(address && chainId) ? createDidFormat(address, chainId) : undefined}
         persona={persona}
         hasDataVault={!!context.dvClient}
+        updatePersona={updatePersona}
       />
       <Navigation
         selected={screen}

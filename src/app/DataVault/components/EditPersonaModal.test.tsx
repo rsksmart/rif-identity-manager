@@ -7,7 +7,10 @@ describe('Component: EditPersonaModal.test', () => {
   const initProps = {
     did: 'did:eth:rsk:0x1234567890',
     updatePersona: jest.fn(),
-    initValue: {}
+    initValue: {
+      DD_NAME: [{ id: '', content: '' }],
+      DD_EMAIL: [{ id: '', content: '' }]
+    }
   }
 
   const initValues = {
@@ -53,6 +56,23 @@ describe('Component: EditPersonaModal.test', () => {
       expect(updateFunction).toBeCalledWith({
         DD_NAME: [{ id: 'a156', content: 'New Name' }],
         DD_EMAIL: [{ id: 'b123', content: '' }]
+      })
+    })
+  })
+
+  it('does not return the values if they are the same', async () => {
+    const updateFunction = jest.fn()
+    const updatePersona = (data: any) => new Promise((resolve) => resolve(updateFunction(data)))
+
+    const wrapper = mount(<EditPersonaModal {...initProps} initValue={initValues} updatePersona={updatePersona} />)
+
+    wrapper.find('button').simulate('click')
+
+    await act(async () => {
+      await wrapper.find('.save').first().simulate('click')
+      expect(updateFunction).toBeCalledWith({
+        DD_NAME: [],
+        DD_EMAIL: []
       })
     })
   })

@@ -7,9 +7,11 @@ describe('Component: Header', () => {
   const initProps = {
     did,
     chainId: 31,
-    persona: {},
-    hasDataVault: true
+    persona: { DD_NAME: [{ id: '', content: '' }], DD_EMAIL: [{ id: '', content: '' }] },
+    hasDataVault: true,
+    updatePersona: jest.fn()
   }
+
   const wrapper = mount(<Header {...initProps} />)
   it('renders, is defined', () => {
     expect(wrapper).toBeDefined()
@@ -27,7 +29,7 @@ describe('Component: Header', () => {
   })
 
   it('shows the name instead of the DID if sent', () => {
-    const wrapper = mount(<Header {...initProps} persona={{ DD_NAME: [{ id: '0156', content: 'My Name' }] }} />)
+    const wrapper = mount(<Header {...initProps} persona={{ ...initProps.persona, DD_NAME: [{ id: '0156', content: 'My Name' }] }} />)
     expect(wrapper.find('h1.persona').find('div').text()).toBe('My Name')
   })
 })
