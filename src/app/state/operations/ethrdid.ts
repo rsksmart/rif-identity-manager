@@ -61,3 +61,29 @@ export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispa
         .catch((err: Error) => reject(err))
     )
   })
+
+export const addAttribute = (provider: any, type: string, value: string, validity?: number) => (dispatch: Dispatch<any>) => {
+  console.log('adding', type, value, validity)
+  return new Promise((resolve, reject) => {
+    getAccountAndNetwork(provider).then(([address, chainId]) =>
+      new EthrDID({
+        address: address,
+        provider,
+        registry: getDIDRegistryAddress(parseInt(chainId))
+      })
+        .setAttribute(type, value, validity)
+        .then((response: any) => {
+          dispatch(resolveDidDocument(provider))
+          resolve(response)
+        })
+        .catch((err: Error) => reject(err))
+    )
+  })
+}
+// .setAttribute('did/pub/Ed25519/veriKey/base64', 'mypublickey')
+// .setAttribute('did/svc/HubService', 'https://jesse.photo')
+
+/*
+export const addServiceEndpoint = (provider: any, name: string, url: string, validity: number) => (dispatch: Dispatch<any>) =>
+  dispatch(addAttribute(provider, `did/svc/${name}`, url, validity))
+*/
