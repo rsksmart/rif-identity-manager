@@ -1,7 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk'
 import { connect } from 'react-redux'
 import { AnyAction } from 'redux'
-import { Authentication, DIDDocument, PublicKey } from 'did-resolver'
+import { DIDDocument, PublicKey } from 'did-resolver'
 import IdentityComponent from './IdentityComponent'
 import { stateInterface } from '../state/configureStore'
 import { setDidOwner, addDelegate } from '../state/operations/ethrdid'
@@ -15,7 +15,7 @@ const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
   owner: getOwnerFromDidDoc(state.ethrdid.didDocument),
-  delegates: state.ethrdid.didDocument.authentication?.filter((pk: Authentication) => !pk.publicKey.endsWith('controller'))
+  delegates: state.ethrdid.didDocument.publicKey?.filter((pk: PublicKey) => !pk.id.endsWith('controller'))
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

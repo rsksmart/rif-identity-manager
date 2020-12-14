@@ -58,17 +58,11 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
 
   return (
     <Panel title="Persona owner">
-      <div className="container">
-        <div className="column">
-          <h2>Owner</h2>
-          <p className="value">
-            {ownerDid && <ToolTip hoverContent={ownerDid}>{truncateAddressDid(ownerDid)}</ToolTip>}
-          </p>
-        </div>
-        <div className="column">
-          {isOwner && <BaseButton onClick={() => setIsEditing(true)}>Transfer</BaseButton>}
-        </div>
-      </div>
+      <h2>Owner</h2>
+      <p className="value">
+        {ownerDid && <ToolTip hoverContent={ownerDid}>{truncateAddressDid(ownerDid)}</ToolTip>}
+      </p>
+      {isOwner && <BaseButton onClick={() => setIsEditing(true)}>Transfer</BaseButton>}
 
       <EditValueModal
         show={isEditing}

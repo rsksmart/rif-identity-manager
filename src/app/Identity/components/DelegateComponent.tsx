@@ -1,33 +1,30 @@
-import React, { useContext, useState } from 'react'
-import { Authentication } from 'did-resolver'
-import { Web3ProviderContext } from '../../../providerContext'
+import React, { useState } from 'react'
+import { PublicKey } from 'did-resolver'
 import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../../../components/Modal/Modal'
-import { truncateAddressDid } from '../../../formatters'
+import { createDidFormat, truncateAddressDid } from '../../../formatters'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import Panel from '../../../components/Panel/Panel'
+import EditValueModal from '../../../components/Modal/EditValueModal'
 
 interface DelegateComponentInterface {
-  delegates?: Authentication[] | null
+  delegates?: PublicKey[] | null
   chainId?: number | null
-  addDelegate: (provider: any, delegate: string) => any
+  addDelegate: (delegate: string) => any
   isOwner: boolean
 }
 
 const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, chainId, addDelegate, isOwner }) => {
-  const [add, setAdd] = useState<boolean>(false)
+  const [isAdding, setIsAdding] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [newDelegate, setNewDelegate] = useState<string>('')
   const [isError, setIsError] = useState<null | string>(null)
-  const context = useContext(Web3ProviderContext)
 
   const resetState = () => {
     setIsError(null)
     setIsLoading(false)
   }
 
-  const handleAddDelegate = () => {
+  const handleAddDelegate = (newDelegate: string) => {
     resetState()
 
     if (!isValidAddress(newDelegate)) {
@@ -40,16 +37,18 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
       return setIsError('Checksum is incorrect.')
     }
 
-    if (delegates?.filter(item => item.publicKey.indexOf(newDelegate) !== -1).length !== 0) {
+    /*
+    if (delegates?.filter(item => item.publicKey.indexOf(newDelegate.toLowerCase()) !== -1).length !== 0) {
       resetState()
       return setIsError('This address is already a delegate.')
     }
+    */
 
+    console.log('setting delegate', newDelegate)
     setIsLoading(true)
-    addDelegate(context?.provider, newDelegate)
+    addDelegate(newDelegate)
       .then(() => {
-        setAdd(false)
-        setNewDelegate('')
+        setIsAdding(false)
         resetState()
       })
       .catch((err: Error) => {
@@ -60,42 +59,46 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
 
   const handleClose = () => {
     if (!isLoading) {
-      setAdd(false)
+      setIsAdding(false)
       resetState()
     }
   }
 
   return (
     <Panel title="Delegate Identity">
+      <h2>Delegates</h2>
       <ul className="value">
-        {delegates?.map((delegate: Authentication) =>
-          <li key={delegate.publicKey}>
-            <ToolTip hoverContent={delegate.publicKey}>
-              {truncateAddressDid(delegate.publicKey.slice(delegate.publicKey.lastIndexOf(':') + 1, delegate.publicKey.indexOf('#')))}
-            </ToolTip>
-          </li>)
-        }
+        {delegates?.length === 0 && <li><em>No delegates for this persona.</em></li>}
+        {delegates?.map((delegate: PublicKey) => {
+          if (!delegate.ethereumAddress || !chainId) return <></>
+          const did = createDidFormat(delegate.ethereumAddress, chainId)
+          return (
+            <li key={did}>
+              <ToolTip hoverContent={did}>{truncateAddressDid(did)}</ToolTip>
+            </li>
+          )
+        })}
       </ul>
+      <p>
+        {isOwner && <BaseButton onClick={() => setIsAdding(true)}>Add Delegate</BaseButton>}
+      </p>
 
-      {isOwner && <BaseButton onClick={() => setAdd(true)}>Add Delegate</BaseButton>}
-      <Modal show={add} title="Delegate Identity" onClose={handleClose}>
-        <div className="delegate-identity">
-          <p>Controllers can manage the identity but they are not the owners. Only the owners can transfer identities.</p>
-          <p>
-            <strong>Delegate to: </strong>
-            <input
-              type="text"
-              value={newDelegate}
-              onChange={evt => setNewDelegate(evt.target.value)}
-              placeholder="address"
-              className="line"
-              disabled={isLoading}
-            />
-          </p>
-          <BaseButton className="blue" disabled={isLoading} onClick={handleAddDelegate}>Add controller</BaseButton>
-          {isError && <p>{isError}</p>}
-        </div>
-      </Modal>
+      <EditValueModal
+        show={isAdding}
+        onClose={handleClose}
+        className="delegate-identity"
+        onConfirm={handleAddDelegate}
+        disabled={isLoading}
+        error={isError}
+        initValue='0xEe3D5f22Ea0FF393AeEf5Cf88a81E7d44979633B'
+        strings={{
+          title: 'Delegate Identity',
+          intro: 'Controllers can manage the identity but they are not the owners. Only the owners can transfer identities.',
+          label: 'Delegate to',
+          submit: 'Add delegate',
+          placeholder: 'Address'
+        }}
+      />
     </Panel>
   )
 }

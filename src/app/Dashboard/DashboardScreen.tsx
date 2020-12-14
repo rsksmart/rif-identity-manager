@@ -1,6 +1,5 @@
 import React from 'react'
 import IdentitySummary from './panels/IdentitySummary'
-import { Authentication } from 'did-resolver'
 import Balance from './panels/Balance'
 import { Token } from '../state/reducers/tokens'
 import DataVaultSummary from './panels/DataVaultSummary'
@@ -11,8 +10,6 @@ import { createDidFormat } from '../../formatters'
 interface DashboardScreenInterface {
   chainId?: number | null
   address: string | null
-  owner?: string | null
-  delegates?: Authentication[]
   tokens?: Token[]
   storage?: DataVaultStorageState
   changeOwner: (provider: any, newOwner: string) => any

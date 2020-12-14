@@ -1,4 +1,4 @@
-import { Authentication } from 'did-resolver'
+import { PublicKey } from 'did-resolver'
 import React, { useContext } from 'react'
 import DelegateComponent from './components/DelegateComponent'
 import OwnerComponent from './components/OwnerComponent'
@@ -8,7 +8,7 @@ interface IdentityComponentInterface {
   owner?: string | null
   address: string
   chainId?: number | null
-  delegates?: Authentication[]
+  delegates?: PublicKey[]
   changeOwner: (provider: any, newOwner: string) => any
   addDelegate: (provider: any, delegateAddr: string) => any
 }
@@ -18,6 +18,7 @@ const IdentityComponent: React.FC<IdentityComponentInterface> = ({ owner, addres
   const context = useContext(Web3ProviderContext)
 
   const handleChangeOwner = (newOwner: string) => changeOwner(context?.provider, newOwner)
+  const handleAddDelegate = (delegate: string) => addDelegate(context?.provider, delegate)
 
   return (
     <div className="content identity">
@@ -26,7 +27,7 @@ const IdentityComponent: React.FC<IdentityComponentInterface> = ({ owner, addres
           <OwnerComponent owner={owner} chainId={chainId} isOwner={isOwner} changeOwner={handleChangeOwner} />
         </div>
         <div className="column">
-          <DelegateComponent delegates={delegates} addDelegate={addDelegate} isOwner={isOwner} />
+          <DelegateComponent delegates={delegates} chainId={chainId} addDelegate={handleAddDelegate} isOwner={isOwner} />
         </div>
       </div>
     </div>
