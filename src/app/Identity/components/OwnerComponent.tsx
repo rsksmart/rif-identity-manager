@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { createDidFormat, truncateAddressDid } from '../../../formatters'
-import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import Panel from '../../../components/Panel/Panel'
@@ -57,12 +56,14 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
   const ownerDid = owner && chainId && createDidFormat(owner, chainId, true)
 
   return (
-    <Panel title="Persona owner">
+    <Panel
+      title="Persona owner"
+      headerRight={isOwner && <button onClick={() => setIsEditing(true)}>Transfer</button>}
+    >
       <h2>Owner</h2>
       <p className="value">
         {ownerDid && <ToolTip hoverContent={ownerDid}>{truncateAddressDid(ownerDid)}</ToolTip>}
       </p>
-      {isOwner && <BaseButton onClick={() => setIsEditing(true)}>Transfer</BaseButton>}
 
       <EditValueModal
         show={isEditing}

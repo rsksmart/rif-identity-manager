@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { PublicKey } from 'did-resolver'
-import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import { createDidFormat, truncateAddressDid } from '../../../formatters'
 import ToolTip from '../../../components/Tooltip/Tooltip'
@@ -65,7 +64,10 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
   }
 
   return (
-    <Panel title="Delegate Identity">
+    <Panel
+      title="Delegate Identity"
+      headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Delegate</button>}
+    >
       <h2>Delegates</h2>
       <ul className="value">
         {delegates?.length === 0 && <li><em>No delegates for this persona.</em></li>}
@@ -79,9 +81,6 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
           )
         })}
       </ul>
-      <p>
-        {isOwner && <BaseButton onClick={() => setIsAdding(true)}>Add Delegate</BaseButton>}
-      </p>
 
       <EditValueModal
         show={isAdding}
