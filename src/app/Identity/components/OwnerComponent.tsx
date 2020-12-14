@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { truncateAddressDid } from '../../formatters'
-import { Web3ProviderContext } from '../../providerContext'
-import { BaseButton } from '../Buttons'
+import { truncateAddressDid } from '../../../formatters'
+import { Web3ProviderContext } from '../../../providerContext'
+import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../Modal/Modal'
-import ToolTip from '../Tooltip/Tooltip'
+import Modal from '../../../components/Modal/Modal'
+import ToolTip from '../../../components/Tooltip/Tooltip'
+import Panel from '../../../components/Panel/Panel'
 
 interface OwnerComponentInterface {
   owner?: string | null
@@ -58,8 +59,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
   }
 
   return (
-    <div className="column">
-      <h2>Owner</h2>
+    <Panel title="Owner">
       <p className="value">
         {owner && <ToolTip hoverContent={owner}>{truncateAddressDid(owner)}</ToolTip>}
       </p>
@@ -84,7 +84,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
           {isError && <p>{isError}</p>}
         </div>
       </Modal>
-    </div>
+    </Panel>
   )
 }
 

@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { Authentication } from 'did-resolver'
-import { Web3ProviderContext } from '../../providerContext'
-import { BaseButton } from '../Buttons'
+import { Web3ProviderContext } from '../../../providerContext'
+import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../Modal/Modal'
-import { truncateAddressDid } from '../../formatters'
-import ToolTip from '../Tooltip/Tooltip'
+import Modal from '../../../components/Modal/Modal'
+import { truncateAddressDid } from '../../../formatters'
+import ToolTip from '../../../components/Tooltip/Tooltip'
+import Panel from '../../../components/Panel/Panel'
 
 interface DelegateComponentInterface {
   delegates?: Authentication[] | null
@@ -65,8 +66,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
   }
 
   return (
-    <div className="column">
-      <h2>Controllers</h2>
+    <Panel title="Delegate Identity">
       <ul className="value">
         {delegates?.map((delegate: Authentication) =>
           <li key={delegate.publicKey}>
@@ -96,7 +96,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
           {isError && <p>{isError}</p>}
         </div>
       </Modal>
-    </div>
+    </Panel>
   )
 }
 

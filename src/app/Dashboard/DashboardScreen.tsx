@@ -1,5 +1,5 @@
 import React from 'react'
-import IdentityInformationComponent from './panels/IdentityInformation'
+import IdentitySummary from './panels/IdentitySummary'
 import { Authentication } from 'did-resolver'
 import Balance from './panels/Balance'
 import { Token } from '../state/reducers/tokens'
@@ -25,13 +25,9 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({
 }) => {
   return (
     <div className="content dashboard">
-      <IdentityInformationComponent
+      <IdentitySummary
         address={address}
         chainId={chainId}
-        owner={owner}
-        delegates={delegates}
-        changeOwner={changeOwner}
-        addDelegate={addDelegate}
       />
       <div className="container">
         <div className="column">
