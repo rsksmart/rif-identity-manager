@@ -4,6 +4,7 @@ import Navigation, { screens } from './components/Navigation'
 import DashboardContainer from '../Dashboard/DashboardContainer'
 import DataVaultContainer from '../DataVault/DataVaultContainer'
 import { Web3ProviderContext } from '../../providerContext'
+import IdentityContainer from '../Identity/IdentityContainer'
 
 interface AuthenticatedComponentInterface {
   chainId: number | null
@@ -26,6 +27,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
       />
       {screen === screens.DASHBOARD && <DashboardContainer changeScreen={changeScreen} />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}
+      {screen === screens.IDENTITY && <IdentityContainer />}
     </>
   )
 }
