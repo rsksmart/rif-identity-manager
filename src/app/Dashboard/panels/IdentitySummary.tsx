@@ -2,27 +2,26 @@ import React from 'react'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
 import Panel from '../../../components/Panel/Panel'
 import ToolTip from '../../../components/Tooltip/Tooltip'
-import { displayIdentity } from '../../../formatters'
+import { truncateAddressDid } from '../../../formatters'
 
 interface IdentityInformationPanelI {
-  address?: string | null
-  chainId?: number | null
+  did?: string
 }
 
-const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId }) =>
-  (!address || !chainId) ? <LoadingComponent />
+const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ did }) =>
+  !did ? <LoadingComponent />
     : (
       <div className="container">
         <div className="column">
           <Panel
-            title="Identity information"
+            title="Persona information"
             className="identity-information"
           >
             <div className="container">
               <div className="column">
-                <h2>Identity Address</h2>
+                <h2>Persona Address</h2>
                 <p className="value">
-                  <ToolTip hoverContent={address}>{displayIdentity(address, chainId)}</ToolTip>
+                  <ToolTip hoverContent={did}>{truncateAddressDid(did)}</ToolTip>
                 </p>
               </div>
             </div>

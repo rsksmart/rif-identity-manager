@@ -1,32 +1,29 @@
-import React, { useContext, useState } from 'react'
-import { truncateAddressDid } from '../../../formatters'
-import { Web3ProviderContext } from '../../../providerContext'
+import React, { useState } from 'react'
+import { createDidFormat, truncateAddressDid } from '../../../formatters'
 import { BaseButton } from '../../../components/Buttons'
 import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
-import Modal from '../../../components/Modal/Modal'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import Panel from '../../../components/Panel/Panel'
+import EditValueModal from '../../../components/Modal/EditValueModal'
 
 interface OwnerComponentInterface {
   owner?: string | null
   isOwner: boolean
   chainId?: number | null
-  changeOwner: (provider: any, newOwner: string) => any
+  changeOwner: (newOwner: string) => any
 }
 
 const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, chainId, changeOwner }) => {
-  const [edit, setEdit] = useState<boolean>(false)
-  const [newOwner, setNewOwner] = useState<string>('')
+  const [isEditing, setIsEditing] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<null | string>(null)
-  const context = useContext(Web3ProviderContext)
 
   const resetState = () => {
     setIsError(null)
     setIsLoading(false)
   }
 
-  const handleSetOwner = () => {
+  const handleSetOwner = (newOwner: string) => {
     resetState()
 
     if (!isValidAddress(newOwner)) {
@@ -39,10 +36,9 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
       return setIsError('Checksum is incorrect.')
     }
     setIsLoading(true)
-    changeOwner(context?.provider, newOwner)
+    changeOwner(newOwner)
       .then(() => {
-        setEdit(false)
-        setNewOwner('')
+        setIsEditing(false)
         resetState()
       })
       .catch((err: Error) => {
@@ -53,37 +49,43 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
 
   const handleClose = () => {
     if (!isLoading) {
-      setEdit(false)
+      setIsEditing(false)
       resetState()
     }
   }
 
+  const ownerDid = owner && chainId && createDidFormat(owner, chainId, true)
+
   return (
-    <Panel title="Owner">
-      <p className="value">
-        {owner && <ToolTip hoverContent={owner}>{truncateAddressDid(owner)}</ToolTip>}
-      </p>
-
-      {isOwner && <BaseButton onClick={() => setEdit(!edit)}>Change Owner</BaseButton>}
-
-      <Modal show={edit} title="Transfer Identity" onClose={handleClose}>
-        <div className="change-owner">
-          <p>Be aware that once you transfer the identity, you will lose ownership and can no longer manage the identity.</p>
-          <p>
-            <strong>Transfer to: </strong>
-            <input
-              type="text"
-              value={newOwner}
-              onChange={evt => setNewOwner(evt.target.value)}
-              placeholder="address"
-              className="line"
-              disabled={isLoading}
-            />
+    <Panel title="Persona owner">
+      <div className="container">
+        <div className="column">
+          <h2>Owner</h2>
+          <p className="value">
+            {ownerDid && <ToolTip hoverContent={ownerDid}>{truncateAddressDid(ownerDid)}</ToolTip>}
           </p>
-          <BaseButton className="blue" disabled={isLoading} onClick={handleSetOwner}>Transfer</BaseButton>
-          {isError && <p>{isError}</p>}
         </div>
-      </Modal>
+        <div className="column">
+          {isOwner && <BaseButton onClick={() => setIsEditing(true)}>Transfer</BaseButton>}
+        </div>
+      </div>
+
+      <EditValueModal
+        show={isEditing}
+        className="change-owner"
+        onConfirm={handleSetOwner}
+        onClose={handleClose}
+        disabled={isLoading}
+        error={isError}
+        initValue={owner || ''}
+        strings={{
+          title: 'Transfer Persona Owner',
+          intro: 'Be aware that once you transfer the identity, you will lose ownership and can no longer manage the identity.',
+          label: 'Transfer to',
+          placeholder: 'address',
+          submit: 'Transfer'
+        }}
+      />
     </Panel>
   )
 }
