@@ -90,6 +90,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
         disabled={isLoading}
         error={isError}
         initValue='0xEe3D5f22Ea0FF393AeEf5Cf88a81E7d44979633B'
+        isLoading={isLoading}
         strings={{
           title: 'Delegate Identity',
           intro: 'Controllers can manage the identity but they are not the owners. Only the owners can transfer identities.',

@@ -71,6 +71,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
         onConfirm={handleSetOwner}
         onClose={handleClose}
         disabled={isLoading}
+        isLoading={isLoading}
         error={isError}
         initValue={owner || ''}
         strings={{
