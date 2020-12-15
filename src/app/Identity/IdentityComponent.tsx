@@ -41,10 +41,10 @@ const IdentityComponent: React.FC<IdentityComponentInterface> = ({
       </div>
       <div className="container">
         <div className="column">
-          <PublicKeys publicKeys={publicKeys} addKey={handleAddAttribute} />
+          <PublicKeys publicKeys={publicKeys} addKey={handleAddAttribute} isOwner={isOwner} />
         </div>
         <div className="column">
-          <ServiceEndPoints endpoints={service} addEndpoint={handleAddAttribute} />
+          <ServiceEndPoints endpoints={service} addEndpoint={handleAddAttribute} isOwner={isOwner} />
         </div>
       </div>
     </div>

@@ -7,10 +7,11 @@ import LoadingComponent from '../../../components/Loading/LoadingComponent'
 
 interface PublicAttributesInterface {
   addKey: (type: string, value: string, validity: number) => Promise<any>
-  publicKeys?: PublicKey[],
+  publicKeys?: PublicKey[]
+  isOwner: boolean
 }
 
-const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, addKey }) => {
+const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, addKey, isOwner }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<null | string>(null)
@@ -55,7 +56,7 @@ const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, add
     <>
       <Panel
         title="Public Keys"
-        headerRight={<button onClick={() => setIsAdding(true)}>Add Public Key</button>}
+        headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Public Key</button>}
       >
         <h2>Public Keys</h2>
         <ul>

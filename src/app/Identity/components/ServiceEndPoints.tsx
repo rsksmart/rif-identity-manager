@@ -8,9 +8,10 @@ import LoadingComponent from '../../../components/Loading/LoadingComponent'
 interface ServiceEndPointsInterface {
   endpoints?: ServiceEndpoint[],
   addEndpoint: (name: string, url: string, validity: number) => Promise<any>
+  isOwner: boolean
 }
 
-const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addEndpoint }) => {
+const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addEndpoint, isOwner }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
@@ -56,7 +57,10 @@ const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addE
 
   return (
     <>
-      <Panel title="Service Endpoints" headerRight={<button onClick={() => setIsAdding(true)}>Add Endpoint</button>}>
+      <Panel
+        title="Service Endpoints"
+        headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Endpoint</button>}
+      >
         <h2>Active Endpoints</h2>
         <ul>
           {endpoints?.length === 0 && <li><em>No service endpoints setup.</em></li>}
