@@ -37,7 +37,7 @@ describe('Component: ServiceEndPoints', () => {
 
     await act(async () => {
       wrapper.find('button.submit').simulate('click')
-      expect(addEndpoint).toBeCalledWith('did/svc/test', 'https://123', '600')
+      expect(addEndpoint).toBeCalledWith('did/svc/test', 'https://123', 600)
     })
   })
 })

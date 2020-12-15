@@ -1,6 +1,6 @@
 import { Dispatch } from 'react'
 import EthrDID from '@rsksmart/ethr-did'
-import { getAccountAndNetwork } from '../../../ethrpc'
+import { getAccountAndNetwork, transactionListener, transactionListenerI } from '../../../ethrpc'
 import { resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
@@ -62,9 +62,11 @@ export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispa
     )
   })
 
-export const addAttribute = (provider: any, type: string, value: string, validity?: number) => (dispatch: Dispatch<any>) => {
-  console.log('adding', type, value, validity)
-  return new Promise((resolve, reject) => {
+export const addAttribute = (provider: any, type: string, value: string, validity?: number) => (dispatch: Dispatch<any>) =>
+  new Promise((resolve, reject) => {
+    const callback = (response: transactionListenerI) =>
+      response.error ? reject(response.error) : resolve(dispatch(resolveDidDocument(provider)))
+
     getAccountAndNetwork(provider).then(([address, chainId]) =>
       new EthrDID({
         address: address,
@@ -72,18 +74,7 @@ export const addAttribute = (provider: any, type: string, value: string, validit
         registry: getDIDRegistryAddress(parseInt(chainId))
       })
         .setAttribute(type, value, validity)
-        .then((response: any) => {
-          dispatch(resolveDidDocument(provider))
-          resolve(response)
-        })
+        .then((tx: string) => transactionListener(provider, tx, callback))
         .catch((err: Error) => reject(err))
     )
   })
-}
-// .setAttribute('did/pub/Ed25519/veriKey/base64', 'mypublickey')
-// .setAttribute('did/svc/HubService', 'https://jesse.photo')
-
-/*
-export const addServiceEndpoint = (provider: any, name: string, url: string, validity: number) => (dispatch: Dispatch<any>) =>
-  dispatch(addAttribute(provider, `did/svc/${name}`, url, validity))
-*/

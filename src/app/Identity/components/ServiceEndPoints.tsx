@@ -14,11 +14,9 @@ const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addE
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
-  const [values, setValues] = useState<{ name: string, url: string, validity: number}>({
-    name: '',
-    url: '',
-    validity: 86400
-  })
+
+  const defaults = { name: '', url: '', validity: '86400' }
+  const [values, setValues] = useState<{ name: string, url: string, validity: string}>(defaults)
 
   const sharedProps = (id: string) => ({
     type: 'text',
@@ -44,11 +42,11 @@ const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addE
       return setIsError('Name should not contain spaces.')
     }
 
-    addEndpoint(`did/svc/${values.name}`, values.url, values.validity)
+    addEndpoint(`did/svc/${values.name}`, values.url, parseInt(values.validity))
       .then(() => {
         setIsLoading(false)
         setIsAdding(false)
-        setValues({ name: '', url: '', validity: 86400 })
+        setValues(defaults)
       })
       .catch((err: Error) => {
         setIsLoading(false)

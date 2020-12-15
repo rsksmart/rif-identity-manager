@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-input[type=text].line, textarea.line {
+input[type=text].line, textarea.line, select.line {
   margin-left: 5px;
   border-top: none;
   border-right: none;
@@ -37,7 +37,7 @@ fieldset {
       }
     }
 
-    input {
+    input, textarea, select {
       flex: 3;
       width: 100%;
     }

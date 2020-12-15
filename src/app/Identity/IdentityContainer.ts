@@ -17,7 +17,7 @@ const mapStateToProps = (state: stateInterface) => ({
   owner: getOwnerFromDidDoc(state.ethrdid.didDocument),
   delegates: state.ethrdid.didDocument.publicKey?.filter((pk: PublicKey) => !pk.id.endsWith('controller')),
   service: state.ethrdid.didDocument.service,
-  publicKeys: state.ethrdid.didDocument.publicKey?.filter((pk: PublicKey) => pk.publicKeyBase64)
+  publicKeys: state.ethrdid.didDocument.publicKey?.filter((pk: PublicKey) => pk.publicKeyBase64 || pk.publicKeyHex)
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
