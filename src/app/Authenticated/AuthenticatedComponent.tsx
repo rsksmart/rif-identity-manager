@@ -8,6 +8,7 @@ import { Web3ProviderContext } from '../../providerContext'
 import IdentityContainer from '../Identity/IdentityContainer'
 import { createDidFormat } from '../../formatters'
 import { DataVaultKey } from '../state/reducers/datavault'
+import DefiContainer from '../DeFi/DeFiContainer'
 
 interface AuthenticatedComponentInterface {
   chainId: number | null
@@ -40,6 +41,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
       {screen === screens.DASHBOARD && <DashboardContainer changeScreen={changeScreen} />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}
       {screen === screens.IDENTITY && <IdentityContainer />}
+      {screen === screens.DEFI && <DefiContainer />}
     </>
   )
 }

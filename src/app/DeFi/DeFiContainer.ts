@@ -1,15 +1,12 @@
+import { ThunkDispatch } from 'redux-thunk'
 import { connect } from 'react-redux'
 import { stateInterface } from '../state/configureStore'
-import DasboardScreen from './DashboardScreen'
-import { ThunkDispatch } from 'redux-thunk'
+import DeFiComponent from './DeFiComponent'
 import { AnyAction } from 'redux'
 import { addCustomToken } from '../state/operations/tokens'
 
 const mapStateToProps = (state: stateInterface) => ({
-  address: state.identity.address,
-  chainId: state.identity.chainId,
-  tokens: state.tokens.tokens,
-  storage: state.datavault.storage
+  tokens: state.tokens.tokens
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
@@ -19,7 +16,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyActio
 const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => ({
   ...stateProps,
   ...dispatchProps,
-  ...ownProps
+  ...ownProps,
+  addCustomToken: (provider: any, tokenAddr: string) => dispatchProps.addCustomToken(provider, stateProps.address, tokenAddr, stateProps.chainId)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(DasboardScreen)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(DeFiComponent)

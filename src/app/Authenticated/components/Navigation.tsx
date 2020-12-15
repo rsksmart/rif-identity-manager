@@ -4,7 +4,8 @@ import React from 'react'
 export enum screens {
   DASHBOARD = 'dashboard',
   DATAVAULT = 'datavault',
-  IDENTITY = 'identity'
+  IDENTITY = 'identity',
+  DEFI = 'defi'
 }
 
 interface NavigationInterface {
@@ -19,6 +20,9 @@ const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, ha
       <ul className="navigation">
         <li className={selected === screens.DASHBOARD ? 'active' : ''}>
           <button onClick={() => handleClick(screens.DASHBOARD)}>Dashboard</button>
+        </li>
+        <li className={selected === screens.DEFI ? 'active' : ''}>
+          <button onClick={() => handleClick(screens.DEFI)}>DeFi Assets</button>
         </li>
         {showDataVault && (
           <li className={selected === screens.DATAVAULT ? 'active' : ''}>
