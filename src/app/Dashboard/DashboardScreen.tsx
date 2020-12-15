@@ -3,6 +3,7 @@ import IdentitySummary from './panels/IdentitySummary'
 import DataVaultSummary from './panels/DataVaultSummary'
 import { screens } from '../Authenticated/components/Navigation'
 import { DataVaultStorageState } from '../state/reducers/datavault'
+import DeFiSummary from './panels/DeFiSummary'
 
 interface DashboardScreenInterface {
   chainId?: number | null
@@ -19,7 +20,7 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({
       {address && chainId && <IdentitySummary address={address} chainId={chainId} />}
       <div className="container">
         <div className="column">
-          Balance Summary
+          <DeFiSummary />
         </div>
         <div className="column">
           <DataVaultSummary storage={storage} handleButton={() => changeScreen(screens.DATAVAULT)} />
