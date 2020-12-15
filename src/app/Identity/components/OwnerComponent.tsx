@@ -4,6 +4,7 @@ import { isValidAddress, isValidChecksumAddress } from 'rskjs-util'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import Panel from '../../../components/Panel/Panel'
 import EditValueModal from '../../../components/Modal/EditValueModal'
+import PersonaIcon from '../../../assets/images/icons/persona.svg'
 
 interface OwnerComponentInterface {
   owner?: string | null
@@ -57,7 +58,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
 
   return (
     <Panel
-      title="Persona owner"
+      title={<><img src={PersonaIcon} /> Persona owner</>}
       headerRight={isOwner && <button onClick={() => setIsEditing(true)}>Transfer</button>}
     >
       <h2>Owner</h2>
@@ -73,7 +74,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
         disabled={isLoading}
         isLoading={isLoading}
         error={isError}
-        initValue={owner || ''}
+        initValue={''}
         strings={{
           title: 'Transfer Persona Owner',
           intro: 'Be aware that once you transfer the identity, you will lose ownership and can no longer manage the identity.',

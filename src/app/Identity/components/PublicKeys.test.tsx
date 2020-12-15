@@ -5,7 +5,7 @@ import PublicKeys from './PublicKeys'
 
 describe('Component: PublicKeys', () => {
   it('renders the component', () => {
-    const wrapper = mount(<PublicKeys addKey={jest.fn()} />)
+    const wrapper = mount(<PublicKeys addKey={jest.fn()} isOwner={true} />)
     expect(wrapper).toBeDefined()
   })
 
@@ -13,7 +13,7 @@ describe('Component: PublicKeys', () => {
     const addEndpoint = jest.fn()
     const addKey = (type: string, value: string, validity: number) =>
       new Promise((resolve) => resolve(addEndpoint(type, value, validity)))
-    const wrapper = mount(<PublicKeys addKey={addKey} />)
+    const wrapper = mount(<PublicKeys addKey={addKey} isOwner={true} />)
 
     beforeEach(() => {
       wrapper.find('.panel-right').find('button').simulate('click')

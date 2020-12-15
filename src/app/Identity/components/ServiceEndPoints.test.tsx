@@ -5,7 +5,7 @@ import ServiceEndPoints from './ServiceEndPoints'
 
 describe('Component: ServiceEndPoints', () => {
   it('renders the component', () => {
-    const wrapper = mount(<ServiceEndPoints addEndpoint={jest.fn()} />)
+    const wrapper = mount(<ServiceEndPoints addEndpoint={jest.fn()} isOwner={true} />)
     expect(wrapper).toBeDefined()
   })
 
@@ -14,7 +14,7 @@ describe('Component: ServiceEndPoints', () => {
       { id: '1', type: 'Exchange', serviceEndpoint: 'https://theExchange' },
       { id: '2', type: 'Identity', serviceEndpoint: 'https://Identity' }
     ]
-    const wrapper = mount(<ServiceEndPoints addEndpoint={jest.fn()} endpoints={endpoints} />)
+    const wrapper = mount(<ServiceEndPoints addEndpoint={jest.fn()} endpoints={endpoints} isOwner={true} />)
 
     expect(wrapper.find('.endpoint').first().text()).toBe('Exchange - https://theExchange')
     expect(wrapper.find('.endpoint').at(1).text()).toBe('Identity - https://Identity')
@@ -25,6 +25,7 @@ describe('Component: ServiceEndPoints', () => {
     const wrapper = mount(
       <ServiceEndPoints
         addEndpoint={(name: string, url: string, validity: number) => new Promise((resolve) => resolve(addEndpoint(name, url, validity)))}
+        isOwner={true}
       />
     )
 

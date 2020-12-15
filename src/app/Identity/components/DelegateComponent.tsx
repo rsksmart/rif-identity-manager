@@ -5,6 +5,7 @@ import { createDidFormat, truncateAddressDid } from '../../../formatters'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import Panel from '../../../components/Panel/Panel'
 import EditValueModal from '../../../components/Modal/EditValueModal'
+import DelegateIcon from '../../../assets/images/icons/delegate.svg'
 
 interface DelegateComponentInterface {
   delegates?: PublicKey[] | null
@@ -36,14 +37,11 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
       return setIsError('Checksum is incorrect.')
     }
 
-    /*
-    if (delegates?.filter(item => item.publicKey.indexOf(newDelegate.toLowerCase()) !== -1).length !== 0) {
+    if (delegates?.filter(item => item.ethereumAddress?.indexOf(newDelegate.toLowerCase()) !== -1).length !== 0) {
       resetState()
       return setIsError('This address is already a delegate.')
     }
-    */
 
-    console.log('setting delegate', newDelegate)
     setIsLoading(true)
     addDelegate(newDelegate)
       .then(() => {
@@ -65,7 +63,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
 
   return (
     <Panel
-      title="Delegate Identity"
+      title={<><img src={DelegateIcon} /> Delegate Identity</>}
       headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Delegate</button>}
     >
       <h2>Delegates</h2>
@@ -89,7 +87,7 @@ const DelegateComponent: React.FC<DelegateComponentInterface> = ({ delegates, ch
         onConfirm={handleAddDelegate}
         disabled={isLoading}
         error={isError}
-        initValue='0xEe3D5f22Ea0FF393AeEf5Cf88a81E7d44979633B'
+        initValue=''
         isLoading={isLoading}
         strings={{
           title: 'Delegate Identity',

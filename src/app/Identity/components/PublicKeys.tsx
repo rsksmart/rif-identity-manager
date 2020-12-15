@@ -4,6 +4,7 @@ import Panel from '../../../components/Panel/Panel'
 import Modal from '../../../components/Modal/Modal'
 import { BaseButton } from '../../../components/Buttons'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
+import KeyIcon from '../../../assets/images/icons/key.svg'
 
 interface PublicAttributesInterface {
   addKey: (type: string, value: string, validity: number) => Promise<any>
@@ -55,7 +56,7 @@ const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, add
   return (
     <>
       <Panel
-        title="Public Keys"
+        title={<><img src={KeyIcon} /> Public Keys</>}
         headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Public Key</button>}
       >
         <h2>Public Keys</h2>

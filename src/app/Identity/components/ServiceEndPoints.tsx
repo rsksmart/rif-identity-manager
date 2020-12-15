@@ -4,6 +4,7 @@ import Panel from '../../../components/Panel/Panel'
 import Modal from '../../../components/Modal/Modal'
 import { BaseButton } from '../../../components/Buttons'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
+import computerIcon from '../../../assets/images/icons/computer.svg'
 
 interface ServiceEndPointsInterface {
   endpoints?: ServiceEndpoint[],
@@ -58,12 +59,12 @@ const ServiceEndPoints: React.FC<ServiceEndPointsInterface> = ({ endpoints, addE
   return (
     <>
       <Panel
-        title="Service Endpoints"
+        title={<><img src={computerIcon} /> Service Endpoints</>}
         headerRight={isOwner && <button onClick={() => setIsAdding(true)}>Add Endpoint</button>}
       >
         <h2>Active Endpoints</h2>
         <ul>
-          {endpoints?.length === 0 && <li><em>No service endpoints setup.</em></li>}
+          {(!endpoints || endpoints?.length === 0) && <li><em>No service endpoints setup.</em></li>}
           {endpoints?.map((endpoint: ServiceEndpoint) => (
             <li className="endpoint" key={endpoint.id || endpoint.type}>
               <strong>{endpoint.type}</strong> - {endpoint.serviceEndpoint}
