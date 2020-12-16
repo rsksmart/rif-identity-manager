@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BaseButton } from '../Buttons'
+import LoadingComponent from '../Loading/LoadingComponent'
 import Modal from './Modal'
 
 interface EditValueModalInterface {
@@ -8,6 +9,7 @@ interface EditValueModalInterface {
   onConfirm: (value: string) => void
   onClose: () => void
   disabled?: boolean
+  isLoading?: boolean
   error?: string | null
   initValue?: string
   inputType?: 'input' | 'textarea'
@@ -21,7 +23,7 @@ interface EditValueModalInterface {
 }
 
 const EditValueModal: React.FC<EditValueModalInterface> = ({
-  show, className, onConfirm, onClose, disabled, error, initValue, inputType, strings
+  show, className, onConfirm, onClose, disabled, isLoading, error, initValue, inputType, strings
 }) => {
   const [editable, setEditable] = useState<string>('')
   const sharedProps = {
@@ -52,6 +54,7 @@ const EditValueModal: React.FC<EditValueModalInterface> = ({
           className="submit"
         >{strings?.submit || 'Submit'}</BaseButton>
       </p>
+      {isLoading && <LoadingComponent />}
       {error && (
         <div className="error container">
           <div className="alert error">{error}</div>

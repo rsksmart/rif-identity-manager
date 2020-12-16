@@ -3,7 +3,8 @@ import React from 'react'
 
 export enum screens {
   DASHBOARD = 'dashboard',
-  DATAVAULT = 'datavault'
+  DATAVAULT = 'datavault',
+  IDENTITY = 'identity'
 }
 
 interface NavigationInterface {
@@ -24,6 +25,9 @@ const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, ha
             <button onClick={() => handleClick(screens.DATAVAULT)}>Data Vault</button>
           </li>
         )}
+        <li className={selected === screens.IDENTITY ? 'active' : ''}>
+          <button onClick={() => handleClick(screens.IDENTITY)}>Manage Identity</button>
+        </li>
         <li className="disabled">Request Credentials</li>
         <li className="disabled">My Dapps</li>
       </ul>

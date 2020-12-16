@@ -1,17 +1,15 @@
 import React from 'react'
-import IdentityInformationComponent from './panels/IdentityInformation'
-import { Authentication } from 'did-resolver'
+import IdentitySummary from './panels/IdentitySummary'
 import Balance from './panels/Balance'
 import { Token } from '../state/reducers/tokens'
 import DataVaultSummary from './panels/DataVaultSummary'
 import { screens } from '../Authenticated/components/Navigation'
 import { DataVaultStorageState } from '../state/reducers/datavault'
+import { createDidFormat } from '../../formatters'
 
 interface DashboardScreenInterface {
   chainId?: number | null
   address: string | null
-  owner?: string | null
-  delegates?: Authentication[]
   tokens?: Token[]
   storage?: DataVaultStorageState
   changeOwner: (provider: any, newOwner: string) => any
@@ -21,17 +19,12 @@ interface DashboardScreenInterface {
 }
 
 const DashboardScreen: React.FC<DashboardScreenInterface> = ({
-  chainId, address, owner, delegates, tokens, changeOwner, addDelegate, addCustomToken, changeScreen, storage
+  chainId, address, tokens, addCustomToken, changeScreen, storage
 }) => {
   return (
     <div className="content dashboard">
-      <IdentityInformationComponent
-        address={address}
-        chainId={chainId}
-        owner={owner}
-        delegates={delegates}
-        changeOwner={changeOwner}
-        addDelegate={addDelegate}
+      <IdentitySummary
+        did={(address && chainId) ? createDidFormat(address, chainId) : undefined}
       />
       <div className="container">
         <div className="column">

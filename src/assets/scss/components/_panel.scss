@@ -1,0 +1,38 @@
+.panel {
+  h2 {
+    font-size: 14px;
+    font-weight: 500 !important;
+    color: $gray;
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 8px;
+      margin: 0 0 8px 0;
+      border-bottom: 1px dashed $lightGray;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .panel-right {
+    button {
+      border: none;
+      background: none;
+      color: $blue;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      color: $gray;
+    }
+  }
+}
