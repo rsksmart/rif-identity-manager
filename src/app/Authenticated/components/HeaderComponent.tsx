@@ -23,10 +23,13 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
       </div>
       <h1 className="persona">
         {did && (
-          <ToolTip hoverContent={did}>
+          <>
             <UserIcon value={did} size={40} />
-            <div>{persona.DD_NAME[0].content !== '' ? persona.DD_NAME[0].content : truncateAddressDid(did)}</div>
-          </ToolTip>
+            {persona.DD_NAME[0].content !== ''
+              ? <div>{persona.DD_NAME[0].content}</div>
+              : <ToolTip hoverContent={did}><div>{truncateAddressDid(did)}</div></ToolTip>
+            }
+          </>
         )}
       </h1>
       {hasDataVault && (
