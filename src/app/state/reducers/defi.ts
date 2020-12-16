@@ -14,23 +14,25 @@ export const tokenInitialState: Token = {
   balance: 0
 }
 
-export interface TokenState {
-  tokens: Token[]
+export interface DefiState {
+  tokens: Token[],
+  gas: number | null
 }
 
 export const initialState = {
-  tokens: []
+  tokens: [],
+  gas: null
 }
 
 interface addTokenDataPayload {
   data: Token
 }
 
-const tokensSlice = createSlice({
+const defiSlice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {
-    addTokenData (state: TokenState, { payload: { data } }: PayloadAction<addTokenDataPayload>) {
+    addTokenData (state: DefiState, { payload: { data } }: PayloadAction<addTokenDataPayload>) {
       const formattedPayload = { ...data, address: data.address.toLowerCase() }
       if (state.tokens.filter((item: Token) => item.address === formattedPayload.address).length === 0) {
         state.tokens.push({ ...tokenInitialState, ...formattedPayload })
@@ -38,10 +40,13 @@ const tokensSlice = createSlice({
         state.tokens = state.tokens.map((item: Token) =>
           (item.address === formattedPayload.address) ? { ...item, ...formattedPayload } : item)
       }
+    },
+    receiveGas (state: DefiState, { payload: { gas } }: PayloadAction<{ gas: number }>) {
+      state.gas = gas
     }
   }
 })
 
-export const { addTokenData } = tokensSlice.actions
+export const { addTokenData, receiveGas } = defiSlice.actions
 
-export default tokensSlice.reducer
+export default defiSlice.reducer

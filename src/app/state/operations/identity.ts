@@ -4,7 +4,7 @@ import { rLogin } from '../../../features/rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
-import { getTokenList } from './tokens'
+import { getTokenList } from './defi'
 import { createClient, getDataVaultContent, getStorageInformation } from './datavault'
 import { createDidFormat } from '../../../formatters'
 

@@ -3,7 +3,7 @@ import Eth from 'ethjs-query'
 import EthContract from 'ethjs-contract'
 import BN from 'bn.js'
 import erc20abi from './erc20.json'
-import { addTokenData } from '../reducers/tokens'
+import { addTokenData } from '../reducers/defi'
 import { getTokens } from '../../../config/getConfig'
 import { saveToLocalStorage, getValueFromLocalStorage } from '../../../storage/localStorage'
 

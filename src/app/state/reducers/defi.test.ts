@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import tokenSlice, { addTokenData, TokenState, initialState, tokenInitialState } from './tokens'
+import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveGas } from './defi'
 
 describe('token slide', () => {
   describe('action creators', () => {
@@ -12,10 +12,14 @@ describe('token slide', () => {
       }
       expect(addTokenData({ data })).toEqual({ type: addTokenData.type, payload: { data } })
     })
+
+    test('receiveGas', () => {
+      expect(receiveGas({ gas: 0.1268 })).toEqual({ type: receiveGas.type, payload: { gas: 0.1268 } })
+    })
   })
 
   describe('reducer', () => {
-    let store: Store<TokenState, AnyAction>
+    let store: Store<DefiState, AnyAction>
 
     beforeEach(() => {
       store = configureStore({ reducer: tokenSlice })
@@ -29,20 +33,22 @@ describe('token slide', () => {
       store.dispatch(addTokenData({ data: { address: '0x987' } }))
 
       expect(store.getState()).toEqual({
+        ...initialState,
         tokens: [
           { ...tokenInitialState, address: '0x987' }
         ]
       })
     })
 
-    test('addTokendata', () => {
+    test('it adds items one at at time', () => {
       store.dispatch(addTokenData({ data: { address: '0x123', name: 'test' } }))
       store.dispatch(addTokenData({ data: { address: '0x123', symbol: 'TEST' } }))
       store.dispatch(addTokenData({ data: { address: '0x123', balance: 6 } }))
 
       expect(store.getState()).toEqual({
+        ...initialState,
         tokens: [
-          { ...tokenInitialState, address: '0x123', balance: 6, name: 'test', symbol: 'TEST' }
+          { address: '0x123', balance: 6, name: 'test', symbol: 'TEST' }
         ]
       })
     })
@@ -52,9 +58,8 @@ describe('token slide', () => {
       store.dispatch(addTokenData({ data: { address: '0x123' } }))
 
       expect(store.getState()).toEqual({
-        tokens: [
-          { ...tokenInitialState, address: '0x123' }
-        ]
+        ...initialState,
+        tokens: [{ ...tokenInitialState, address: '0x123' }]
       })
     })
 
@@ -63,9 +68,8 @@ describe('token slide', () => {
       store.dispatch(addTokenData({ data: { address: '0x123a', name: 'CAPS' } }))
 
       expect(store.getState()).toEqual({
-        tokens: [
-          { ...tokenInitialState, address: '0x123a', name: 'CAPS' }
-        ]
+        ...initialState,
+        tokens: [{ ...tokenInitialState, address: '0x123a', name: 'CAPS' }]
       })
     })
   })

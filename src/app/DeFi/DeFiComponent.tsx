@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token } from '../state/reducers/tokens'
+import { Token } from '../state/reducers/defi'
 import Balance from './panels/Balance'
 
 interface DeFiComponentInterface {

@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { stateInterface } from '../state/configureStore'
 import DeFiComponent from './DeFiComponent'
 import { AnyAction } from 'redux'
-import { addCustomToken } from '../state/operations/tokens'
+import { addCustomToken } from '../state/operations/defi'
 
 const mapStateToProps = (state: stateInterface) => ({
-  tokens: state.tokens.tokens
+  tokens: state.defi.tokens
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
