@@ -3,7 +3,7 @@ import Eth from 'ethjs-query'
 import EthContract from 'ethjs-contract'
 import BN from 'bn.js'
 import erc20abi from './erc20.json'
-import { addTokenData } from '../reducers/defi'
+import { addTokenData, receiveBalance } from '../reducers/defi'
 import { getTokens } from '../../../config/getConfig'
 import { saveToLocalStorage, getValueFromLocalStorage } from '../../../storage/localStorage'
 
@@ -59,3 +59,9 @@ export const addCustomToken = (provider: any, userAddress: string, address: stri
 
     dispatch(getToken(provider, address, userAddress, onComplete))
   })
+
+export const getBalance = (provider: any, address: string) => (dispatch: Dispatch<any>) =>
+  new Eth(provider).getBalance(address)
+    .then((balance: BN) => parseInt(balance.toString()))
+    .then((balance: number) => balance / Math.pow(10, 18))
+    .then((balance:number) => dispatch(receiveBalance({ balance })))

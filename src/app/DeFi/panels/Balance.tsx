@@ -19,7 +19,7 @@ const needHover = (original: number | null | undefined) => {
   return rounded === original ? original : <ToolTip hoverContent={original}>{rounded}</ToolTip>
 }
 
-const SingleToken: React.FC<{ token: Token, key: any }> = ({ token }) => (
+export const SingleToken: React.FC<{ token: Token, key: any }> = ({ token }) => (
   <div className="token">
     <div className="heading-symbol">
       {token.name || `Custom token: ${truncateAddressDid(token.address)}`}</div>

@@ -4,23 +4,31 @@ import DataVaultSummary from './panels/DataVaultSummary'
 import { screens } from '../Authenticated/components/Navigation'
 import { DataVaultStorageState } from '../state/reducers/datavault'
 import DeFiSummary from './panels/DeFiSummary'
+import { Token } from '../state/reducers/defi'
 
 interface DashboardScreenInterface {
   chainId?: number | null
   address: string | null
   storage?: DataVaultStorageState
+  balance: number | null
+  featuredTokens?: Token[]
   changeScreen: (screen: string) => void
 }
 
 const DashboardScreen: React.FC<DashboardScreenInterface> = ({
-  chainId, address, storage, changeScreen
+  chainId, address, storage, balance, featuredTokens, changeScreen
 }) => {
   return (
     <div className="content dashboard">
       {address && chainId && <IdentitySummary address={address} chainId={chainId} />}
       <div className="container">
         <div className="column">
-          <DeFiSummary />
+          <DeFiSummary
+            balance={balance}
+            chainId={chainId}
+            featuredToken={featuredTokens ? featuredTokens[0] : undefined}
+            handleButton={() => changeScreen(screens.DEFI)}
+          />
         </div>
         <div className="column">
           <DataVaultSummary storage={storage} handleButton={() => changeScreen(screens.DATAVAULT)} />

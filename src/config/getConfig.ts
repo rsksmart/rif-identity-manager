@@ -8,7 +8,8 @@ export enum SETTINGS {
   ETHR_DID_CONTRACT = 'ethrDid',
   RPC_URL = 'rpcUrl',
   TOKENS = 'tokens',
-  DATAVAULT = 'dataVault'
+  DATAVAULT = 'dataVault',
+  BALANCE_NAME = 'balanceName'
 }
 
 const getSetting = (chainId: number, setting: SETTINGS) => {
@@ -16,8 +17,7 @@ const getSetting = (chainId: number, setting: SETTINGS) => {
     case 1: return Ethereum[setting]
     case 30: return Mainnet[setting]
     case 31: return Testnet[setting]
-    case 5777: return Local[setting]
-    default: throw new Error(`No setting for chainId ${chainId}`)
+    default: return Local[setting]
   }
 }
 
@@ -25,3 +25,4 @@ export const getDIDRegistryAddress = (chainId: number) => getSetting(chainId, SE
 export const getRPCUrl = (chainId: number) => getSetting(chainId, SETTINGS.RPC_URL)
 export const getTokens = (chainId: number) => getSetting(chainId, SETTINGS.TOKENS)
 export const getDataVault = (chainId: number) => getSetting(chainId, SETTINGS.DATAVAULT)
+export const getBalanceName = (chainId: number) => getSetting(chainId, SETTINGS.BALANCE_NAME) as string

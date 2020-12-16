@@ -16,12 +16,12 @@ export const tokenInitialState: Token = {
 
 export interface DefiState {
   tokens: Token[],
-  gas: number | null
+  balance: number | null
 }
 
 export const initialState = {
   tokens: [],
-  gas: null
+  balance: null
 }
 
 interface addTokenDataPayload {
@@ -41,12 +41,12 @@ const defiSlice = createSlice({
           (item.address === formattedPayload.address) ? { ...item, ...formattedPayload } : item)
       }
     },
-    receiveGas (state: DefiState, { payload: { gas } }: PayloadAction<{ gas: number }>) {
-      state.gas = gas
+    receiveBalance (state: DefiState, { payload: { balance } }: PayloadAction<{ balance: number }>) {
+      state.balance = balance
     }
   }
 })
 
-export const { addTokenData, receiveGas } = defiSlice.actions
+export const { addTokenData, receiveBalance } = defiSlice.actions
 
 export default defiSlice.reducer

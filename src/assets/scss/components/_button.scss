@@ -32,6 +32,11 @@ button.turquoise:hover:not(:disabled) {
   background-color: $blue;
 }
 
+button.full {
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 
 button.circle-plus {
   width: 22px;

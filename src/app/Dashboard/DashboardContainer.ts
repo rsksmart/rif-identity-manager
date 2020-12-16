@@ -3,12 +3,12 @@ import { stateInterface } from '../state/configureStore'
 import DasboardScreen from './DashboardScreen'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { addCustomToken } from '../state/operations/tokens'
+import { addCustomToken } from '../state/operations/defi'
 
 const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
-  tokens: state.tokens.tokens,
+  tokens: state.defi.tokens,
   storage: state.datavault.storage
 })
 

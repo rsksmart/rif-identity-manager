@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveGas } from './defi'
+import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveBalance } from './defi'
 
 describe('token slide', () => {
   describe('action creators', () => {
@@ -13,8 +13,8 @@ describe('token slide', () => {
       expect(addTokenData({ data })).toEqual({ type: addTokenData.type, payload: { data } })
     })
 
-    test('receiveGas', () => {
-      expect(receiveGas({ gas: 0.1268 })).toEqual({ type: receiveGas.type, payload: { gas: 0.1268 } })
+    test('receiveBalance', () => {
+      expect(receiveBalance({ balance: 0.1268 })).toEqual({ type: receiveBalance.type, payload: { balance: 0.1268 } })
     })
   })
 
@@ -71,6 +71,11 @@ describe('token slide', () => {
         ...initialState,
         tokens: [{ ...tokenInitialState, address: '0x123a', name: 'CAPS' }]
       })
+    })
+
+    test('it receives a balance amount', () => {
+      store.dispatch(receiveBalance({ balance: 1.846 }))
+      expect(store.getState().balance).toEqual(1.846)
     })
   })
 })
