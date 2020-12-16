@@ -20,10 +20,10 @@ describe('Component: PublicKeys', () => {
       wrapper.find('textarea#value').simulate('change', { target: { value: 'value', id: 'value' } })
     })
 
-    it('returns secp256ka/veriKey/hex (the defaults)', async () => {
+    it('returns secp256k1/veriKey/hex (the defaults)', async () => {
       await act(async () => {
         wrapper.find('button.submit').simulate('click')
-        expect(addEndpoint).toBeCalledWith('did/pub/Secp256ka/veriKey/hex', 'value', 86400)
+        expect(addEndpoint).toBeCalledWith('did/pub/secp256k1/veriKey/hex', 'value', 86400)
       })
     })
 
@@ -44,7 +44,7 @@ describe('Component: PublicKeys', () => {
 
       await act(async () => {
         wrapper.find('button.submit').simulate('click')
-        expect(addEndpoint).toBeCalledWith('did/pub/Secp256ka/veriKey/hex', 'updatedValue', 60)
+        expect(addEndpoint).toBeCalledWith('did/pub/secp256k1/veriKey/hex', 'updatedValue', 60)
       })
     })
   })

@@ -18,7 +18,7 @@ const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, add
   const [isError, setIsError] = useState<null | string>(null)
 
   const defaults = ({
-    algorithm: 'Secp256ka',
+    algorithm: 'secp256k1',
     purpose: 'veriKey',
     encoding: 'hex',
     validity: '86400',
@@ -72,7 +72,7 @@ const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, add
           <p>
             <label>Key Algorithm</label>
             <select {...sharedProps('algorithm')} value={values.algorithm}>
-              <option value="Secp256ka">Secp256ka</option>
+              <option value="secp256k1">secp256k1</option>
               <option value="rsa">RSA</option>
               <option value="Ed25519">Ed25519</option>
             </select>
@@ -100,7 +100,7 @@ const PublicAttributes: React.FC<PublicAttributesInterface> = ({ publicKeys, add
             <textarea {...sharedProps('value')}></textarea>
           </p>
 
-          <BaseButton className="submit" disabled={isLoading} onClick={handleAddKey}>Add Endpoint</BaseButton>
+          <BaseButton className="submit" disabled={isLoading} onClick={handleAddKey}>Add Public Key</BaseButton>
           {isError && <div className="alert error">{isError}</div>}
           {isLoading && <LoadingComponent />}
         </fieldset>
