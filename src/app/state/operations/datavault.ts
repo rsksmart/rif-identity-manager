@@ -78,7 +78,6 @@ export const swapDataVaultContent = (client: DataVaultWebClient, key: string, co
 export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
   client.getStorageInformation()
     .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))
-    .catch((err: Error) => console.log('could not get storage', err))
 
 /**
  * Helper function that loops through DataVault items and decides if key & value should be created, updated, or removed
