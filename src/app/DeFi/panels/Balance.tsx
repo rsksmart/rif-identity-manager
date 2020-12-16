@@ -1,36 +1,21 @@
 import React, { useContext, useState } from 'react'
-import { BaseButton } from '../../../components/Buttons'
-import Modal from '../../../components/Modal/Modal'
 import Panel from '../../../components/Panel/Panel'
 import { Web3ProviderContext } from '../../../providerContext'
 import { Token } from '../../state/reducers/defi'
 import { isValidAddress } from 'rskjs-util'
-import ToolTip from '../../../components/Tooltip/Tooltip'
 import { truncateAddressDid } from '../../../formatters'
+import BalanceRow from '../../../components/BalanceRow/BalanceRow'
+import EditValueModal from '../../../components/Modal/EditValueModal'
+import { getBalanceName } from '../../../config/getConfig'
 
 interface BalanceInterface {
   tokens?: Token[]
   addCustomToken: (provider: any, tokenAddress: string) => any
+  chainId: number
+  balance: number | null
 }
 
-const needHover = (original: number | null | undefined) => {
-  if (!original) { return original }
-  const rounded = parseFloat(original.toFixed(8))
-  return rounded === original ? original : <ToolTip hoverContent={original}>{rounded}</ToolTip>
-}
-
-export const SingleToken: React.FC<{ token: Token, key: any }> = ({ token }) => (
-  <div className="token">
-    <div className="heading-symbol">
-      {token.name || `Custom token: ${truncateAddressDid(token.address)}`}</div>
-    <div>
-      <span className="balance">{needHover(token.balance)}</span>
-      <span className="symbol">{token.symbol}</span>
-    </div>
-  </div>
-)
-
-const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
+const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, addCustomToken }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [newAddress, setNewAddress] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -66,30 +51,40 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, addCustomToken }) => {
     <Panel
       title="Identity Balance"
       className="identity-balance"
-      headerRight={<button onClick={togglePopup} className="circle-plus">+</button>}
+      headerRight={<button onClick={togglePopup}>Watch Asset</button>}
     >
-      {tokens?.map((token: Token) => <SingleToken key={token.address} token={token} />)}
+      {balance && (
+        <BalanceRow
+          name="Balance"
+          className="defaultBalance"
+          balance={balance}
+          symbol={getBalanceName(chainId)}
+        />
+      )}
 
-      <Modal show={isAdding} title="Add token" onClose={togglePopup}>
-        <p>Add an ERC20 or ERC721 token to the dashboard.</p>
-        <p>
-          <strong>Token to Add:</strong>
-          <input
-            type="text"
-            value={newAddress}
-            onChange={evt => setNewAddress(evt.target.value)}
-            placeholder="contract address"
-            className="line"
-            disabled={isLoading}
-          />
-        </p>
-        <BaseButton
-          onClick={addToken}
-          className="blue"
-          disabled={isLoading}
-        >Add Token</BaseButton>
-        {isError && <p>{isError}</p>}
-      </Modal>
+      {tokens?.map((token: Token) =>
+        <BalanceRow
+          key={token.address}
+          name={token.name || `Custom token: ${truncateAddressDid(token.address)}`}
+          balance={token.balance}
+          symbol={token.symbol}
+        />
+      )}
+
+      <EditValueModal
+        show={isAdding}
+        onClose={togglePopup}
+        disabled={isLoading}
+        error={isError}
+        strings={{
+          title: 'Add Token',
+          intro: 'Add an ERC20 or ERC721 token to the dashboard',
+          label: 'Token to add:',
+          placeholder: 'contract address',
+          submit: 'Add Token'
+        }}
+        onConfirm={addToken}
+      />
     </Panel>
   )
 }

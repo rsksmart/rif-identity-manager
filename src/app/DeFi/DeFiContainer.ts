@@ -6,7 +6,9 @@ import { AnyAction } from 'redux'
 import { addCustomToken } from '../state/operations/defi'
 
 const mapStateToProps = (state: stateInterface) => ({
-  tokens: state.defi.tokens
+  tokens: state.defi.tokens,
+  chainId: state.identity.chainId,
+  balance: state.defi.balance
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

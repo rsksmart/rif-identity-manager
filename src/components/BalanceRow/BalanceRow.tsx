@@ -8,17 +8,17 @@ interface BalanceRowInterface {
 }
 
 const BalanceRow: React.FC<BalanceRowInterface> = ({ name, balance, symbol, className }) => {
-  const round = (original: number | null | undefined) => {
+  const shorten = (original: number | null | undefined) => {
     if (!original) { return original }
-    const rounded = parseFloat(original.toFixed(8))
-    return rounded === original ? original : rounded
+    const shorten = parseFloat(original.toFixed(8))
+    return shorten === original ? original : shorten
   }
 
   return (
     <div className={className ? `token ${className}` : 'token'}>
       <h2>{name}</h2>
       <div>
-        <span className="balance">{round(balance)}</span>
+        <span className="balance">{shorten(balance)}</span>
         <span className="symbol">{symbol}</span>
       </div>
     </div>
