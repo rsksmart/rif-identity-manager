@@ -20,6 +20,11 @@ describe('Component: BalanceRow.test', () => {
 
   it('truncates the balance to eight places if longer', () => {
     const wrapper = mount(<BalanceRow {...props} balance={1.258480974564560} />)
-    expect(wrapper.find('.balance').text()).toBe('1.25848097')
+    expect(wrapper.find('.balance').text()).toBe('1.258481')
+  })
+
+  it('shows USD conversion when sent', () => {
+    const wrapper = mount(<BalanceRow {...props} conversion={27.54} />)
+    expect(wrapper.find('.conversion').text()).toBe('$5.23 USD')
   })
 })

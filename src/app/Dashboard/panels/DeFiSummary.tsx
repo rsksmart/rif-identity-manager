@@ -5,14 +5,14 @@ import Panel from '../../../components/Panel/Panel'
 import { getBalanceName } from '../../../config/getConfig'
 import { Token } from '../../state/reducers/defi'
 
-interface BalanceSummaryInterface {
+interface DeFiSummaryInterface {
   balance: number | null
   chainId?: number | null
   featuredToken?: Token
   handleButton: () => void
 }
 
-const BalanceSummary: React.FC<BalanceSummaryInterface> = ({ balance, chainId, featuredToken, handleButton }) =>
+const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, featuredToken, handleButton }) =>
   balance && chainId
     ? (
       <Panel title={<>DeFi Summary</>} className="defi">
@@ -37,4 +37,4 @@ const BalanceSummary: React.FC<BalanceSummaryInterface> = ({ balance, chainId, f
     )
     : <></>
 
-export default BalanceSummary
+export default DeFiSummary

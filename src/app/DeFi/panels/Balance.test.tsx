@@ -24,7 +24,7 @@ describe('Component: Balace', () => {
       { address: '0x123', balance: 4, name: 'test token', symbol: 'TEST' }
     ]
     const wrapper = mount(<Balance {...props} tokens={tokens} />)
-    const token = wrapper.find('.token')
+    const token = wrapper.find('.balance-row')
     expect(token.length).toBeDefined()
     expect(token.find('h2').text()).toBe('test token')
     expect(token.find('.balance').text()).toBe('4')
@@ -37,6 +37,6 @@ describe('Component: Balace', () => {
       { address: '0x456', balance: 4, name: 'test token', symbol: 'TEST2' }
     ]
     const wrapper = mount(<Balance {...props} tokens={tokens} />)
-    expect(wrapper.find('.token')).toHaveLength(2)
+    expect(wrapper.find('.balance-row')).toHaveLength(2)
   })
 })

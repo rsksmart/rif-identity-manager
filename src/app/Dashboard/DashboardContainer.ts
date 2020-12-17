@@ -4,12 +4,14 @@ import DasboardScreen from './DashboardScreen'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { addCustomToken } from '../state/operations/defi'
+import { Token } from '../state/reducers/defi'
 
 const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
   tokens: state.defi.tokens,
   balance: state.defi.balance,
+  featuredTokens: state.defi.tokens.filter((token: Token) => token.symbol === 'RIF' || token.symbol === 'tRIF'),
   storage: state.datavault.storage
 })
 
