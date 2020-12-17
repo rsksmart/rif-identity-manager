@@ -1,33 +1,43 @@
 import React from 'react'
-import LoadingComponent from '../../../components/Loading/LoadingComponent'
+import CopyButton from '../../../components/CopyButton/CopyButton'
 import Panel from '../../../components/Panel/Panel'
 import ToolTip from '../../../components/Tooltip/Tooltip'
-import { truncateAddressDid } from '../../../formatters'
+import { createDidFormat, truncateAddressDid } from '../../../formatters'
 
 interface IdentityInformationPanelI {
-  did?: string
+  address: string
+  chainId: number
 }
 
-const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ did }) =>
-  !did ? <LoadingComponent />
-    : (
-      <div className="container">
-        <div className="column">
-          <Panel
-            title="Persona information"
-            className="identity-information"
-          >
-            <div className="container">
-              <div className="column">
-                <h2>Persona Address</h2>
-                <p className="value">
-                  <ToolTip hoverContent={did}>{truncateAddressDid(did)}</ToolTip>
-                </p>
-              </div>
+const IdentityInformationPanel: React.FC<IdentityInformationPanelI> = ({ address, chainId }) => {
+  const did = createDidFormat(address, chainId)
+  return (
+    <div className="container">
+      <div className="column">
+        <Panel
+          title="Persona information"
+          className="identity-information"
+        >
+          <div className="container">
+            <div className="column">
+              <h2>Persona DID</h2>
+              <p className="value">
+                <ToolTip hoverContent={did}>{truncateAddressDid(did)}</ToolTip>
+                <CopyButton value={did} />
+              </p>
             </div>
-          </Panel>
-        </div>
+            <div className="column">
+              <h2>Persona Address</h2>
+              <p className="value">
+                {address}
+                <CopyButton value={address} />
+              </p>
+            </div>
+          </div>
+        </Panel>
       </div>
-    )
+    </div>
+  )
+}
 
 export default IdentityInformationPanel
