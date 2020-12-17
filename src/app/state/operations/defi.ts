@@ -35,18 +35,20 @@ const getSetTokenList = (provider: any, userAddress: string, chainId: number) =>
     return
   }
 
+  const eth = new Eth(provider)
+  const ethContract = new EthContract(eth)
   for (const address in allTokens) {
     const metadata = allTokens[address] as TokenMetadata
 
-    const eth = new Eth(provider)
-    const ethContract = new EthContract(eth)
-    ethContract(erc20abi).at(address).balanceOf(userAddress)
-      .then((balance: BN[]) => balance[0])
-      .then((balance: BN) => balance.div(new BN(10).pow(new BN(metadata.decimals))).toNumber())
-      .then((balance: number) =>
-        dispatch(addTokenData({ data: { address, balance, name: metadata.name, symbol: metadata.symbol } }))
-      )
-      .catch((err: Error) => console.log('balanceOf error', err))
+    if (metadata.erc20) {
+      ethContract(erc20abi).at(address).balanceOf(userAddress)
+        .then((balance: BN[]) => balance[0])
+        .then((balance: BN) => balance.div(new BN(10).pow(new BN(metadata.decimals))).toNumber())
+        .then((balance: number) =>
+          dispatch(addTokenData({ data: { address, balance, name: metadata.name, symbol: metadata.symbol } }))
+        )
+        .catch((err: Error) => console.log('balanceOf error', err))
+    }
   }
 }
 

@@ -50,7 +50,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, convers
 
   return (
     <Panel
-      title="Identity Balance"
+      title="Assets"
       className="identity-balance"
       headerRight={<button onClick={togglePopup}>Watch Asset</button>}
     >

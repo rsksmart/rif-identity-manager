@@ -30,6 +30,7 @@ const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, feature
                 name={featuredToken.name}
                 balance={featuredToken.balance}
                 symbol={featuredToken.symbol}
+                conversion={featuredToken.conversion || undefined}
               />
             )}
           </div>
