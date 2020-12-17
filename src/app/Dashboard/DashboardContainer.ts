@@ -9,6 +9,7 @@ const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
   tokens: state.defi.tokens,
+  balance: state.defi.balance,
   storage: state.datavault.storage
 })
 
