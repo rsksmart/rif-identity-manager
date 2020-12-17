@@ -8,7 +8,8 @@ import { addCustomToken } from '../state/operations/defi'
 const mapStateToProps = (state: stateInterface) => ({
   tokens: state.defi.tokens,
   chainId: state.identity.chainId,
-  balance: state.defi.balance
+  balance: state.defi.balance,
+  conversion: state.defi.conversion
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

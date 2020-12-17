@@ -4,24 +4,28 @@ export interface Token {
   address: string,
   name?: string | null,
   symbol?: string | null,
-  balance?: number | null
+  balance?: number | null,
+  conversion?: number
 }
 
 export const tokenInitialState: Token = {
   address: '',
   name: null,
   symbol: null,
-  balance: 0
+  balance: 0,
+  conversion: undefined
 }
 
 export interface DefiState {
   tokens: Token[],
-  balance: number | null
+  balance: number | null,
+  conversion: number | null
 }
 
 export const initialState = {
   tokens: [],
-  balance: null
+  balance: null,
+  conversion: null
 }
 
 interface addTokenDataPayload {
@@ -43,10 +47,13 @@ const defiSlice = createSlice({
     },
     receiveBalance (state: DefiState, { payload: { balance } }: PayloadAction<{ balance: number }>) {
       state.balance = balance
+    },
+    receiveConversionBalance (state: DefiState, { payload: { usd } }: PayloadAction<{ usd: number }>) {
+      state.conversion = usd
     }
   }
 })
 
-export const { addTokenData, receiveBalance } = defiSlice.actions
+export const { addTokenData, receiveBalance, receiveConversionBalance } = defiSlice.actions
 
 export default defiSlice.reducer

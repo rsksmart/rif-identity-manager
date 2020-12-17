@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveBalance } from './defi'
+import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveBalance, receiveConversionBalance } from './defi'
 
 describe('token slide', () => {
   describe('action creators', () => {
@@ -15,6 +15,10 @@ describe('token slide', () => {
 
     test('receiveBalance', () => {
       expect(receiveBalance({ balance: 0.1268 })).toEqual({ type: receiveBalance.type, payload: { balance: 0.1268 } })
+    })
+
+    test('receiveConversionBalance', () => {
+      expect(receiveConversionBalance({ usd: 15 })).toEqual({ type: receiveConversionBalance.type, payload: { usd: 15 } })
     })
   })
 
@@ -44,11 +48,12 @@ describe('token slide', () => {
       store.dispatch(addTokenData({ data: { address: '0x123', name: 'test' } }))
       store.dispatch(addTokenData({ data: { address: '0x123', symbol: 'TEST' } }))
       store.dispatch(addTokenData({ data: { address: '0x123', balance: 6 } }))
+      store.dispatch(addTokenData({ data: { address: '0x123', conversion: 15 } }))
 
       expect(store.getState()).toEqual({
         ...initialState,
         tokens: [
-          { address: '0x123', balance: 6, name: 'test', symbol: 'TEST' }
+          { address: '0x123', balance: 6, name: 'test', symbol: 'TEST', conversion: 15 }
         ]
       })
     })
@@ -76,6 +81,11 @@ describe('token slide', () => {
     test('it receives a balance amount', () => {
       store.dispatch(receiveBalance({ balance: 1.846 }))
       expect(store.getState().balance).toEqual(1.846)
+    })
+
+    test('it receives the conversion for balance', () => {
+      store.dispatch(receiveConversionBalance({ usd: 18 }))
+      expect(store.getState().conversion).toEqual(18)
     })
   })
 })

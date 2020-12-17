@@ -10,12 +10,13 @@ import { getBalanceName } from '../../../config/getConfig'
 
 interface BalanceInterface {
   tokens?: Token[]
-  addCustomToken: (provider: any, tokenAddress: string) => any
   chainId: number
-  balance: number | null
+  balance: number | null,
+  conversion: number | null,
+  addCustomToken: (provider: any, tokenAddress: string) => any
 }
 
-const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, addCustomToken }) => {
+const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, conversion, addCustomToken }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const [newAddress, setNewAddress] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -59,6 +60,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, addCust
           className="defaultBalance"
           balance={balance}
           symbol={getBalanceName(chainId)}
+          conversion={conversion || undefined}
         />
       )}
 
@@ -68,6 +70,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, addCust
           name={token.name || `Custom token: ${truncateAddressDid(token.address)}`}
           balance={token.balance}
           symbol={token.symbol}
+          conversion={token.conversion}
         />
       )}
 

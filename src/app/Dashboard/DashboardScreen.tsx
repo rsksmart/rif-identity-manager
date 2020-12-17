@@ -12,11 +12,12 @@ interface DashboardScreenInterface {
   storage?: DataVaultStorageState
   balance: number | null
   featuredTokens?: Token[]
+  converstion: number | null
   changeScreen: (screen: string) => void
 }
 
 const DashboardScreen: React.FC<DashboardScreenInterface> = ({
-  chainId, address, storage, balance, featuredTokens, changeScreen
+  chainId, address, storage, balance, featuredTokens, converstion, changeScreen
 }) => {
   return (
     <div className="content dashboard">
@@ -25,6 +26,7 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({
         <div className="column">
           <DeFiSummary
             balance={balance}
+            converstion={converstion}
             chainId={chainId}
             featuredToken={featuredTokens ? featuredTokens[0] : undefined}
             handleButton={() => changeScreen(screens.DEFI)}

@@ -11,6 +11,7 @@ const mapStateToProps = (state: stateInterface) => ({
   chainId: state.identity.chainId,
   tokens: state.defi.tokens,
   balance: state.defi.balance,
+  converstion: state.defi.conversion,
   featuredTokens: state.defi.tokens.filter((token: Token) => token.symbol === 'RIF' || token.symbol === 'tRIF'),
   storage: state.datavault.storage
 })

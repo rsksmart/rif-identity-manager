@@ -7,12 +7,13 @@ import { Token } from '../../state/reducers/defi'
 
 interface DeFiSummaryInterface {
   balance: number | null
+  converstion: number | null
   chainId?: number | null
   featuredToken?: Token
   handleButton: () => void
 }
 
-const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, featuredToken, handleButton }) =>
+const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, featuredToken, converstion, handleButton }) =>
   balance && chainId
     ? (
       <Panel title={<>DeFi Summary</>} className="defi">
@@ -22,6 +23,7 @@ const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, feature
               name="Balance"
               balance={balance}
               symbol={getBalanceName(chainId)}
+              conversion={converstion || undefined}
             />
             {featuredToken && (
               <BalanceRow

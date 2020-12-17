@@ -7,9 +7,9 @@ import Local from './config.local.json'
 export enum SETTINGS {
   ETHR_DID_CONTRACT = 'ethrDid',
   RPC_URL = 'rpcUrl',
-  TOKENS = 'tokens',
   DATAVAULT = 'dataVault',
-  BALANCE_NAME = 'balanceName'
+  BALANCE_NAME = 'balanceName',
+  COIN_GECKO_IDS = 'coinGeckoIds'
 }
 
 const getSetting = (chainId: number, setting: SETTINGS) => {
@@ -23,6 +23,6 @@ const getSetting = (chainId: number, setting: SETTINGS) => {
 
 export const getDIDRegistryAddress = (chainId: number) => getSetting(chainId, SETTINGS.ETHR_DID_CONTRACT)
 export const getRPCUrl = (chainId: number) => getSetting(chainId, SETTINGS.RPC_URL)
-export const getTokens = (chainId: number) => getSetting(chainId, SETTINGS.TOKENS)
 export const getDataVault = (chainId: number) => getSetting(chainId, SETTINGS.DATAVAULT)
 export const getBalanceName = (chainId: number) => getSetting(chainId, SETTINGS.BALANCE_NAME) as string
+export const getCoinGeckoIdsForNetwork = (chainId: number) => getSetting(chainId, SETTINGS.COIN_GECKO_IDS) as string

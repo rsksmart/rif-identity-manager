@@ -22,7 +22,7 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
       dispatch(changeChainId({ chainId: parseInt(chainId) }))
 
       dispatch(resolveDidDocument(provider))
-      dispatch(getTokenList(provider, chainId, address))
+      dispatch(getTokenList(provider, parseInt(chainId), address))
       dispatch(getBalance(provider, address))
 
       const dataVaultClient = createClient(provider, address, chainId)
