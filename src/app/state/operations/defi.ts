@@ -44,9 +44,11 @@ const getSetTokenList = (provider: any, userAddress: string, chainId: number) =>
       ethContract(erc20abi).at(address).balanceOf(userAddress)
         .then((balance: BN[]) => balance[0])
         .then((balance: BN) => balance.div(new BN(10).pow(new BN(metadata.decimals))).toNumber())
-        .then((balance: number) =>
-          dispatch(addTokenData({ data: { address, balance, name: metadata.name, symbol: metadata.symbol } }))
-        )
+        .then((balance: number) => {
+          if (balance !== 0) {
+            dispatch(addTokenData({ data: { address, balance, name: metadata.name, symbol: metadata.symbol } }))
+          }
+        })
         .catch((err: Error) => console.log('balanceOf error', err))
     }
   }
