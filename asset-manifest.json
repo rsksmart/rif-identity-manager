@@ -1,19 +1,18 @@
 {
   "files": {
-    "main.css": "/rif-identity-manager/static/css/main.f6a5852c.chunk.css",
-    "main.js": "/rif-identity-manager/static/js/main.3ebdd0d9.chunk.js",
-    "main.js.map": "/rif-identity-manager/static/js/main.3ebdd0d9.chunk.js.map",
-    "runtime-main.js": "/rif-identity-manager/static/js/runtime-main.7b9c2f5c.js",
-    "runtime-main.js.map": "/rif-identity-manager/static/js/runtime-main.7b9c2f5c.js.map",
-    "static/js/2.f484da4c.chunk.js": "/rif-identity-manager/static/js/2.f484da4c.chunk.js",
-    "static/js/2.f484da4c.chunk.js.map": "/rif-identity-manager/static/js/2.f484da4c.chunk.js.map",
-    "static/js/3.071cbb63.chunk.js": "/rif-identity-manager/static/js/3.071cbb63.chunk.js",
-    "static/js/3.071cbb63.chunk.js.map": "/rif-identity-manager/static/js/3.071cbb63.chunk.js.map",
+    "main.css": "/rif-identity-manager/static/css/main.f32be0e4.chunk.css",
+    "main.js": "/rif-identity-manager/static/js/main.4cad4ced.chunk.js",
+    "main.js.map": "/rif-identity-manager/static/js/main.4cad4ced.chunk.js.map",
+    "runtime-main.js": "/rif-identity-manager/static/js/runtime-main.7c541719.js",
+    "runtime-main.js.map": "/rif-identity-manager/static/js/runtime-main.7c541719.js.map",
+    "static/js/2.83f444ad.chunk.js": "/rif-identity-manager/static/js/2.83f444ad.chunk.js",
+    "static/js/2.83f444ad.chunk.js.map": "/rif-identity-manager/static/js/2.83f444ad.chunk.js.map",
+    "static/js/3.0aec2c71.chunk.js": "/rif-identity-manager/static/js/3.0aec2c71.chunk.js",
+    "static/js/3.0aec2c71.chunk.js.map": "/rif-identity-manager/static/js/3.0aec2c71.chunk.js.map",
     "index.html": "/rif-identity-manager/index.html",
-    "static/css/main.f6a5852c.chunk.css.map": "/rif-identity-manager/static/css/main.f6a5852c.chunk.css.map",
-    "static/js/2.f484da4c.chunk.js.LICENSE.txt": "/rif-identity-manager/static/js/2.f484da4c.chunk.js.LICENSE.txt",
+    "static/css/main.f32be0e4.chunk.css.map": "/rif-identity-manager/static/css/main.f32be0e4.chunk.css.map",
+    "static/js/2.83f444ad.chunk.js.LICENSE.txt": "/rif-identity-manager/static/js/2.83f444ad.chunk.js.LICENSE.txt",
     "static/media/computer.de8f038b.svg": "/rif-identity-manager/static/media/computer.de8f038b.svg",
-    "static/media/copy.713b200d.svg": "/rif-identity-manager/static/media/copy.713b200d.svg",
     "static/media/data-vault.c8c9253d.svg": "/rif-identity-manager/static/media/data-vault.c8c9253d.svg",
     "static/media/declarative-details.0f849d72.svg": "/rif-identity-manager/static/media/declarative-details.0f849d72.svg",
     "static/media/delegate.618299c9.svg": "/rif-identity-manager/static/media/delegate.618299c9.svg",
@@ -28,9 +27,9 @@
     "static/media/upload.f7f9ea67.svg": "/rif-identity-manager/static/media/upload.f7f9ea67.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7b9c2f5c.js",
-    "static/js/2.f484da4c.chunk.js",
-    "static/css/main.f6a5852c.chunk.css",
-    "static/js/main.3ebdd0d9.chunk.js"
+    "static/js/runtime-main.7c541719.js",
+    "static/js/2.83f444ad.chunk.js",
+    "static/css/main.f32be0e4.chunk.css",
+    "static/js/main.4cad4ced.chunk.js"
   ]
 }
