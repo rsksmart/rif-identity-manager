@@ -26,7 +26,7 @@ export const getPersonaDeclarativeDetails = (data: DataVaultKey) => {
 const mapStateToProps = (state: stateInterface) => ({
   address: state.identity.address,
   chainId: state.identity.chainId,
-  persona: getPersonaDeclarativeDetails(state.datavault.data)
+  persona: getPersonaDeclarativeDetails(state.datavault.declarativeDetails)
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

@@ -26,12 +26,12 @@ export interface DataVaultStorageState {
 }
 
 export interface DataVaultState {
-  data: DataVaultKey
+  declarativeDetails: DataVaultKey
   storage?: DataVaultStorageState
 }
 
 export const initialState: DataVaultState = {
-  data: {},
+  declarativeDetails: {},
   storage: undefined
 }
 
@@ -40,16 +40,16 @@ const dataVaultSlice = createSlice({
   initialState,
   reducers: {
     receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<ReceivePayLoad>) {
-      state.data[key] = content
+      state.declarativeDetails[key] = content
     },
     addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
-      state.data[key] ? state.data[key].push(content) : state.data[key] = [content]
+      state.declarativeDetails[key] ? state.declarativeDetails[key].push(content) : state.declarativeDetails[key] = [content]
     },
     removeContentfromKey (state: DataVaultState, { payload: { key, id } }: PayloadAction<{ key: string, id: string }>) {
-      state.data[key] = state.data[key].filter((item: DataVaultContent) => item.id !== id)
+      state.declarativeDetails[key] = state.declarativeDetails[key].filter((item: DataVaultContent) => item.id !== id)
     },
     swapContentById (state: DataVaultState, { payload: { key, id, content } }: PayloadAction<SwapPayLoad>) {
-      state.data[key] = state.data[key].map((item: DataVaultContent) => item.id === id ? { ...item, content } : item)
+      state.declarativeDetails[key] = state.declarativeDetails[key].map((item: DataVaultContent) => item.id === id ? { ...item, content } : item)
     },
     receiveStorageInformation (state: DataVaultState, { payload: { storage } }: PayloadAction<{ storage: DataVaultStorageState }>) {
       state.storage = storage
