@@ -54,7 +54,7 @@ const OwnerComponent: React.FC<OwnerComponentInterface> = ({ owner, isOwner, cha
     }
   }
 
-  const ownerDid = owner && chainId && createDidFormat(owner, chainId, true)
+  const ownerDid = owner && chainId && createDidFormat(owner, chainId)
 
   return (
     <Panel

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -18,7 +18,7 @@ export const createClient = (provider: any, address: string, chainId: number) =>
     ? new DataVaultWebClient({
       serviceUrl: dataVaultConfig.serviceUrl,
       serviceDid: dataVaultConfig.serviceDid,
-      did: createDidFormat(address, chainId, true),
+      did: createDidFormat(address, chainId),
       rpcPersonalSign: (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
     })
     : null
@@ -78,3 +78,30 @@ export const swapDataVaultContent = (client: DataVaultWebClient, key: string, co
 export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
   client.getStorageInformation()
     .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))
+
+/**
+ * Helper function that loops through DataVault items and decides if key & value should be created, updated, or removed
+ * @param client DataVault Client
+ * @param item Key/Value DataVault pair where KEY is the DV KEY and VALUE is an array of DataVaultContent
+ */
+export const modifyMultipleItems = (client: DataVaultWebClient, values: DataVaultKey) => (dispatch: Dispatch<any>) => {
+  // eslint-disable-next-line prefer-const
+  let promiseArray: Promise<any>[] = []
+
+  Object.keys(values).map((key: string) =>
+    values[key].map((item: DataVaultContent) => {
+      let action: any
+      if (item.id === '' && item.content !== '') {
+        action = () => dispatch(createDataVaultContent(client, key, item.content))
+      } else if (item.id !== '' && item.content !== '') {
+        action = () => dispatch(swapDataVaultContent(client, key, item.content, item.id))
+      } else if (item.id !== '' && item.content === '') {
+        action = () => dispatch(deleteDataVaultContent(client, key, item.id))
+      }
+
+      promiseArray.push(new Promise((resolve) => { resolve(action()) }))
+    })
+  )
+
+  return Promise.all(promiseArray)
+}

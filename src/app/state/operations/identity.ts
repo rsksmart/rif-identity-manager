@@ -27,7 +27,7 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
       const dataVaultClient = createClient(provider, address, chainId)
       context.setDvClient(dataVaultClient)
 
-      dataVaultClient && dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId, true)))
+      dataVaultClient && dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId)))
       dataVaultClient && dispatch(getStorageInformation(dataVaultClient))
     })
   })
