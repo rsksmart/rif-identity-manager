@@ -57,6 +57,16 @@ describe('dataVault slice', () => {
 
         expect(store.getState().declarativeDetails).toEqual({ KEY1: content1, KEY2: content2 })
       })
+
+      test('receiveKeyData with credentials', () => {
+        const content = [{ id: '2', content: 'bye' }]
+        store.dispatch(receiveKeyData({ key: 'SomethingCredential', content }))
+        expect(store.getState()).toMatchObject({
+          declarativeDetails: {},
+          credentials: { SomethingCredential: content },
+          storage: undefined
+        })
+      })
     })
 
     describe('addContentToKey', () => {

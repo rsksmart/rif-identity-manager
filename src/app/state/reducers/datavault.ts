@@ -27,11 +27,13 @@ export interface DataVaultStorageState {
 
 export interface DataVaultState {
   declarativeDetails: DataVaultKey
+  credentials: DataVaultKey
   storage?: DataVaultStorageState
 }
 
 export const initialState: DataVaultState = {
   declarativeDetails: {},
+  credentials: {},
   storage: undefined
 }
 
@@ -40,7 +42,11 @@ const dataVaultSlice = createSlice({
   initialState,
   reducers: {
     receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<ReceivePayLoad>) {
-      state.declarativeDetails[key] = content
+      if (key.endsWith('Credential')) {
+        state.credentials[key] = content
+      } else {
+        state.declarativeDetails[key] = content
+      }
     },
     addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
       state.declarativeDetails[key] ? state.declarativeDetails[key].push(content) : state.declarativeDetails[key] = [content]
