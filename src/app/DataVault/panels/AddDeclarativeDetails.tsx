@@ -23,7 +23,7 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDe
       return setIsError('Type and Content cannot be empty.')
     }
 
-    addDeclarativeDetail(type, content)
+    addDeclarativeDetail(`DD_${type.toUpperCase()}`, content)
       .then(() => {
         setIsLoading(false)
         setContent('')
