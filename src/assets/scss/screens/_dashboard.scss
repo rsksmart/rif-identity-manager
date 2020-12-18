@@ -23,41 +23,6 @@
     }
   }
 
-  .identity-balance {
-    button.circle-plus {
-      margin-top: -10px;
-      margin-right: -10px;
-    }
-
-    .token {
-      padding-bottom: 20px;
-
-      .heading-symbol {
-        color: $gray;
-        font-size: 14px;
-        text-transform: uppercase;
-      }
-      .balance {
-        color: $turquoise;
-        font-size: 50px;
-
-        .hover-content {
-          font-size: 16px;
-        }
-      }
-      .symbol {
-        color: $turquoise;
-        font-size: 30px;
-        margin-left: 15px;
-      }
-      .conversion {
-        margin-left: 25px;
-        color: $gray;
-        font-size: 20px;
-      }
-    }
-  }
-
   .dataVault {
     .columnDouble {
       padding: 0;
@@ -77,6 +42,13 @@
       }
     }
   }
+
+  .defi {
+    button {
+      float: right;
+    }
+    padding-bottom: 45px;
+  }
 }
 
 @media screen and (max-width: $breakpoint-phone) {
@@ -87,6 +59,6 @@
       bottom: auto;
       right: auto;
       margin-top: 15px;
+    }
   }
-}
 }

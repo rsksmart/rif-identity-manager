@@ -32,8 +32,10 @@ html, body {
 @import 'components/header';
 @import 'components/navigation';
 @import 'components/panel';
+@import 'components/balance-row';
 
 @import 'screens/login-screen';
 @import 'screens/dashboard';
 @import 'screens/data-vault';
 @import 'screens/identity';
+@import 'screens/defi';

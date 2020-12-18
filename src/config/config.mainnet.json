@@ -1,6 +1,7 @@
 {
   "ethrDid": "0xdca7ef03e98e0dc2b855be647c39abe984fcf21b",
   "rpcUrl": "https://did.rsk.co:4444",
-  "tokens": [ "0x2acc95758f8b5f583470ba265eb685a8f45fc9d5" ],
-  "dataVault": null
+  "balanceName": "RBTC",
+  "dataVault": null,
+  "coinGeckoIds": "bitcoin,rif-token"
 }

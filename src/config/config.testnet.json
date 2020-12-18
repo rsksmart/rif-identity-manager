@@ -1,9 +1,10 @@
 {
   "ethrDid": "0xdca7ef03e98e0dc2b855be647c39abe984fcf21b",
   "rpcUrl": "https://did.testnet.rsk.co:4444",
-  "tokens": [ "0x19f64674d8a5b4e652319f5e239efd3bc969a1fe" ],
+  "balanceName": "TRBTC",
   "dataVault": {
     "serviceDid": "did:ethr:rsk:testnet:0x285B30492a3F444d78f75261A35cB292Fc8F41A6",
     "serviceUrl": "https://identity.staging.rifcomputing.net"
-  }
+  },
+  "coinGeckoIds": "rif-token,bitcoin"
 }
