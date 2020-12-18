@@ -5,7 +5,6 @@ import { Token } from '../state/reducers/tokens'
 import DataVaultSummary from './panels/DataVaultSummary'
 import { screens } from '../Authenticated/components/Navigation'
 import { DataVaultStorageState } from '../state/reducers/datavault'
-import { createDidFormat } from '../../formatters'
 
 interface DashboardScreenInterface {
   chainId?: number | null
@@ -23,9 +22,7 @@ const DashboardScreen: React.FC<DashboardScreenInterface> = ({
 }) => {
   return (
     <div className="content dashboard">
-      <IdentitySummary
-        did={(address && chainId) ? createDidFormat(address, chainId) : undefined}
-      />
+      {address && chainId && <IdentitySummary address={address} chainId={chainId} />}
       <div className="container">
         <div className="column">
           <Balance tokens={tokens} addCustomToken={addCustomToken} />
