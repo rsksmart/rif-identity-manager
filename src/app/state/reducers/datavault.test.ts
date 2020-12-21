@@ -45,7 +45,7 @@ describe('dataVault slice', () => {
         const content = [{ id: '1', content: 'hello' }, { id: '2', content: 'bye' }]
         store.dispatch(receiveKeyData({ key: 'MY_KEY', content }))
 
-        expect(store.getState().data).toEqual({ MY_KEY: content })
+        expect(store.getState().declarativeDetails).toEqual({ MY_KEY: content })
       })
 
       test('receiveKeyData from multiple keys', () => {
@@ -55,7 +55,17 @@ describe('dataVault slice', () => {
         store.dispatch(receiveKeyData({ key: 'KEY1', content: content1 }))
         store.dispatch(receiveKeyData({ key: 'KEY2', content: content2 }))
 
-        expect(store.getState().data).toEqual({ KEY1: content1, KEY2: content2 })
+        expect(store.getState().declarativeDetails).toEqual({ KEY1: content1, KEY2: content2 })
+      })
+
+      test('receiveKeyData with credentials', () => {
+        const content = [{ id: '2', content: 'bye' }]
+        store.dispatch(receiveKeyData({ key: 'SomethingCredential', content }))
+        expect(store.getState()).toMatchObject({
+          declarativeDetails: {},
+          credentials: { SomethingCredential: content },
+          storage: undefined
+        })
       })
     })
 
@@ -65,14 +75,14 @@ describe('dataVault slice', () => {
         store.dispatch(receiveKeyData({ key: 'MY_KEY', content }))
         store.dispatch(addContentToKey({ key: 'MY_KEY', content: { id: '2', content: 'bye' } }))
 
-        expect(store.getState().data)
+        expect(store.getState().declarativeDetails)
           .toEqual({ MY_KEY: [{ id: '1', content: 'hello' }, { id: '2', content: 'bye' }] })
       })
 
       test('add content to key that does not exist', () => {
         store.dispatch(addContentToKey({ key: 'NEW_KEY', content: { id: '1', content: 'hello' } }))
 
-        expect(store.getState().data)
+        expect(store.getState().declarativeDetails)
           .toEqual({ NEW_KEY: [{ id: '1', content: 'hello' }] })
       })
     })
@@ -85,14 +95,14 @@ describe('dataVault slice', () => {
 
       test('it deletes an item', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
-        expect(store.getState().data).toEqual({ MY_KEY: [{ id: '1', content: 'hello' }] })
+        expect(store.getState().declarativeDetails).toEqual({ MY_KEY: [{ id: '1', content: 'hello' }] })
       })
 
       test('it deletes multiple items', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '1' }))
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
 
-        expect(store.getState().data).toEqual({ MY_KEY: [] })
+        expect(store.getState().declarativeDetails).toEqual({ MY_KEY: [] })
       })
     })
 
@@ -106,13 +116,13 @@ describe('dataVault slice', () => {
       test('it swaps content of existing key', () => {
         store.dispatch(swapContentById({ id: '1', content: 'newContent', key: 'MY_KEY' }))
 
-        const id1 = store.getState().data.MY_KEY.filter((item: DataVaultContent) => item.id === '1')[0]
+        const id1 = store.getState().declarativeDetails.MY_KEY.filter((item: DataVaultContent) => item.id === '1')[0]
         expect(id1.content).toBe('newContent')
       })
 
       test('it keeps content when id is invalid', () => {
         store.dispatch(swapContentById({ id: '15', content: 'newContent', key: 'MY_KEY' }))
-        expect(store.getState().data.MY_KEY).toMatchObject(initContent)
+        expect(store.getState().declarativeDetails.MY_KEY).toMatchObject(initContent)
       })
     })
 

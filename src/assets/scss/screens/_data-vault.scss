@@ -71,6 +71,25 @@
       }
     }
   }
+
+  .credentials {
+    textarea {
+      width: 100%;
+      cursor: pointer;
+      min-height: 250px;
+    }
+
+    div.raw {
+      border: 1px solid $gray;
+      background-color: #efefef;
+      padding: 10px;
+      font-size: 13px;
+    }
+  }
+
+  .alert {
+    width: auto !important;
+  }
 }
 
 @media screen and (max-width: $breakpoint-phone) {

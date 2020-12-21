@@ -7,7 +7,8 @@ import { AnyAction } from 'redux'
 import { createDataVaultContent, deleteDataVaultContent, swapDataVaultContent } from '../state/operations/datavault'
 
 const mapStateToProps = (state: stateInterface) => ({
-  declarativeDetails: state.datavault.data
+  declarativeDetails: state.datavault.declarativeDetails,
+  credentials: state.datavault.credentials
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({

@@ -63,7 +63,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
             if (details[key].length !== 0) {
               return (
                 <tr key={key}>
-                  <td>{key}</td>
+                  <td>{key.replace('DD_', '')}</td>
                   <td>
                     {details[key].map((item: DataVaultContent) => (
                       <div className="content-row" key={item.id}>
