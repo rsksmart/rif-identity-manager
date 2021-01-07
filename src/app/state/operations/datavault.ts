@@ -1,5 +1,6 @@
 import { Dispatch } from 'react'
-import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
+import DataVaultWebClient, { AuthManager, EncryptionManager } from '@rsksmart/ipfs-cpinner-client'
+
 import { createDidFormat } from '../../../formatters'
 import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
@@ -12,16 +13,18 @@ import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
  * @param chainId chainId of the network to create the DID
  */
 export const createClient = (provider: any, address: string, chainId: number) => {
-  const dataVaultConfig = <{serviceUrl: string, serviceDid: string} | null> getDataVault(chainId)
+  const serviceUrl = getDataVault()
+  const did = createDidFormat(address, chainId)
 
-  return dataVaultConfig
-    ? new DataVaultWebClient({
-      serviceUrl: dataVaultConfig.serviceUrl,
-      serviceDid: dataVaultConfig.serviceDid,
-      did: createDidFormat(address, chainId),
-      rpcPersonalSign: (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
-    })
-    : null
+  const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
+  const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
+  const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
+
+  return new DataVaultWebClient({
+    serviceUrl,
+    authManager: new AuthManager({ did, serviceUrl, personalSign }),
+    encryptionManager: new EncryptionManager({ getEncryptionPublicKey, decrypt })
+  })
 }
 
 /**
@@ -29,14 +32,13 @@ export const createClient = (provider: any, address: string, chainId: number) =>
  * @param client DataVault client
  * @param did DID of the user, required for getting individual key content
  */
-export const getDataVaultContent = (client: DataVaultWebClient, did: string) => (dispatch: Dispatch<any>) =>
+export const getDataVaultContent = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
   client.getKeys()
     .then((keys: string[]) =>
       keys.forEach((key: string) =>
-        client.get({ did, key })
+        client.get({ key })
           .then((content: any) => content as DataVaultContent[])
-          .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content })))
-      )
+          .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content }))))
     )
 
 /**
@@ -72,14 +74,6 @@ export const swapDataVaultContent = (client: DataVaultWebClient, key: string, co
     .then(() => dispatch(swapContentById({ key, id, content })))
 
 /**
- * Returns storage information from DataVault
- * @param client DataVault client
- */
-export const getStorageInformation = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
-  client.getStorageInformation()
-    .then((storage: DataVaultStorageState) => dispatch(receiveStorageInformation({ storage })))
-
-/**
  * Helper function that loops through DataVault items and decides if key & value should be created, updated, or removed
  * @param client DataVault Client
  * @param item Key/Value DataVault pair where KEY is the DV KEY and VALUE is an array of DataVaultContent
@@ -104,4 +98,25 @@ export const modifyMultipleItems = (client: DataVaultWebClient, values: DataVaul
   )
 
   return Promise.all(promiseArray)
+}
+
+/**
+ * Start the Data Vault Client
+ * Request StorageInformation first, which will save the access token with the DataVault Service
+ * in localStorage. Then request the content from the data vault.
+ * @param provider Web3 Provider
+ * @param address User Address
+ * @param chainId ChainId
+ * @param callback Function
+ */
+export const dataVaultStart = (provider: any, address: string, chainId: number, callback?: any) => (dispatch: Dispatch<any>) => {
+  const client = createClient(provider, address, chainId)
+
+  client.getStorageInformation()
+    .then((storage: DataVaultStorageState) => {
+      dispatch(receiveStorageInformation({ storage }))
+      dispatch(getDataVaultContent(client))
+      callback(client)
+    })
+    .catch((err: any) => callback(null, err))
 }
