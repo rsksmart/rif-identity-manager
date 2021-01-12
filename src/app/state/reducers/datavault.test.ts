@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent, receiveStorageInformation } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent, receiveStorageInformation, receiveKeys } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -26,6 +26,11 @@ describe('dataVault slice', () => {
     test('receiveStorageInformation', () => {
       const storage = { used: 150, available: 200 }
       expect(receiveStorageInformation({ storage })).toEqual({ type: receiveStorageInformation.type, payload: { storage } })
+    })
+
+    test('receiveKeys', () => {
+      const keys = ['ONE', 'TWO']
+      expect(receiveKeys({ keys })).toEqual({ type: receiveKeys.type, payload: { keys } })
     })
   })
 
@@ -138,6 +143,22 @@ describe('dataVault slice', () => {
       test('it receives storage information', () => {
         store.dispatch(receiveStorageInformation({ storage: { used: 10, available: 15 } }))
         expect(store.getState().storage).toMatchObject({ used: 10, available: 15 })
+      })
+    })
+
+    describe('receiveKeys', () => {
+      test('it receives keys', () => {
+        store.dispatch(receiveKeys({ keys: ['oneDD', 'twoCredential'] }))
+
+        expect(store.getState()).toEqual({
+          credentials: {
+            twoCredential: []
+          },
+          declarativeDetails: {
+            oneDD: []
+          },
+          storage: undefined
+        })
       })
     })
   })

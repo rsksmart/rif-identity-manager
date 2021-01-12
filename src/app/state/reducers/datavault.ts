@@ -64,10 +64,15 @@ const dataVaultSlice = createSlice({
     },
     receiveStorageInformation (state: DataVaultState, { payload: { storage } }: PayloadAction<{ storage: DataVaultStorageState }>) {
       state.storage = storage
+    },
+    receiveKeys (state: DataVaultState, { payload: { keys } }: PayloadAction<{ keys: string[] }>) {
+      keys.forEach((key: string) => {
+        key.endsWith('Credential') ? state.credentials[key] = [] : state.declarativeDetails[key] = []
+      })
     }
   }
 })
 
-export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById, receiveStorageInformation } = dataVaultSlice.actions
+export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById, receiveStorageInformation, receiveKeys } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer

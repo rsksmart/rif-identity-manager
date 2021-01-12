@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 import DataVaultWebClient, { AuthManager, EncryptionManager } from '@rsksmart/ipfs-cpinner-client'
 
 import { createDidFormat } from '../../../formatters'
-import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey } from '../reducers/datavault'
+import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey, receiveKeys } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
@@ -28,18 +28,22 @@ export const createClient = (provider: any, address: string, chainId: number) =>
 }
 
 /**
- * Get all keys and data from the datavault
+ * Get all keys and from the datavault
  * @param client DataVault client
- * @param did DID of the user, required for getting individual key content
  */
-export const getDataVaultContent = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
+export const getDataVaultKeys = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
   client.getKeys()
-    .then((keys: string[]) =>
-      keys.forEach((key: string) =>
-        client.get({ key })
-          .then((content: any) => content as DataVaultContent[])
-          .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content }))))
-    )
+    .then((keys: string[]) => dispatch(receiveKeys({ keys })))
+
+/**
+ * Get all content from a specific key from the datavault
+ * @param client DataVault client
+ * @param key string
+ */
+export const getDataVaultContent = (client: DataVaultWebClient, key: string) => (dispatch: Dispatch<any>) =>
+  client.get({ key })
+    .then((content: any) => content as DataVaultContent[])
+    .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content })))
 
 /**
  * Create Datavault content to an existing key or a new key
@@ -115,7 +119,7 @@ export const dataVaultStart = (provider: any, address: string, chainId: number, 
   client.getStorageInformation()
     .then((storage: DataVaultStorageState) => {
       dispatch(receiveStorageInformation({ storage }))
-      dispatch(getDataVaultContent(client))
+      dispatch(getDataVaultKeys(client))
       callback(client)
     })
     .catch((err: any) => callback(null, err))

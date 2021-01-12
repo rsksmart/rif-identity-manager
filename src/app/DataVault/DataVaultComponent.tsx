@@ -14,10 +14,11 @@ interface DataVaultComponentProps {
   deleteValue: (client: DataVaultWebClient, key: string, id: string) => any
   swapValue: (client: DataVaultWebClient, key: string, content: string, id: string) => any
   downloadBackup: (client: DataVaultWebClient) => any
+  getKeyContent: (client: DataVaultWebClient, key: string) => any
 }
 
 const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
-  addDeclarativeDetail, declarativeDetails, credentials, deleteValue, swapValue, downloadBackup
+  addDeclarativeDetail, declarativeDetails, credentials, deleteValue, swapValue, downloadBackup, getKeyContent
 }) => {
   const context = useContext(Web3ProviderContext)
 
@@ -28,6 +29,8 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
   const handleSwap = (key: string, content: string, id: string) =>
     context.dvClient && swapValue(context.dvClient, key, content, id)
   const handleDownload = () => context.dvClient && downloadBackup(context.dvClient)
+  const handleGetKeyContent = (key: string) =>
+    context.dvClient && getKeyContent(context.dvClient, key)
 
   return (
     <div className="content data-vault">
@@ -42,6 +45,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
             details={declarativeDetails}
             deleteValue={handleDelete}
             swapValue={handleSwap}
+            getKeyContent={handleGetKeyContent}
           />
         </div>
       </div>
