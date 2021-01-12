@@ -37,22 +37,20 @@ export const initialState: DataVaultState = {
   storage: undefined
 }
 
+const getBucket = (key: string) => key.endsWith('Credential') ? 'credentials' : 'declarativeDetails'
+
 const dataVaultSlice = createSlice({
   name: 'datavault',
   initialState,
   reducers: {
     receiveKeyData (state: DataVaultState, { payload: { key, content } }: PayloadAction<ReceivePayLoad>) {
-      if (key.endsWith('Credential')) {
-        state.credentials[key] = content
-      } else {
-        state.declarativeDetails[key] = content
-      }
+      state[getBucket(key)][key] = content
     },
     addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
       state.declarativeDetails[key] ? state.declarativeDetails[key].push(content) : state.declarativeDetails[key] = [content]
     },
     removeContentfromKey (state: DataVaultState, { payload: { key, id } }: PayloadAction<{ key: string, id: string }>) {
-      const bucket = key.endsWith('Credential') ? 'credentials' : 'declarativeDetails'
+      const bucket = getBucket(key)
       state[bucket][key] = state[bucket][key].filter((item: DataVaultContent) => item.id !== id)
 
       if (state[bucket][key].length === 0) {

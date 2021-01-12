@@ -103,7 +103,7 @@ describe('dataVault slice', () => {
         expect(store.getState().declarativeDetails).toEqual({ MY_KEY: [{ id: '1', content: 'hello' }] })
       })
 
-      test('it deletes multiple items', () => {
+      test('it deletes the key if there is no content left', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '1' }))
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
 
