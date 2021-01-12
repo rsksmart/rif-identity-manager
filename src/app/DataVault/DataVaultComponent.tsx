@@ -54,6 +54,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
           <CredentialDisplay
             credentials={credentials}
             deleteValue={handleDelete}
+            getKeyContent={handleGetKeyContent}
           />
         </div>
       </div>

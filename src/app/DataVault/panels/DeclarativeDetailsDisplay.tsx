@@ -5,7 +5,7 @@ import pencilIcon from '../../../assets/images/icons/pencil.svg'
 import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import EditValueModal from '../../../components/Modal/EditValueModal'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
-import { BaseButton } from '../../../components/Buttons'
+import DecryptKey from '../components/DecryptKey'
 
 interface DeclarativeDetailsDisplayInterface {
   deleteValue: (key: string, id: string) => Promise<any>
@@ -21,7 +21,6 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   const [isError, setIsError] = useState<null | string>(null)
   const [isEditing, setIsEditing] = useState<null | EditItemI>(null)
   const [isGettingContent, setIsGettingContent] = useState<string[]>([])
-  const [isGetError, setIsGetError] = useState<null | string>(null)
 
   const handleEditItem = (newValue: string, existingItem: EditItemI) => {
     if (newValue === existingItem.item.content) {
@@ -41,13 +40,10 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   }
 
   const handleGetContent = (key: string) => {
-    setIsGetError(null)
-    setIsLoading(true)
     setIsGettingContent([...isGettingContent, key])
     getKeyContent(key)
-      .catch((err: Error) => setIsGetError(err.message))
+      .catch((err: Error) => console.log(err))
       .finally(() => {
-        setIsLoading(false)
         setIsGettingContent(isGettingContent.filter((k: string) => k !== key))
       })
   }
@@ -55,7 +51,6 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   return (
     <Panel title={<><img src={declarativeIcon} /> Declarative Details</>} className="display">
       {Object.keys(details).length !== 0 && <p className="intro">Click on the download button to decrypt the content. Your wallet will request to decrypt each piece of content.</p>}
-      {isGetError && <div className="alert error">{isGetError}</div>}
       <table>
         <thead>
           <tr>
@@ -70,14 +65,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
                 <td>{key.replace('DD_', '')}</td>
                 <td>
                   {details[key].length === 0 && (
-                    <div className="decrypt">
-                      <BaseButton
-                        className="gray small"
-                        onClick={() => handleGetContent(key)}
-                        disabled={isGettingContent.includes(key)}>
-                        Download
-                      </BaseButton>
-                    </div>
+                    <DecryptKey handleGetContent={() => handleGetContent(key)} disabled={isGettingContent.includes(key)} />
                   )}
                   {details[key].map((item: DataVaultContent) => (
                     <div className="content-row" key={item.id}>
