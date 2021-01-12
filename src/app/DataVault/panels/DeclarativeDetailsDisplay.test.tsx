@@ -12,7 +12,8 @@ describe('Component: DeclarativeDetailsDisplay', () => {
 
   const mockedAttributes = {
     deleteValue: jest.fn(),
-    swapValue: jest.fn()
+    swapValue: jest.fn(),
+    getKeyContent: jest.fn()
   }
 
   it('renders the component', () => {
@@ -28,20 +29,36 @@ describe('Component: DeclarativeDetailsDisplay', () => {
     expect(wrapper.find('tr').at(1).find('.content').text()).toBe('jesse@iovlabs.org')
   })
 
-  it('does not show the key row if it has no content', () => {
+  it('shows the key row if it has no content with download button', () => {
     const mockDetails: DataVaultKey = {
       EMAIL: [{ id: '1', content: 'jesse@iovlabs.org' }],
       NAME: []
     }
 
-    const wrapper = shallow(<DeclarativeDetailsDisplay details={mockDetails} {...mockedAttributes} />)
-    expect(wrapper.find('tbody').children()).toHaveLength(1)
+    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDetails} {...mockedAttributes} />)
+    expect(wrapper.find('tr').at(1).find('.content').text()).toBe('jesse@iovlabs.org')
+    expect(wrapper.find('tr').at(2).find('.decrypt').text()).toBe('Download')
+  })
+
+  it('handles delete click', async () => {
+    const deleteFunction = jest.fn()
+    const deleteValue = (key: string, id: string) => new Promise((resolve) => resolve(deleteFunction(key, id)))
+    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} {...mockedAttributes} deleteValue={deleteValue} />)
+
+    wrapper.find('.content-row').at(0).find('button.delete').simulate('click')
+
+    await act(async () => {
+      await wrapper.find('.delete-modal').find('.column').at(1).find('button').simulate('click')
+
+      expect(deleteFunction).toBeCalledTimes(1)
+      expect(deleteFunction).toBeCalledWith('EMAIL', '1')
+    })
   })
 
   it('handles swap click', async () => {
     const editFunction = jest.fn()
     const swapValue = (key:string, content: string, id: string) => new Promise((resolve) => resolve(editFunction(key, content, id)))
-    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} deleteValue={jest.fn()} swapValue={swapValue} />)
+    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} {...mockedAttributes} swapValue={swapValue} />)
 
     wrapper.find('.content-row').at(0).find('button.edit').simulate('click')
     expect(wrapper.find('textarea').props().value).toBe('jesse@iovlabs.org')
@@ -59,6 +76,18 @@ describe('Component: DeclarativeDetailsDisplay', () => {
 
       expect(editFunction).toBeCalledTimes(1)
       expect(editFunction).toBeCalledWith('EMAIL', 'new@value.org', '1')
+    })
+  })
+
+  it('handles getContent click', async () => {
+    const getFunction = jest.fn()
+    const getContent = (_key:string) => new Promise((resolve) => resolve(getFunction()))
+
+    const wrapper = mount(<DeclarativeDetailsDisplay details={{ EMAIL: [] }} {...mockedAttributes} getKeyContent={getContent} />)
+
+    await act(async () => {
+      wrapper.find('.decrypt').find('button').simulate('click')
+      expect(getFunction).toBeCalledTimes(1)
     })
   })
 })
