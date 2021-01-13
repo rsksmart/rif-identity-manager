@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import Panel from '../../../components/Panel/Panel'
 import declarativeIcon from '../../../assets/images/icons/declarative-details.svg'
-import trashIcon from '../../../assets/images/icons/trash.svg'
 import pencilIcon from '../../../assets/images/icons/pencil.svg'
 import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
-import BinaryModal from '../../../components/Modal/BinaryModal'
 import EditValueModal from '../../../components/Modal/EditValueModal'
+import DeleteDvContentButton from '../components/DeleteDvContentButton'
 
 interface DeclarativeDetailsDisplayInterface {
   deleteValue: (key: string, id: string) => Promise<any>
@@ -13,24 +12,12 @@ interface DeclarativeDetailsDisplayInterface {
   details: DataVaultKey
 }
 
-const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue, swapValue }) => {
-  interface DeleteItemI { key: string; id: string }
+const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue, swapValue, getKeyContent }) => {
   interface EditItemI { key: string; item: DataVaultContent }
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<null | string>(null)
-  const [isDeleting, setIsDeleting] = useState<null | DeleteItemI>(null)
   const [isEditing, setIsEditing] = useState<null | EditItemI>(null)
-
-  const handleDeleteItem = (item: DeleteItemI) => {
-    setIsLoading(true)
-    setIsError(null)
-
-    deleteValue(item.key, item.id)
-      .then(() => setIsDeleting(null))
-      .catch((err: Error) => setIsError(err.message))
-      .finally(() => setIsLoading(false))
-  }
 
   const handleEditItem = (newValue: string, existingItem: EditItemI) => {
     if (newValue === existingItem.item.content) {
@@ -78,12 +65,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
                           >
                             <img src={pencilIcon} alt="Edit item" />
                           </button>
-                          <button
-                            disabled={isLoading}
-                            className="icon delete"
-                            onClick={() => setIsDeleting({ key, id: item.id })}>
-                            <img src={trashIcon} alt="Delete Item" />
-                          </button>
+                          <DeleteDvContentButton itemKey={key} item={item} deleteValue={deleteValue} />
                         </div>
                       </div>
                     ))}
@@ -106,15 +88,6 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
         initValue={isEditing ? isEditing.item.content : ''}
         inputType="textarea"
         error={isError}
-      />
-
-      <BinaryModal
-        show={isDeleting !== null}
-        onClose={() => setIsDeleting(null)}
-        onConfirm={() => isDeleting && handleDeleteItem(isDeleting)}
-        disabled={isLoading}
-        strings={{ text: 'Do you want to delete this item from the data vault?', confirm: 'Yes', deny: 'No' }}
-        className="delete-modal"
       />
     </Panel>
   )

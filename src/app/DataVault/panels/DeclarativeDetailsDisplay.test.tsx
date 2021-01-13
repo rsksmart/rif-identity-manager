@@ -38,6 +38,7 @@ describe('Component: DeclarativeDetailsDisplay', () => {
     expect(wrapper.find('tbody').children()).toHaveLength(1)
   })
 
+<<<<<<< HEAD
   it('handles delete click', async () => {
     const deleteFunction = jest.fn()
     const deleteValue = (key: string, id: string) => new Promise((resolve) => resolve(deleteFunction(key, id)))
@@ -53,6 +54,8 @@ describe('Component: DeclarativeDetailsDisplay', () => {
     })
   })
 
+=======
+>>>>>>> c57224c... Extract DeleteButton into its own component
   it('handles swap click', async () => {
     const editFunction = jest.fn()
     const swapValue = (key:string, content: string, id: string) => new Promise((resolve) => resolve(editFunction(key, content, id)))
