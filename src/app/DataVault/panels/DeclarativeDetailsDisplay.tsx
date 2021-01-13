@@ -12,7 +12,7 @@ interface DeclarativeDetailsDisplayInterface {
   details: DataVaultKey
 }
 
-const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue, swapValue, getKeyContent }) => {
+const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = ({ details, deleteValue, swapValue }) => {
   interface EditItemI { key: string; item: DataVaultContent }
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
