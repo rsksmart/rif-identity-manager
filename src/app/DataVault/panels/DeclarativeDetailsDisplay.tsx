@@ -48,9 +48,24 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
       })
   }
 
+  const showDownloadMessage = () => {
+    const keys = Object.keys(details)
+    if (keys.length === 0) {
+      return false
+    }
+
+    let hasEmpty = false
+    for (var key in details) {
+      if (details[key].length === 0) {
+        hasEmpty = true
+      }
+    }
+    return hasEmpty
+  }
+
   return (
     <Panel title={<><img src={declarativeIcon} /> Declarative Details</>} className="display">
-      {Object.keys(details).length !== 0 && <p className="intro">Click on the download button to decrypt the content. Your wallet will request to decrypt each piece of content.</p>}
+      {showDownloadMessage() && <p className="intro">Click on the download button to decrypt the content. Your wallet will request to decrypt each piece of content.</p>}
       <table>
         <thead>
           <tr>
@@ -69,7 +84,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
                   )}
                   {details[key].map((item: DataVaultContent) => (
                     <div className="content-row" key={item.id}>
-                      <div className="content">
+                      <div className="content break-all">
                         <p>{item.content}</p>
                       </div>
                       <div className="options">

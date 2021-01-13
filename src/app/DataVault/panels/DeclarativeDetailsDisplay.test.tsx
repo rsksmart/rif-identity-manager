@@ -90,4 +90,12 @@ describe('Component: DeclarativeDetailsDisplay', () => {
       expect(getFunction).toBeCalledTimes(1)
     })
   })
+
+  it('shows a message to download when there are keys with no content', () => {
+    const wrapper = mount(<DeclarativeDetailsDisplay details={{ EMAIL: [] }} {...mockedAttributes} />)
+    expect(wrapper.find('p.intro')).toBeTruthy()
+
+    const wrapper2 = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} {...mockedAttributes} />)
+    expect(wrapper2.contains('p.intro')).toBe(false)
+  })
 })
