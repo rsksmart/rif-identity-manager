@@ -38,10 +38,11 @@ const DeleteDvContentButton: React.FC<Interface> = ({
       <BinaryModal
         show={isDeleting}
         onClose={() => setIsDeleting(false)}
-        onConfirm={() => isDeleting && handleDeleteItem()}
+        onConfirm={handleDeleteItem}
         disabled={isLoading}
         strings={{ text: 'Do you want to delete this item from the data vault?', confirm: 'Yes', deny: 'No' }}
         className="delete-modal"
+        error={isError}
       />
     </>
   )
