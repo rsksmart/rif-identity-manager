@@ -4,7 +4,7 @@ import DataVaultWebClient, { AuthManager, EncryptionManager } from '@rsksmart/ip
 import { createDidFormat } from '../../../formatters'
 import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
-import { CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
+import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 
 /**
  * Create DataVault Clinet
@@ -120,3 +120,19 @@ export const dataVaultStart = (provider: any, address: string, chainId: number, 
     })
     .catch((err: any) => callback(null, err))
 }
+
+/**
+ * Download backup text file from the DataVault
+ * @param client DataVault Client
+ */
+export const downloadBackup = (client: DataVaultWebClient) =>
+  client.getBackup()
+    .then((value: Backup) => JSON.stringify(value))
+    .then((value: string) => {
+      const element = document.createElement('a')
+      element.href = URL.createObjectURL(new Blob([value], { type: 'text/plain;charset=utf-8' }))
+      element.download = 'dataVaultBackup.txt'
+      document.body.appendChild(element)
+      element.click()
+      element.remove()
+    })
