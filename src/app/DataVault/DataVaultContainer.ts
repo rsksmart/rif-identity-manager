@@ -4,7 +4,7 @@ import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { stateInterface } from '../state/configureStore'
 import DataVaultComponent from './DataVaultComponent'
 import { AnyAction } from 'redux'
-import { createDataVaultContent, deleteDataVaultContent, swapDataVaultContent } from '../state/operations/datavault'
+import { createDataVaultContent, deleteDataVaultContent, swapDataVaultContent, downloadBackup } from '../state/operations/datavault'
 
 const mapStateToProps = (state: stateInterface) => ({
   declarativeDetails: state.datavault.declarativeDetails,
@@ -17,7 +17,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyActio
   deleteValue: (client: DataVaultWebClient, key: string, id: string) =>
     dispatch(deleteDataVaultContent(client, key, id)),
   swapValue: (client: DataVaultWebClient, key: string, content: string, id: string) =>
-    dispatch(swapDataVaultContent(client, key, content, id))
+    dispatch(swapDataVaultContent(client, key, content, id)),
+  downloadBackup: (client: DataVaultWebClient) => downloadBackup(client)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataVaultComponent)

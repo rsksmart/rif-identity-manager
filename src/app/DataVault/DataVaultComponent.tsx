@@ -5,6 +5,7 @@ import AddDeclarativeDetails from './panels/AddDeclarativeDetails'
 import { DataVaultKey } from '../state/reducers/datavault'
 import { Web3ProviderContext } from '../../providerContext'
 import CredentialDisplay from './panels/CredentialDisplay'
+import DownloadBackup from './panels/DownloadBackup'
 
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey
@@ -12,10 +13,11 @@ interface DataVaultComponentProps {
   addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) => any
   deleteValue: (client: DataVaultWebClient, key: string, id: string) => any
   swapValue: (client: DataVaultWebClient, key: string, content: string, id: string) => any
+  downloadBackup: (client: DataVaultWebClient) => any
 }
 
 const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
-  addDeclarativeDetail, declarativeDetails, credentials, deleteValue, swapValue
+  addDeclarativeDetail, declarativeDetails, credentials, deleteValue, swapValue, downloadBackup
 }) => {
   const context = useContext(Web3ProviderContext)
 
@@ -25,6 +27,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
     context.dvClient && deleteValue(context.dvClient, key, id)
   const handleSwap = (key: string, content: string, id: string) =>
     context.dvClient && swapValue(context.dvClient, key, content, id)
+  const handleDownload = () => context.dvClient && downloadBackup(context.dvClient)
 
   return (
     <div className="content data-vault">
@@ -46,6 +49,12 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
         <div className="column">
           <CredentialDisplay credentials={credentials} />
         </div>
+      </div>
+      <div className="container">
+        <div className="column">
+          <DownloadBackup handleDownload={handleDownload} />
+        </div>
+        <div className="column"></div>
       </div>
     </div>
   )
