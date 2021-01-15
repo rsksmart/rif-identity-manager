@@ -5,6 +5,7 @@ import { createDidFormat } from '../../../formatters'
 import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey, receiveKeys } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
+import { getProviderName, PROVIDERS } from '../../../ethrpc'
 
 /**
  * Create DataVault Clinet
@@ -20,10 +21,14 @@ export const createClient = (provider: any, address: string, chainId: number) =>
   const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
   const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
 
+  const encryptionManager = getProviderName(provider) === PROVIDERS.METAMASK
+    ? new EncryptionManager({ getEncryptionPublicKey, decrypt })
+    : new EncryptionManager({ getEncryptionPublicKey: undefined })
+
   return new DataVaultWebClient({
     serviceUrl,
     authManager: new AuthManager({ did, serviceUrl, personalSign }),
-    encryptionManager: new EncryptionManager({ getEncryptionPublicKey, decrypt })
+    encryptionManager
   })
 }
 
