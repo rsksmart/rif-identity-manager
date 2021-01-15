@@ -47,7 +47,10 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
       </div>
       <div className="container">
         <div className="column">
-          <CredentialDisplay credentials={credentials} />
+          <CredentialDisplay
+            credentials={credentials}
+            deleteValue={handleDelete}
+          />
         </div>
       </div>
       <div className="container">

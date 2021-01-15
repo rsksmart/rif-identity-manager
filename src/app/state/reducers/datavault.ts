@@ -52,7 +52,12 @@ const dataVaultSlice = createSlice({
       state.declarativeDetails[key] ? state.declarativeDetails[key].push(content) : state.declarativeDetails[key] = [content]
     },
     removeContentfromKey (state: DataVaultState, { payload: { key, id } }: PayloadAction<{ key: string, id: string }>) {
-      state.declarativeDetails[key] = state.declarativeDetails[key].filter((item: DataVaultContent) => item.id !== id)
+      const bucket = key.endsWith('Credential') ? 'credentials' : 'declarativeDetails'
+      state[bucket][key] = state[bucket][key].filter((item: DataVaultContent) => item.id !== id)
+
+      if (state[bucket][key].length === 0) {
+        delete state[bucket][key]
+      }
     },
     swapContentById (state: DataVaultState, { payload: { key, id, content } }: PayloadAction<SwapPayLoad>) {
       state.declarativeDetails[key] = state.declarativeDetails[key].map((item: DataVaultContent) => item.id === id ? { ...item, content } : item)

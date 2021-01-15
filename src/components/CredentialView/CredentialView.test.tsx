@@ -25,4 +25,9 @@ describe('Component: CredentialView', () => {
     expect(wrapper.find('.alert').text()).toBe('Could not decode credential!The raw data is displayed below.')
     expect(wrapper.find('div.raw').text()).toBe('Hello World!')
   })
+
+  it('adds custom options', () => {
+    const wrapper = mount(<CredentialView jwt={sampleJwt} options={<p className="test">Extra!</p>} />)
+    expect(wrapper.find('.options').find('p.test').text()).toBe('Extra!')
+  })
 })

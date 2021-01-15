@@ -38,21 +38,6 @@ describe('Component: DeclarativeDetailsDisplay', () => {
     expect(wrapper.find('tbody').children()).toHaveLength(1)
   })
 
-  it('handles delete click', async () => {
-    const deleteFunction = jest.fn()
-    const deleteValue = (key: string, id: string) => new Promise((resolve) => resolve(deleteFunction(key, id)))
-    const wrapper = mount(<DeclarativeDetailsDisplay details={mockDeclarativeDetials} deleteValue={deleteValue} swapValue={jest.fn()} />)
-
-    wrapper.find('.content-row').at(0).find('button.delete').simulate('click')
-
-    await act(async () => {
-      await wrapper.find('.delete-modal').find('.column').at(1).find('button').simulate('click')
-
-      expect(deleteFunction).toBeCalledTimes(1)
-      expect(deleteFunction).toBeCalledWith('EMAIL', '1')
-    })
-  })
-
   it('handles swap click', async () => {
     const editFunction = jest.fn()
     const swapValue = (key:string, content: string, id: string) => new Promise((resolve) => resolve(editFunction(key, content, id)))

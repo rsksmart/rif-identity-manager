@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 
 interface CredentialViewInterface {
   jwt: string
+  options?: ReactNode
 }
 
-const CredentialView: React.FC<CredentialViewInterface> = ({ jwt }) => {
+const CredentialView: React.FC<CredentialViewInterface> = ({ jwt, options }) => {
   const [showRaw, setShowRaw] = useState<boolean>(false)
   const [error, setError] = useState<null | string>(null)
   const [prettyJson, setPrettyJson] = useState<string>('')
@@ -42,6 +43,7 @@ const CredentialView: React.FC<CredentialViewInterface> = ({ jwt }) => {
       {!error && (
         <div className="options">
           <button className="icon raw" onClick={() => setShowRaw(!showRaw)}>{showRaw ? 'Hide' : 'View'} Raw</button>
+          {options}
         </div>
       )}
     </div>

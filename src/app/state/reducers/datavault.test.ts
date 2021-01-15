@@ -102,7 +102,15 @@ describe('dataVault slice', () => {
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '1' }))
         store.dispatch(removeContentfromKey({ key: 'MY_KEY', id: '2' }))
 
-        expect(store.getState().declarativeDetails).toEqual({ MY_KEY: [] })
+        expect(store.getState().declarativeDetails).toEqual({})
+      })
+
+      test('it deletes credentials from list', () => {
+        const content = [{ id: '3', content: 'theCredential' }, { id: '4', content: 'c2' }]
+        store.dispatch(receiveKeyData({ key: 'helloCredential', content }))
+
+        store.dispatch(removeContentfromKey({ key: 'helloCredential', id: '3' }))
+        expect(store.getState().credentials).toEqual({ helloCredential: [{ id: '4', content: 'c2' }] })
       })
     })
 

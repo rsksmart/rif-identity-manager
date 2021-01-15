@@ -12,13 +12,14 @@ interface BinaryModalInterface {
     deny?: string
   }
   className?: string
+  error?: string | null
   onConfirm: () => void
   onDeny?: () => void
   onClose: () => void
 }
 
 const BinaryModal: React.FC<BinaryModalInterface> = ({
-  show, title, disabled, className, onConfirm, onClose, onDeny, strings
+  show, title, disabled, className, error, onConfirm, onClose, onDeny, strings
 }) => {
   return (
     <Modal show={show} className={className} onClose={onClose} title={title || 'Are you sure?'}>
@@ -35,6 +36,7 @@ const BinaryModal: React.FC<BinaryModalInterface> = ({
           </BaseButton>
         </div>
       </div>
+      {error && <div className="alert error">{error}</div>}
     </Modal>
   )
 }

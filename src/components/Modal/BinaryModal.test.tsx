@@ -46,4 +46,9 @@ describe('Component: BinaryModal', () => {
     expect(onClose).toBeCalledTimes(0)
     expect(onDeny).toBeCalledTimes(1)
   })
+
+  it('shows an error', () => {
+    const wrapper = mount(<BinaryModal show={true} onConfirm={jest.fn()} onClose={jest.fn()} onDeny={jest.fn()} error="An Error!" />)
+    expect(wrapper.find('.alert').text()).toBe('An Error!')
+  })
 })
