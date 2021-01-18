@@ -15,15 +15,16 @@ import { getProviderName, PROVIDERS } from '../../../ethrpc'
  */
 export const createClient = (provider: any, address: string, chainId: number) => {
   const serviceUrl = getDataVault()
-  const did = createDidFormat(address, chainId)
+  const did = createDidFormat(address, chainId).toLowerCase()
 
   const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
   const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
+  const mockDecrypt = (_hexCypher: string) => Promise.resolve('Error: Content could not be decrypted by your wallet.')
 
   const encryptionManager = getProviderName(provider) === PROVIDERS.METAMASK
     ? new EncryptionManager({ getEncryptionPublicKey, decrypt })
-    : new EncryptionManager({ getEncryptionPublicKey: undefined })
+    : new EncryptionManager({ getEncryptionPublicKey: undefined, decrypt: mockDecrypt })
 
   return new DataVaultWebClient({
     serviceUrl,

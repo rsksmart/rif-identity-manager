@@ -6,7 +6,7 @@
  */
 export const createDidFormat = (address: string, chainId: number) => {
   switch (chainId) {
-    case 1: return `did:ethr:mainnet:${address}`
+    case 1: return `did:ethr:${address}`
     case 30: return `did:ethr:rsk:${address}`
     case 31: return `did:ethr:rsk:testnet:${address}`
     case 5777: return `did:ethr:development:${address}`
