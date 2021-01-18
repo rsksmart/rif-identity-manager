@@ -16,7 +16,7 @@ export const createClient = (provider: any, address: string, chainId: number) =>
   const serviceUrl = getDataVault()
   const did = createDidFormat(address, chainId)
 
-  const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
+  const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
   const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
 
