@@ -70,3 +70,8 @@ button.icon:hover {
 button.icon:disabled {
   opacity: .25;
 }
+
+button.small {
+  padding: 5px 25px;
+  font-size: 14px;
+}

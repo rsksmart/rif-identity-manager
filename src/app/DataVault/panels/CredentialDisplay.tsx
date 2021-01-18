@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CredentialView from '../../../components/CredentialView/CredentialView'
 import Panel from '../../../components/Panel/Panel'
 import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import CredentialIcon from '../../../assets/images/icons/credential.svg'
+import DecryptKey from '../components/DecryptKey'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
 
 interface CredentialDisplayInterface {
   credentials: DataVaultKey
+  getKeyContent: (key: string) => Promise<any>
   deleteValue: (key: string, id: string) => Promise<any>
 }
 
-const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, deleteValue }) => {
+const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue }) => {
+  const [isGettingContent, setIsGettingContent] = useState<string[]>([])
+  const handleGetContent = (key: string) => {
+    setIsGettingContent([...isGettingContent, key])
+    getKeyContent(key)
+      .catch((err: Error) => console.log(err.message))
+      .finally(() => setIsGettingContent(isGettingContent.filter((k: string) => k !== key)))
+  }
+
   return (
     <Panel title={<><img src={CredentialIcon} /> Credentials</>} className="display credentials">
       <table>
@@ -35,6 +45,9 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
                         />
                       </li>)}
                   </ul>
+                  {credentials[key].length === 0 && (
+                    <DecryptKey handleGetContent={() => handleGetContent(key)} disabled={isGettingContent.includes(key)} />
+                  )}
                 </td>
               </tr>
             )
