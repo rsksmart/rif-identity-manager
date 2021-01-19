@@ -5,6 +5,7 @@ import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import CredentialIcon from '../../../assets/images/icons/credential.svg'
 import DecryptKey from '../components/DecryptKey'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
+import PresentCredential from '../components/PresentCredential'
 
 interface CredentialDisplayInterface {
   credentials: DataVaultKey
@@ -41,7 +42,10 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
                       <li key={item.id}>
                         <CredentialView
                           jwt={item.content}
-                          options={<DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} />}
+                          options={<>
+                            <div><PresentCredential item={item} /></div>
+                            <div><DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} /></div>
+                          </>}
                         />
                       </li>)}
                   </ul>
