@@ -6,6 +6,7 @@ import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import EditValueModal from '../../../components/Modal/EditValueModal'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
 import DecryptKey from '../components/DecryptKey'
+import DownloadErrorMessage from '../components/DownloadErrorMessage'
 
 interface DeclarativeDetailsDisplayInterface {
   deleteValue: (key: string, id: string) => Promise<any>
@@ -68,7 +69,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   return (
     <Panel title={<><img src={declarativeIcon} /> Declarative Details</>} className="display">
       {showDownloadMessage() && <p className="intro">Click on the download button to decrypt the content. Your wallet will request to decrypt each piece of content.</p>}
-      {isDownloadError && <p className="alert error">This content is encrypted, and your wallet is unable to decrypt the key <em>{isDownloadError}</em>.</p>}
+      {isDownloadError && <DownloadErrorMessage keyError={isDownloadError} />}
       <table>
         <thead>
           <tr>
