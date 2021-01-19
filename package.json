@@ -2,6 +2,7 @@
   "name": "rif-identity-manager",
   "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "homepage": "https://rsksmart.github.io/rif-identity-manager/",
   "scripts": {
     "start": "react-scripts start",
