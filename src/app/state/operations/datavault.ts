@@ -20,7 +20,7 @@ export const createClient = (provider: any, address: string, chainId: number) =>
   const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
   const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
-  const mockDecrypt = (_hexCypher: string) => Promise.resolve('Error: Content could not be decrypted by your wallet.')
+  const mockDecrypt = (_hexCypher: string) => Promise.reject(new Error('Content could not be decrypted by your wallet.'))
 
   const encryptionManager = getProviderName(provider) === PROVIDERS.METAMASK
     ? new EncryptionManager({ getEncryptionPublicKey, decrypt })

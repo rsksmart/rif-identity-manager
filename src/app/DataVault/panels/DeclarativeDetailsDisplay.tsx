@@ -19,6 +19,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<null | string>(null)
+  const [isDownloadError, setIsDownloadError] = useState<null | string>(null)
   const [isEditing, setIsEditing] = useState<null | EditItemI>(null)
   const [isGettingContent, setIsGettingContent] = useState<string[]>([])
 
@@ -40,9 +41,10 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   }
 
   const handleGetContent = (key: string) => {
+    setIsDownloadError(null)
     setIsGettingContent([...isGettingContent, key])
     getKeyContent(key)
-      .catch((err: Error) => console.log(err))
+      .catch(() => setIsDownloadError(key))
       .finally(() => {
         setIsGettingContent(isGettingContent.filter((k: string) => k !== key))
       })
@@ -66,6 +68,7 @@ const DeclarativeDetailsDisplay: React.FC<DeclarativeDetailsDisplayInterface> = 
   return (
     <Panel title={<><img src={declarativeIcon} /> Declarative Details</>} className="display">
       {showDownloadMessage() && <p className="intro">Click on the download button to decrypt the content. Your wallet will request to decrypt each piece of content.</p>}
+      {isDownloadError && <p className="alert error">This content is encrypted, and your wallet is unable to decrypt the key <em>{isDownloadError}</em>.</p>}
       <table>
         <thead>
           <tr>
