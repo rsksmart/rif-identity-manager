@@ -1,47 +1,50 @@
 import React, { useContext, useState } from 'react'
 import Modal from '../../../components/Modal/Modal'
-import { DataVaultContent } from '../../state/reducers/datavault'
-import { JwtPresentationPayload, createVerifiablePresentationJwt, Issuer } from 'did-jwt-vc'
 import { Web3ProviderContext } from '../../../providerContext'
+import { createPresentation } from '../../../features/credentials'
+import LoadingComponent from '../../../components/Loading/LoadingComponent'
+import CopyButton from '../../../components/CopyButton/CopyButton'
+import { BaseButton } from '../../../components/Buttons'
 
 interface PresentCredentialInterface {
-  item: DataVaultContent
+  jwt: string
 }
 
-const PresentCredential: React.FC<PresentCredentialInterface> = ({ item }) => {
-  const [present, setPresent] = useState<null | DataVaultContent>(null)
-  const [presentation, setPresentation] = useState<null | string>(null)
+const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt }) => {
+  interface stateInterface {
+    status: 'NONE' | 'LOADING' | 'DONE' | 'ERROR'
+    message: string
+  }
+  const initialState: stateInterface = { status: 'NONE', message: '' }
+  const [state, setState] = useState<stateInterface>(initialState)
 
-  const address = '0x3dd03d7d6c3137f1eb7582ba5957b8a2e26f304a'
-  const did = 'did:ethr:rsk:testnet:0x3dd03d7d6c3137f1eb7582ba5957b8a2e26f304a'
   const context = useContext(Web3ProviderContext)
 
-  const createPresentation = async () => {
-    setPresent(item)
-
-    const provider = context.provider
-    const issuer: Issuer = {
-      did,
-      signer: (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
-    }
-
-    const vpPayload: JwtPresentationPayload = {
-      vp: {
-        '@context': ['https://www.w3.org/2018/credentials/v1'],
-        type: ['VerifiablePresentation'],
-        verifiableCredential: [item.content]
-      }
-    }
-    const vpJwt = await createVerifiablePresentationJwt(vpPayload, issuer)
-    console.log(vpJwt)
-    setPresentation(vpJwt)
+  const handleCreate = () => {
+    setState({ status: 'LOADING', message: '' })
+    createPresentation(context.provider, jwt)
+      .then((message: string) => setState({ status: 'DONE', message }))
+      .catch((error: Error) => setState({ status: 'ERROR', message: error.message }))
   }
 
   return (
     <>
-      <button className="icon" onClick={createPresentation}>Present</button>
-      <Modal show={!!present} onClose={() => setPresent(null)} title="Present Credential">
-        {presentation && <textarea defaultValue={presentation} />}
+      <button className="icon" onClick={handleCreate}>Present</button>
+      <Modal show={state.status !== 'NONE'} onClose={() => setState(initialState)} title="Present Credential">
+        {state.status === 'LOADING' && <LoadingComponent />}
+        {state.status === 'DONE' && (
+          <div>
+            <h2>Raw JWT</h2>
+            <textarea defaultValue={state.message} className="jwt" />
+            <CopyButton value={state.message} />
+          </div>
+        )}
+        {state.status === 'ERROR' && (
+          <>
+            <p className="alert error">{state.message}</p>
+            <p><BaseButton onClick={handleCreate}>Try Again</BaseButton></p>
+          </>
+        )}
       </Modal>
     </>
   )

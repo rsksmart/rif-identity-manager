@@ -43,7 +43,7 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
                         <CredentialView
                           jwt={item.content}
                           options={<>
-                            <div><PresentCredential item={item} /></div>
+                            <div><PresentCredential jwt={item.content} /></div>
                             <div><DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} /></div>
                           </>}
                         />
