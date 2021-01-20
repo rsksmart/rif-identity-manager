@@ -11,9 +11,10 @@ interface CredentialDisplayInterface {
   credentials: DataVaultKey
   getKeyContent: (key: string) => Promise<any>
   deleteValue: (key: string, id: string) => Promise<any>
+  createPresentation: (jwt: string) => Promise<any>
 }
 
-const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue }) => {
+const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue, createPresentation }) => {
   const [isGettingContent, setIsGettingContent] = useState<string[]>([])
   const handleGetContent = (key: string) => {
     setIsGettingContent([...isGettingContent, key])
@@ -43,7 +44,7 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
                         <CredentialView
                           jwt={item.content}
                           options={<>
-                            <div><PresentCredential jwt={item.content} /></div>
+                            <div><PresentCredential jwt={item.content} createPresentation={createPresentation} /></div>
                             <div><DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} /></div>
                           </>}
                         />

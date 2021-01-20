@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Modal from '../../../components/Modal/Modal'
-import { Web3ProviderContext } from '../../../providerContext'
-import { createPresentation } from '../../../features/credentials'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
 import CopyButton from '../../../components/CopyButton/CopyButton'
 import { BaseButton } from '../../../components/Buttons'
 
 interface PresentCredentialInterface {
   jwt: string
+  createPresentation: (jwt: string) => Promise<string>
 }
 
-const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt }) => {
+const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt, createPresentation }) => {
   interface stateInterface {
     status: 'NONE' | 'LOADING' | 'DONE' | 'ERROR'
     message: string
@@ -18,11 +17,9 @@ const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt }) => {
   const initialState: stateInterface = { status: 'NONE', message: '' }
   const [state, setState] = useState<stateInterface>(initialState)
 
-  const context = useContext(Web3ProviderContext)
-
   const handleCreate = () => {
     setState({ status: 'LOADING', message: '' })
-    createPresentation(context.provider, jwt)
+    createPresentation(jwt)
       .then((message: string) => setState({ status: 'DONE', message }))
       .catch((error: Error) => setState({ status: 'ERROR', message: error.message }))
   }

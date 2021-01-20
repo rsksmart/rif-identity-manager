@@ -6,6 +6,7 @@ import { DataVaultKey } from '../state/reducers/datavault'
 import { Web3ProviderContext } from '../../providerContext'
 import CredentialDisplay from './panels/CredentialDisplay'
 import DownloadBackup from './panels/DownloadBackup'
+import { createPresentation } from '../../features/credentials'
 
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey
@@ -55,6 +56,7 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
             credentials={credentials}
             deleteValue={handleDelete}
             getKeyContent={handleGetKeyContent}
+            createPresentation={(jwt: string) => createPresentation(context.provider, jwt)}
           />
         </div>
       </div>
