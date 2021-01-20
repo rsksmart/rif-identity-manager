@@ -1594,12 +1594,12 @@
     ethjs-query "^0.3.8"
     ethr-did-resolver "^1.0.2"
 
-"@rsksmart/ipfs-cpinner-client@0.1.1-beta.7":
-  version "0.1.1-beta.7"
-  resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.1-beta.7.tgz#3f55537792501f76c7119feeb01039f58398e667"
-  integrity sha512-1KERjN9qmJZjRpqHAb9lWNpT04AF/sYKKml17jPeFZjLp5MJl/GDWM+6GYGv97sRTzRjWdtB4SD8qrg23myjZw==
+"@rsksmart/ipfs-cpinner-client@0.1.1-beta.8":
+  version "0.1.1-beta.8"
+  resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.1-beta.8.tgz#4c8a3616e347d01ce33cc5812930aaf5b74c1744"
+  integrity sha512-ZIhKpbcIrifUY6EV/yiqcfoPPVlb/mLfiVtkLm2FZDu/QmrJaBsa6PKpofWoXXEAHAYGAvRUtPFD69yY83GMrg==
   dependencies:
-    axios "^0.21.0"
+    axios "^0.21.1"
     buffer "^6.0.3"
     did-jwt "^4.6.2"
     eth-sig-util "^3.0.0"
@@ -3207,7 +3207,7 @@ axios@^0.20.0:
   dependencies:
     follow-redirects "^1.10.0"
 
-axios@^0.21.0:
+axios@^0.21.0, axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
@@ -5031,6 +5031,13 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+did-jwt-vc@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/did-jwt-vc/-/did-jwt-vc-1.0.7.tgz#ff25bb14b5b7468576533bd37409aad9bb746745"
+  integrity sha512-ZQypMpR3TovdEc67SEOvhb0h3lnMRgm7PagNVnEO0FiPb4qVC1hMkX/qQd6SQqx8sW5GjYRm3xTWYMXaWDpgwQ==
+  dependencies:
+    did-jwt "^4.8.1"
+
 did-jwt@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-3.0.0.tgz#5e11f1d6e5c9e2d8bdcba0d391f1fcec7c58a07d"
@@ -5046,7 +5053,7 @@ did-jwt@^3.0.0:
     tweetnacl "^1.0.1"
     uport-base64url "3.0.2-alpha.0"
 
-did-jwt@^4.6.2:
+did-jwt@^4.6.2, did-jwt@^4.8.1:
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-4.8.1.tgz#fae7d680c6d12c13cdce92530540d9f4b5d007f0"
   integrity sha512-TRfk6He4MSUe3mN+YBqX4wC8N4ns3jan0Ckwal6fPsexKYRwo20ns8w0IGt7J4oHOF3IxXNAkH07OBdEpMnEdA==

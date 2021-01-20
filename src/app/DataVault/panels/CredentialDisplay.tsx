@@ -5,14 +5,16 @@ import { DataVaultContent, DataVaultKey } from '../../state/reducers/datavault'
 import CredentialIcon from '../../../assets/images/icons/credential.svg'
 import DecryptKey from '../components/DecryptKey'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
+import PresentCredential from '../components/PresentCredential'
 
 interface CredentialDisplayInterface {
   credentials: DataVaultKey
   getKeyContent: (key: string) => Promise<any>
   deleteValue: (key: string, id: string) => Promise<any>
+  createPresentation: (jwt: string) => Promise<any>
 }
 
-const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue }) => {
+const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue, createPresentation }) => {
   const [isGettingContent, setIsGettingContent] = useState<string[]>([])
   const handleGetContent = (key: string) => {
     setIsGettingContent([...isGettingContent, key])
@@ -41,7 +43,10 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
                       <li key={item.id}>
                         <CredentialView
                           jwt={item.content}
-                          options={<DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} />}
+                          options={<>
+                            <div><PresentCredential jwt={item.content} createPresentation={createPresentation} /></div>
+                            <div><DeleteDvContentButton item={item} itemKey={key} deleteValue={deleteValue} /></div>
+                          </>}
                         />
                       </li>)}
                   </ul>
