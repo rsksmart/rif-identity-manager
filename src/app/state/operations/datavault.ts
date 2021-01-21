@@ -5,6 +5,7 @@ import { createDidFormat } from '../../../formatters'
 import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey, receiveKeys } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
+import { getProviderName, PROVIDERS } from '../../../ethrpc'
 
 /**
  * Create DataVault Clinet
@@ -14,16 +15,21 @@ import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib
  */
 export const createClient = (provider: any, address: string, chainId: number) => {
   const serviceUrl = getDataVault()
-  const did = createDidFormat(address, chainId)
+  const did = createDidFormat(address, chainId).toLowerCase()
 
-  const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [address, data] })
+  const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
   const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
+  const mockDecrypt = (_hexCypher: string) => Promise.reject(new Error('Content could not be decrypted by your wallet.'))
+
+  const encryptionManager = getProviderName(provider) === PROVIDERS.METAMASK
+    ? new EncryptionManager({ getEncryptionPublicKey, decrypt })
+    : new EncryptionManager({ getEncryptionPublicKey: undefined, decrypt: mockDecrypt })
 
   return new DataVaultWebClient({
     serviceUrl,
     authManager: new AuthManager({ did, serviceUrl, personalSign }),
-    encryptionManager: new EncryptionManager({ getEncryptionPublicKey, decrypt })
+    encryptionManager
   })
 }
 

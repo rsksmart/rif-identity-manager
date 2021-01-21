@@ -6,6 +6,7 @@ import CredentialIcon from '../../../assets/images/icons/credential.svg'
 import DecryptKey from '../components/DecryptKey'
 import DeleteDvContentButton from '../components/DeleteDvContentButton'
 import PresentCredential from '../components/PresentCredential'
+import DownloadErrorMessage from '../components/DownloadErrorMessage'
 
 interface CredentialDisplayInterface {
   credentials: DataVaultKey
@@ -16,15 +17,18 @@ interface CredentialDisplayInterface {
 
 const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, getKeyContent, deleteValue, createPresentation }) => {
   const [isGettingContent, setIsGettingContent] = useState<string[]>([])
+  const [isDownloadError, setIsDownloadError] = useState<null | string>(null)
   const handleGetContent = (key: string) => {
     setIsGettingContent([...isGettingContent, key])
+    setIsDownloadError(null)
     getKeyContent(key)
-      .catch((err: Error) => console.log(err.message))
+      .catch(() => setIsDownloadError(key))
       .finally(() => setIsGettingContent(isGettingContent.filter((k: string) => k !== key)))
   }
 
   return (
     <Panel title={<><img src={CredentialIcon} /> Credentials</>} className="display credentials">
+      {isDownloadError && <DownloadErrorMessage keyError={isDownloadError} />}
       <table>
         <thead>
           <tr>

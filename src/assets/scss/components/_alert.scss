@@ -5,10 +5,23 @@
   margin: 1rem 0;
   border: 1px solid transparent;
   border-radius: .25rem;
+
+  h2, p {
+    margin: 0 0 2px 0;
+  }
 }
 
 .alert.error {
   color: $white;
   background-color: $red;
   border-color: $deepRed;
+}
+
+.alert.warning {
+  color: $white;
+  background-color: $orange;
+
+  h2 {
+    color: $white;
+  }
 }
