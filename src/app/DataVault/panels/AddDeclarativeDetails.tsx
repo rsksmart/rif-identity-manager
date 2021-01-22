@@ -7,7 +7,7 @@ import { PROVIDERS } from '../../../ethrpc'
 
 interface AddDeclarativeDetailsInterface {
   addDeclarativeDetail: (key: string, content: string) => Promise<any>
-  providerName: PROVIDERS
+  providerName?: PROVIDERS
 }
 
 const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDeclarativeDetail, providerName }) => {

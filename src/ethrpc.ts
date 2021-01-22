@@ -48,6 +48,6 @@ export const getProviderName = (provider: any) => {
     return PROVIDERS.METAMASK
   }
   if (provider.wc) {
-    return provider.WALLET_CONNECT
+    return PROVIDERS.WALLET_CONNECT
   }
 }
