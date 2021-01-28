@@ -24,6 +24,8 @@ const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt, createPr
       .catch((error: Error) => setState({ status: 'ERROR', message: error.message }))
   }
 
+  const presentationLink = state.status === 'DONE' ? `https://rsksmart.github.io/rif-credential-verifier/?jwt=${state.message}` : ''
+
   return (
     <>
       <button className="icon" onClick={handleCreate}>Present</button>
@@ -31,9 +33,14 @@ const PresentCredential: React.FC<PresentCredentialInterface> = ({ jwt, createPr
         {state.status === 'LOADING' && <LoadingComponent />}
         {state.status === 'DONE' && (
           <div>
-            <h2>Raw JWT</h2>
-            <textarea defaultValue={state.message} className="jwt" />
-            <CopyButton value={state.message} />
+            <h2>Sharable link:</h2>
+            <textarea defaultValue={presentationLink} className="sharableLink" />
+            <p><CopyButton value={presentationLink} /></p>
+            <p>
+              <a href={presentationLink} target="_blank" rel="noreferrer">
+                Open in new window
+              </a>
+            </p>
           </div>
         )}
         {state.status === 'ERROR' && (

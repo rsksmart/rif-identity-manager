@@ -30,8 +30,8 @@ describe('Component: PresentCredential.test', () => {
       wrapper.update()
 
       await act(async () => {
-        expect(wrapper.find('h2').text()).toBe('Raw JWT')
-        expect(wrapper.find('textarea').props().defaultValue).toBe('thePresentation')
+        expect(wrapper.find('h2').text()).toBe('Sharable link:')
+        expect(wrapper.find('textarea').props().defaultValue).toBe('https://rsksmart.github.io/rif-credential-verifier/?jwt=thePresentation')
       })
     })
   })
