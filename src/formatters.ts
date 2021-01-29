@@ -10,6 +10,7 @@ export const createDidFormat = (address: string, chainId: number) => {
     case 3: return `did:ethr:ropsten:${address}`
     case 30: return `did:ethr:rsk:${address}`
     case 31: return `did:ethr:rsk:testnet:${address}`
+    case 42: return `did:ethr:kovan:${address}`
     case 5777: return `did:ethr:development:${address}`
     default: return address
   }
