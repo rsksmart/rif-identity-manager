@@ -1,14 +1,16 @@
 import { getDIDRegistryAddress, getRPCUrl } from '../config/getConfig'
 
+const add = (name: string, chainId: number) => ({ name, registry: getDIDRegistryAddress(chainId), rpcUrl: getRPCUrl(chainId) })
+
 export const resolverProviderConfig = {
   networks: [
-    { name: 'mainnet', registry: getDIDRegistryAddress(1), rpcUrl: getRPCUrl(1) },
-    { name: 'ropsten', registry: getDIDRegistryAddress(3), rpcUrl: getRPCUrl(3) },
-    { name: 'rinkeby', registry: getDIDRegistryAddress(4), rpcUrl: getRPCUrl(4) },
-    { name: 'goerli', registry: getDIDRegistryAddress(5), rpcUrl: getRPCUrl(5) },
-    { name: 'rsk', registry: getDIDRegistryAddress(30), rpcUrl: getRPCUrl(30) },
-    { name: 'rsk:testnet', registry: getDIDRegistryAddress(31), rpcUrl: getRPCUrl(31) },
-    { name: 'kovan', refistry: getDIDRegistryAddress(42), rpcUrl: getRPCUrl(42) },
-    { name: 'development', registry: getDIDRegistryAddress(5777), rpcUrl: getRPCUrl(5777) }
+    add('mainnet', 1),
+    add('ropsten', 3),
+    add('rinkeby', 4),
+    add('goerli', 5),
+    add('rsk', 30),
+    add('rsk:testnet', 31),
+    add('kovan', 31),
+    add('development', 5777)
   ]
 }
