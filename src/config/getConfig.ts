@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import AllNetworks from './config.json'
 import Ethereum from './config.ethereum.json'
+import Ropsten from './config.ropsten.json'
 import Mainnet from './config.mainnet.json'
 import Testnet from './config.testnet.json'
 import Local from './config.local.json'
@@ -15,6 +16,7 @@ export enum SETTINGS {
 const getSetting = (chainId: number, setting: SETTINGS) => {
   switch (chainId) {
     case 1: return Ethereum[setting]
+    case 3: return Ropsten[setting]
     case 30: return Mainnet[setting]
     case 31: return Testnet[setting]
     default: return Local[setting]

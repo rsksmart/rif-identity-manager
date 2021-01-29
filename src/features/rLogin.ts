@@ -10,6 +10,7 @@ export const rLogin = new RLogin({
       options: {
         rpc: {
           1: getRPCUrl(1),
+          3: getRPCUrl(3),
           30: getRPCUrl(30),
           31: getRPCUrl(31),
           5777: getRPCUrl(5777)
@@ -17,7 +18,7 @@ export const rLogin = new RLogin({
       }
     }
   },
-  supportedChains: [1, 30, 31, 5777]
+  supportedChains: [1, 3, 30, 31, 5777]
 })
 
 export const clearRloginStorage = () => {
