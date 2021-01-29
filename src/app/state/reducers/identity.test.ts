@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import identitySlice, { changeAccount, changeChainId, IdentityState, initialState } from './identity'
+import identitySlice, { changeAccount, changeChainId, IdentityState, initialState, reset } from './identity'
 
 describe('identity slide', () => {
   const address = '0xf3beac30c498d9e26865f34fcaa57dbb935b0d74'
@@ -38,6 +38,13 @@ describe('identity slide', () => {
         ...initialState,
         chainId: 30
       })
+    })
+
+    test('reset', () => {
+      store.dispatch(changeAccount({ address }))
+      store.dispatch(changeChainId({ chainId: 30 }))
+      store.dispatch(reset())
+      expect(store.getState()).toEqual(initialState)
     })
   })
 })

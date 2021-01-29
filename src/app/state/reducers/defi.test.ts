@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveBalance, receiveConversionBalance } from './defi'
+import tokenSlice, { addTokenData, DefiState, initialState, tokenInitialState, receiveBalance, receiveConversionBalance, reset } from './defi'
 
 describe('token slide', () => {
   describe('action creators', () => {
@@ -86,6 +86,14 @@ describe('token slide', () => {
     test('it receives the conversion for balance', () => {
       store.dispatch(receiveConversionBalance({ usd: 18 }))
       expect(store.getState().conversion).toEqual(18)
+    })
+
+    test('reset', () => {
+      store.dispatch(receiveBalance({ balance: 1.846 }))
+      store.dispatch(receiveConversionBalance({ usd: 18 }))
+      store.dispatch(addTokenData({ data: { address: '0x123', name: 'test' } }))
+      store.dispatch(reset())
+      expect(store.getState()).toEqual(initialState)
     })
   })
 })

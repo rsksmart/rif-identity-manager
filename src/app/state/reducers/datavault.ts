@@ -67,10 +67,11 @@ const dataVaultSlice = createSlice({
       keys.forEach((key: string) => {
         key.endsWith('Credential') ? state.credentials[key] = [] : state.declarativeDetails[key] = []
       })
-    }
+    },
+    reset: _state => initialState
   }
 })
 
-export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById, receiveStorageInformation, receiveKeys } = dataVaultSlice.actions
+export const { receiveKeyData, addContentToKey, removeContentfromKey, swapContentById, receiveStorageInformation, receiveKeys, reset } = dataVaultSlice.actions
 
 export default dataVaultSlice.reducer

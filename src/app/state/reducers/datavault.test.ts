@@ -1,5 +1,5 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
-import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent, receiveStorageInformation, receiveKeys } from './datavault'
+import dataVaultSlice, { DataVaultState, receiveKeyData, initialState, addContentToKey, removeContentfromKey, swapContentById, DataVaultContent, receiveStorageInformation, receiveKeys, reset } from './datavault'
 
 describe('dataVault slice', () => {
   describe('action creators', () => {
@@ -42,6 +42,13 @@ describe('dataVault slice', () => {
     })
 
     test('initial state', () => {
+      expect(store.getState()).toEqual(initialState)
+    })
+
+    test('it resets', () => {
+      store.dispatch(receiveKeys({ keys: ['oneDD', 'twoCredential'] }))
+      store.dispatch(addContentToKey({ key: 'twoCredential', content: { id: '2', content: 'bye' } }))
+      store.dispatch(reset())
       expect(store.getState()).toEqual(initialState)
     })
 

@@ -50,10 +50,11 @@ const defiSlice = createSlice({
     },
     receiveConversionBalance (state: DefiState, { payload: { usd } }: PayloadAction<{ usd: number }>) {
       state.conversion = usd
-    }
+    },
+    reset: _state => initialState
   }
 })
 
-export const { addTokenData, receiveBalance, receiveConversionBalance } = defiSlice.actions
+export const { addTokenData, receiveBalance, receiveConversionBalance, reset } = defiSlice.actions
 
 export default defiSlice.reducer
