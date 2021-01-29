@@ -42,6 +42,7 @@ export const chainIdToName = (chainId: number) => {
     case 1: return 'Ethereum'
     case 3: return 'Ropsten Testnet'
     case 4: return 'Rinkeby Testnet'
+    case 5: return 'Görli Testnet'
     case 42: return 'Kovan Testnet'
     case 30: return 'RSK Mainnet'
     case 31: return 'RSK Testnet'
