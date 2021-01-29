@@ -12,9 +12,10 @@ interface NavigationInterface {
   selected: string
   handleClick: (screen: screens) => void
   showDataVault?: boolean
+  logout: () => void
 }
 
-const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, handleClick }) => (
+const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, handleClick, logout }) => (
   <div className="container">
     <div className="column">
       <ul className="navigation">
@@ -34,6 +35,7 @@ const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, ha
         </li>
         <li className="disabled">Request Credentials</li>
         <li className="disabled">My Dapps</li>
+        <li className="logout"><button onClick={logout}>Logout</button></li>
       </ul>
     </div>
   </div>
