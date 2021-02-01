@@ -9,7 +9,7 @@ import dataVaultReducer, { DataVaultState } from './reducers/datavault'
 const middleware: Middleware[] = [thunk]
 
 if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger());
+  middleware.push(createLogger())
 }
 
 export interface stateInterface {
