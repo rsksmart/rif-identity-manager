@@ -1,7 +1,6 @@
 import React from 'react'
 import Panel from '../../../components/Panel/Panel'
 import datavaultIcon from '../../../assets/images/icons/data-vault.svg'
-import { BaseButton } from '../../../components/Buttons'
 import ProgressBar from '../../../components/ProgressBar/ProgressBar'
 import ToolTip from '../../../components/Tooltip/Tooltip'
 import { DataVaultStorageState } from '../../state/reducers/datavault'
@@ -22,7 +21,7 @@ const DataVaultSummary: React.FC<DataVaultSummaryInterface> = ({ storage, handle
           </ToolTip>
         </div>
         <div className="column">
-          <BaseButton onClick={handleButton} className="turquoise panel-button">DataVault</BaseButton>
+          <button className="link" style={{ marginTop: -10 }} onClick={handleButton}>View your DataVault</button>
         </div>
       </div>
     </Panel>
