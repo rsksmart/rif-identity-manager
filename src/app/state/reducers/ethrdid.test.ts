@@ -1,6 +1,6 @@
 import { configureStore, Store, AnyAction } from '@reduxjs/toolkit'
 import { DIDDocument } from 'did-resolver'
-import ethrdidSlice, { EtherdidState, initialState, resolveDid } from './ethrdid'
+import ethrdidSlice, { EtherdidState, initialState, reset, resolveDid } from './ethrdid'
 
 describe('ethrdid slice', () => {
   const data: DIDDocument = {
@@ -33,6 +33,12 @@ describe('ethrdid slice', () => {
         ...initialState,
         didDocument: data
       })
+    })
+
+    test('reset', () => {
+      store.dispatch(resolveDid({ data }))
+      store.dispatch(reset())
+      expect(store.getState()).toEqual(initialState)
     })
   })
 })

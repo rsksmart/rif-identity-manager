@@ -1,12 +1,16 @@
 import { Dispatch } from 'react'
 
 import { getAccountAndNetwork } from '../../../ethrpc'
-import { rLogin } from '../../../features/rLogin'
+import { rLogin, clearRloginStorage } from '../../../features/rLogin'
 
-import { changeAccount, changeChainId } from '../reducers/identity'
+import { changeAccount, changeChainId, reset as resetIdentity } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
 import { getBalance, getTokenList } from './defi'
 import { dataVaultStart } from './datavault'
+
+import { reset as resetDV } from '../reducers/datavault'
+import { reset as resetDefi } from '../reducers/defi'
+import { reset as resetEthrDid } from '../reducers/ethrdid'
 
 /**
  * Login into web3 provider via rLogin
@@ -30,3 +34,14 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     })
   })
     .catch((err: string) => console.log('rLogin Error', err))
+
+export const logout = () => (dispatch: Dispatch<any>) => {
+  // local storage
+  clearRloginStorage()
+
+  // reducers
+  dispatch(resetDV())
+  dispatch(resetDefi())
+  dispatch(resetEthrDid())
+  dispatch(resetIdentity())
+}

@@ -6,11 +6,13 @@ export interface Web3ProviderContextInterface {
   setProvider?: (value: any) => void
   dvClient: DataVaultWebClient | null,
   setDvClient?: (client: DataVaultWebClient) => void
+  reset: () => void
 }
 
 export const Web3ProviderContext = React.createContext<Web3ProviderContextInterface>({
   provider: null,
-  dvClient: null
+  dvClient: null,
+  reset: () => {}
 })
 
 interface Web3ProviderElementInterface {
@@ -25,7 +27,11 @@ export const Web3ProviderElement: React.FC<Web3ProviderElementInterface> = ({ ch
     provider: provider,
     setProvider: (provider: any) => setProvider(provider),
     dvClient: dvClient,
-    setDvClient: (client: DataVaultWebClient) => setDvClient(client)
+    setDvClient: (client: DataVaultWebClient | null) => setDvClient(client),
+    reset: () => {
+      setProvider(null)
+      setDvClient(null)
+    }
   }
 
   return (

@@ -19,3 +19,15 @@ export const rLogin = new RLogin({
   },
   supportedChains: [1, 30, 31, 5777]
 })
+
+export const clearRloginStorage = () => {
+  localStorage.removeItem('RLOGIN_ACCESS_TOKEN')
+  localStorage.removeItem('RLOGIN_REFRESH_TOKEN')
+  localStorage.removeItem('walletconnect')
+
+  Object.keys(localStorage).map((key: string) => {
+    if (key.startsWith('DV_ACCESS_TOKEN') || key.startsWith('DV_REFRESH_TOKEN')) {
+      localStorage.removeItem(key)
+    }
+  })
+}

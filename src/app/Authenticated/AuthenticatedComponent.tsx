@@ -15,14 +15,19 @@ interface AuthenticatedComponentInterface {
   address: string | null
   persona: DataVaultKey
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
+  logout: () => void
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logout }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
   const changeScreen = (screen: screens) => setScreen(screen)
   const updatePersona = (items: DataVaultKey) => context.dvClient && modifyMultipleItems(context.dvClient, items)
+  const handleLogout = () => {
+    context.reset()
+    logout()
+  }
 
   return (
     <>
@@ -37,6 +42,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
         selected={screen}
         handleClick={changeScreen}
         showDataVault={!!context.dvClient}
+        logout={handleLogout}
       />
       {screen === screens.DASHBOARD && <DashboardContainer changeScreen={changeScreen} />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}

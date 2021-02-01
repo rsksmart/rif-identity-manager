@@ -24,10 +24,11 @@ const ethrDidSlice = createSlice({
   reducers: {
     resolveDid (state: EtherdidState, { payload: { data } }: PayloadAction<ResolveDidPayload>) {
       state.didDocument = data
-    }
+    },
+    reset: _state => initialState
   }
 })
 
-export const { resolveDid } = ethrDidSlice.actions
+export const { resolveDid, reset } = ethrDidSlice.actions
 
 export default ethrDidSlice.reducer

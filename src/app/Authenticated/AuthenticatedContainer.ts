@@ -6,6 +6,7 @@ import { stateInterface } from '../state/configureStore'
 import AuthenticatedComponent from './AuthenticatedComponent'
 import { modifyMultipleItems } from '../state/operations/datavault'
 import { DataVaultKey } from '../state/reducers/datavault'
+import { logout } from '../state/operations/identity'
 
 /**
  * Get items that are specifically to the Persona from the DataVault collection
@@ -31,7 +32,8 @@ const mapStateToProps = (state: stateInterface) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) =>
-    dispatch(modifyMultipleItems(client, items))
+    dispatch(modifyMultipleItems(client, items)),
+  logout: () => dispatch(logout())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedComponent)

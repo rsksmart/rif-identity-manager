@@ -32,6 +32,10 @@ ul.navigation {
   li.disabled {
     color: $lightGray;
   }
+
+  li.logout {
+    float: right
+  }
 }
 
 @media screen and (max-width: $breakpoint-phone) {
@@ -41,6 +45,10 @@ ul.navigation {
     li {
       display: block;
       padding: 5px 0;
+    }
+
+    li.logout {
+      float: none
     }
   }
 }
