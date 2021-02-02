@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, Middleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import identityReducer, { IdentityState } from './reducers/identity'
@@ -6,7 +6,11 @@ import ethrdidReducer, { EtherdidState } from './reducers/ethrdid'
 import defiReducer, { DefiState } from './reducers/defi'
 import dataVaultReducer, { DataVaultState } from './reducers/datavault'
 
-const middleware = [thunk, createLogger()]
+const middleware: Middleware[] = [thunk]
+
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(createLogger())
+}
 
 export interface stateInterface {
   identity: IdentityState
