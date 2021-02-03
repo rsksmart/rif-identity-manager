@@ -17,7 +17,7 @@ import { reset as resetEthrDid } from '../reducers/ethrdid'
  * Saves the web3 provider into context and saves address and chainId to redux
  * @param context the app context where the provider will be ser
  */
-export const login = (context: any, cached: string | null) => (dispatch: Dispatch<any>) => {
+export const login = (context: any) => (dispatch: Dispatch<any>) => {
   rLogin.connect().then((provider: any) => {
     context.setProvider(provider)
 
@@ -36,28 +36,21 @@ export const login = (context: any, cached: string | null) => (dispatch: Dispatc
     .catch((err: string) => console.log('rLogin Error', err))
 }
 
-export const logout = () => (dispatch: Dispatch<any>) => {
-  // local storage
-  clearRloginStorage()
-
-  rLogin.clearCachedProvider()
-
-  // reducers
+/**
+ * Dispatch reset on all reducers back to InitialState
+ */
+export const resetReducers = () => (dispatch: Dispatch<any>) => {
   dispatch(resetDV())
   dispatch(resetDefi())
   dispatch(resetEthrDid())
   dispatch(resetIdentity())
-  callback && callback()
 }
 
 /**
  * Logout of App completely removing localStorage, resetting reducers, and restting context
  */
-export const logout = (context: Web3ProviderContextInterface) => (dispatch: Dispatch<any>) => {
-  console.log('logout')
-  context.reset()
-  clearRloginStorage()
+export const logout = () => (dispatch: Dispatch<any>) => {
   rLogin.clearCachedProvider()
-  context.provider.removeAllListeners()
+  clearRloginStorage()
   dispatch(resetReducers())
 }

@@ -27,6 +27,7 @@ export const rLogin = new RLogin({
 export const clearRloginStorage = () => {
   localStorage.removeItem('RLOGIN_ACCESS_TOKEN')
   localStorage.removeItem('RLOGIN_REFRESH_TOKEN')
+  localStorage.removeItem('WEB3_CONNECT_CACHED_PROVIDER')
   localStorage.removeItem('walletconnect')
 
   Object.keys(localStorage).map((key: string) => {
