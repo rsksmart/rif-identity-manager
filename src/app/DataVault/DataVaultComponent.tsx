@@ -23,16 +23,22 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
   addDeclarativeDetail, declarativeDetails, credentials, deleteValue, swapValue, downloadBackup, getKeyContent
 }) => {
   const context = useContext(Web3ProviderContext)
+  const dvClient = context.dvClient
 
-  const handleAdd = (key: string, content: string) =>
-    context.dvClient && addDeclarativeDetail(context.dvClient, key, content)
-  const handleDelete = (key: string, id: string) =>
-    context.dvClient && deleteValue(context.dvClient, key, id)
-  const handleSwap = (key: string, content: string, id: string) =>
-    context.dvClient && swapValue(context.dvClient, key, content, id)
-  const handleDownload = () => context.dvClient && downloadBackup(context.dvClient)
-  const handleGetKeyContent = (key: string) =>
-    context.dvClient && getKeyContent(context.dvClient, key)
+  if (!dvClient) {
+    return (
+      <div className="content data-vault">
+        <h2>Could not connect to the DataVault</h2>
+        <p>Your wallet may be asking for permission.</p>
+      </div>
+    )
+  }
+
+  const handleAdd = (key: string, content: string) => addDeclarativeDetail(dvClient, key, content)
+  const handleDelete = (key: string, id: string) => deleteValue(dvClient, key, id)
+  const handleSwap = (key: string, content: string, id: string) => swapValue(dvClient, key, content, id)
+  const handleDownload = () => context.dvClient && downloadBackup(dvClient)
+  const handleGetKeyContent = (key: string) => getKeyContent(dvClient, key)
 
   return (
     <div className="content data-vault">
