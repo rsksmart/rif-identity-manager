@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/rif-identity-manager/static/css/main.9aa37ee9.chunk.css",
-    "main.js": "/rif-identity-manager/static/js/main.86b739cf.chunk.js",
-    "main.js.map": "/rif-identity-manager/static/js/main.86b739cf.chunk.js.map",
+    "main.js": "/rif-identity-manager/static/js/main.81894330.chunk.js",
+    "main.js.map": "/rif-identity-manager/static/js/main.81894330.chunk.js.map",
     "runtime-main.js": "/rif-identity-manager/static/js/runtime-main.e2d09799.js",
     "runtime-main.js.map": "/rif-identity-manager/static/js/runtime-main.e2d09799.js.map",
     "static/js/2.2e7048c0.chunk.js": "/rif-identity-manager/static/js/2.2e7048c0.chunk.js",
@@ -33,6 +33,6 @@
     "static/js/runtime-main.e2d09799.js",
     "static/js/2.2e7048c0.chunk.js",
     "static/css/main.9aa37ee9.chunk.css",
-    "static/js/main.86b739cf.chunk.js"
+    "static/js/main.81894330.chunk.js"
   ]
 }
