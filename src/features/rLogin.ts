@@ -3,7 +3,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import { getRPCUrl } from '../config/getConfig'
 
 export const rLogin = new RLogin({
-  cachedProvider: false,
+  cacheProvider: true,
   providerOptions: {
     walletconnect: {
       package: WalletConnectProvider,

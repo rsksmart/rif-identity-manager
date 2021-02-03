@@ -17,7 +17,7 @@ import { reset as resetEthrDid } from '../reducers/ethrdid'
  * Saves the web3 provider into context and saves address and chainId to redux
  * @param context the app context where the provider will be ser
  */
-export const login = (context: any) => (dispatch: Dispatch<any>) =>
+export const login = (context: any, cached: string | null) => (dispatch: Dispatch<any>) => {
   rLogin.connect().then((provider: any) => {
     context.setProvider(provider)
 
@@ -34,10 +34,13 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
     })
   })
     .catch((err: string) => console.log('rLogin Error', err))
+}
 
 export const logout = () => (dispatch: Dispatch<any>) => {
   // local storage
   clearRloginStorage()
+
+  rLogin.clearCachedProvider()
 
   // reducers
   dispatch(resetDV())
