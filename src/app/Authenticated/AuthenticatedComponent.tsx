@@ -15,11 +15,10 @@ interface AuthenticatedComponentInterface {
   address: string | null
   persona: DataVaultKey
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
-  logout: () => void
-  switchAccounts: () => void
+  logoutOrSwitchAccounts: (isLoggingOut: boolean) => void
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logout, switchAccounts }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logoutOrSwitchAccounts }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
@@ -29,21 +28,8 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
   const handleWalletChange = (isLoggingOut: boolean = false) => {
     context.provider.removeAllListeners()
     context.reset()
-    isLoggingOut ? logout() : switchAccounts()
+    logoutOrSwitchAccounts(isLoggingOut)
   }
-  /*
-  const handleLogout = () => {
-    context.provider.removeAllListeners()
-    context.reset()
-    logout()
-  }
-
-  const handleSwitch = () => {
-    context.provider.removeAllListeners()
-    context.reset()
-    switchAccounts()
-  }
-  */
 
   useEffect(() => {
     context.provider.on('accountsChanged', () => handleWalletChange())

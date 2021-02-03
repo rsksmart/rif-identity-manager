@@ -33,8 +33,7 @@ const mapStateToProps = (state: stateInterface) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) =>
     dispatch(modifyMultipleItems(client, items)),
-  logout: () => dispatch(logout()),
-  switchAccounts: () => dispatch(resetReducers())
+  logoutOrSwitchAccounts: (isLoggingOut: boolean) => isLoggingOut ? dispatch(logout()) : dispatch(resetReducers())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedComponent)
