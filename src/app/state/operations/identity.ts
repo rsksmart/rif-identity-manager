@@ -58,5 +58,6 @@ export const logout = (context: Web3ProviderContextInterface) => (dispatch: Disp
   context.reset()
   clearRloginStorage()
   rLogin.clearCachedProvider()
+  context.provider.removeAllListeners()
   dispatch(resetReducers())
 }
