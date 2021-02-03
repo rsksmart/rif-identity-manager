@@ -47,4 +47,16 @@ export const logout = () => (dispatch: Dispatch<any>) => {
   dispatch(resetDefi())
   dispatch(resetEthrDid())
   dispatch(resetIdentity())
+  callback && callback()
+}
+
+/**
+ * Logout of App completely removing localStorage, resetting reducers, and restting context
+ */
+export const logout = (context: Web3ProviderContextInterface) => (dispatch: Dispatch<any>) => {
+  console.log('logout')
+  context.reset()
+  clearRloginStorage()
+  rLogin.clearCachedProvider()
+  dispatch(resetReducers())
 }

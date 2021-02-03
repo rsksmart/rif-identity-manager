@@ -4,7 +4,7 @@ import HeaderComponent from './components/HeaderComponent'
 import Navigation, { screens } from './components/Navigation'
 import DashboardContainer from '../Dashboard/DashboardContainer'
 import DataVaultContainer from '../DataVault/DataVaultContainer'
-import { Web3ProviderContext } from '../../providerContext'
+import { Web3ProviderContext, Web3ProviderContextInterface } from '../../providerContext'
 import IdentityContainer from '../Identity/IdentityContainer'
 import { createDidFormat } from '../../formatters'
 import { DataVaultKey } from '../state/reducers/datavault'
@@ -15,7 +15,7 @@ interface AuthenticatedComponentInterface {
   address: string | null
   persona: DataVaultKey
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
-  logout: () => void
+  logout: (context: Web3ProviderContextInterface) => void
 }
 
 const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logout }) => {
@@ -24,10 +24,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
 
   const changeScreen = (screen: screens) => setScreen(screen)
   const updatePersona = (items: DataVaultKey) => context.dvClient && modifyMultipleItems(context.dvClient, items)
-  const handleLogout = () => {
-    context.reset()
-    logout()
-  }
+  const handleLogout = () => logout(context)
 
   return (
     <>
