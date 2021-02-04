@@ -70,7 +70,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "styled-components": "5.2.0",
+    "styled-components": "5.2.1",
     "ts-jest": "^26.4.3",
     "web-vitals": "^0.2.4"
   },
@@ -117,5 +117,8 @@
       "^.+\\.module\\.(css|sass|scss|svg)$": "identity-obj-proxy",
       "src/(.*)$": "<rootDir>/src/$1"
     }
+  },
+  "resolutions": {
+    "styled-components": "5.2.1"
   }
 }
