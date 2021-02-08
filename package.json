@@ -17,6 +17,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
+    "@rsksmart/ipfs-cpinner-client": "0.1.1-beta.9",
+    "@rsksmart/rlogin": "0.1.1",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
     "axios": "^0.21.0",
@@ -35,8 +37,6 @@
     "typescript": "~4.0.5"
   },
   "devDependencies": {
-    "@rsksmart/ipfs-cpinner-client": "0.1.1-beta.9",
-    "@rsksmart/rlogin": "0.0.1-beta.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -70,7 +70,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "styled-components": "5.2.0",
+    "styled-components": "5.2.1",
     "ts-jest": "^26.4.3",
     "web-vitals": "^0.2.4"
   },
@@ -117,5 +117,8 @@
       "^.+\\.module\\.(css|sass|scss|svg)$": "identity-obj-proxy",
       "src/(.*)$": "<rootDir>/src/$1"
     }
+  },
+  "resolutions": {
+    "styled-components": "5.2.1"
   }
 }

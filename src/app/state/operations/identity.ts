@@ -35,13 +35,21 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
   })
     .catch((err: string) => console.log('rLogin Error', err))
 
-export const logout = () => (dispatch: Dispatch<any>) => {
-  // local storage
-  clearRloginStorage()
-
-  // reducers
+/**
+ * Dispatch reset on all reducers back to InitialState
+ */
+export const resetReducers = () => (dispatch: Dispatch<any>) => {
   dispatch(resetDV())
   dispatch(resetDefi())
   dispatch(resetEthrDid())
   dispatch(resetIdentity())
+}
+
+/**
+ * Logout of App completely removing localStorage, resetting reducers, and restting context
+ */
+export const logout = () => (dispatch: Dispatch<any>) => {
+  rLogin.clearCachedProvider()
+  clearRloginStorage()
+  dispatch(resetReducers())
 }

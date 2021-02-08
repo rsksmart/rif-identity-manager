@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import HeaderComponent from './components/HeaderComponent'
 import Navigation, { screens } from './components/Navigation'
@@ -15,19 +15,27 @@ interface AuthenticatedComponentInterface {
   address: string | null
   persona: DataVaultKey
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
-  logout: () => void
+  logoutOrSwitchAccounts: (isLoggingOut: boolean) => void
 }
 
-const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logout }) => {
+const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logoutOrSwitchAccounts }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
 
   const changeScreen = (screen: screens) => setScreen(screen)
   const updatePersona = (items: DataVaultKey) => context.dvClient && modifyMultipleItems(context.dvClient, items)
-  const handleLogout = () => {
+
+  const handleWalletChange = (isLoggingOut: boolean = false) => {
+    context.provider.removeAllListeners()
     context.reset()
-    logout()
+    logoutOrSwitchAccounts(isLoggingOut)
   }
+
+  useEffect(() => {
+    context.provider.on('accountsChanged', () => handleWalletChange())
+    context.provider.on('chainChanged', () => handleWalletChange())
+    context.provider.on('disconnect', () => handleWalletChange())
+  }, [])
 
   return (
     <>
@@ -42,7 +50,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
         selected={screen}
         handleClick={changeScreen}
         showDataVault={!!context.dvClient}
-        logout={handleLogout}
+        logout={() => handleWalletChange(true)}
       />
       {screen === screens.DASHBOARD && <DashboardContainer changeScreen={changeScreen} />}
       {screen === screens.DATAVAULT && <DataVaultContainer />}
