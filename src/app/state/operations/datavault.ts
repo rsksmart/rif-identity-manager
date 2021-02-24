@@ -20,7 +20,7 @@ export const createClient = (provider: any, address: string, chainId: number) =>
   const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const authManager = new AuthManager({ did, serviceUrl, personalSign })
 
-  if (getProviderName(provider) !== PROVIDERS.METAMASK) {
+  if (getProviderName(provider) === PROVIDERS.METAMASK) {
     return Promise.resolve(new DataVaultWebClient({
       serviceUrl,
       authManager,
