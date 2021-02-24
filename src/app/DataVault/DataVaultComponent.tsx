@@ -7,7 +7,6 @@ import { Web3ProviderContext } from '../../providerContext'
 import CredentialDisplay from './panels/CredentialDisplay'
 import DownloadBackup from './panels/DownloadBackup'
 import { createPresentation } from '../../features/credentials'
-import { getProviderName } from '../../ethrpc'
 
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey
@@ -46,7 +45,6 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
         <div className="column">
           <AddDeclarativeDetails
             addDeclarativeDetail={handleAdd}
-            providerName={getProviderName(context.provider)}
           />
         </div>
       </div>
