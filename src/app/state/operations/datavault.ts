@@ -1,11 +1,12 @@
 import { Dispatch } from 'react'
-import DataVaultWebClient, { AuthManager, EncryptionManager } from '@rsksmart/ipfs-cpinner-client'
+import DataVaultWebClient, { AuthManager, AsymmetricEncryptionManager, SignerEncryptionManager } from '@rsksmart/ipfs-cpinner-client'
 
 import { createDidFormat } from '../../../formatters'
 import { addContentToKey, DataVaultContent, receiveKeyData, removeContentfromKey, swapContentById, receiveStorageInformation, DataVaultStorageState, DataVaultKey, receiveKeys } from '../reducers/datavault'
 import { getDataVault } from '../../../config/getConfig'
 import { Backup, CreateContentResponse } from '@rsksmart/ipfs-cpinner-client/lib/types'
 import { getProviderName, PROVIDERS } from '../../../ethrpc'
+import { IEncryptionManager } from '@rsksmart/ipfs-cpinner-client/lib/encryption-manager/types'
 
 /**
  * Create DataVault Clinet
@@ -16,21 +17,24 @@ import { getProviderName, PROVIDERS } from '../../../ethrpc'
 export const createClient = (provider: any, address: string, chainId: number) => {
   const serviceUrl = getDataVault()
   const did = createDidFormat(address, chainId).toLowerCase()
-
   const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
-  const decrypt = (hexCypher: string) => provider.request({ method: 'eth_decrypt', params: [hexCypher, address] })
-  const getEncryptionPublicKey = () => provider.request({ method: 'eth_getEncryptionPublicKey', params: [address] })
-  const mockDecrypt = (_hexCypher: string) => Promise.reject(new Error('Content could not be decrypted by your wallet.'))
+  const authManager = new AuthManager({ did, serviceUrl, personalSign })
 
-  const encryptionManager = getProviderName(provider) === PROVIDERS.METAMASK
-    ? new EncryptionManager({ getEncryptionPublicKey, decrypt })
-    : new EncryptionManager({ getEncryptionPublicKey: undefined, decrypt: mockDecrypt })
+  if (getProviderName(provider) !== PROVIDERS.METAMASK) {
+    return Promise.resolve(new DataVaultWebClient({
+      serviceUrl,
+      authManager,
+      encryptionManager: new AsymmetricEncryptionManager(provider)
+    }))
+  }
 
-  return new DataVaultWebClient({
-    serviceUrl,
-    authManager: new AuthManager({ did, serviceUrl, personalSign }),
-    encryptionManager
-  })
+  return SignerEncryptionManager.fromWeb3Provider(provider)
+    .then((encryptionManager: IEncryptionManager) =>
+      new DataVaultWebClient({
+        serviceUrl,
+        authManager,
+        encryptionManager
+      }))
 }
 
 /**
@@ -122,13 +126,14 @@ export const modifyMultipleItems = (client: DataVaultWebClient, values: DataVaul
 export const dataVaultStart = (provider: any, address: string, chainId: number, callback?: any) => (dispatch: Dispatch<any>) => {
   const client = createClient(provider, address, chainId)
 
-  client.getStorageInformation()
+  client.then((client: DataVaultWebClient) => client.getStorageInformation()
     .then((storage: DataVaultStorageState) => {
       dispatch(receiveStorageInformation({ storage }))
       dispatch(getDataVaultKeys(client))
       callback(client)
     })
     .catch((err: any) => callback(null, err))
+  )
 }
 
 /**
