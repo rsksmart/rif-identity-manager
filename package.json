@@ -17,7 +17,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
-    "@rsksmart/ipfs-cpinner-client": "0.1.1-beta.12",
+    "@rsksmart/ipfs-cpinner-client": "0.1.1-beta.13",
     "@rsksmart/rlogin": "0.1.1",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
