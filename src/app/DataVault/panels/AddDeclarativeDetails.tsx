@@ -3,14 +3,12 @@ import { BaseButton } from '../../../components/Buttons'
 import Panel from '../../../components/Panel/Panel'
 import uploadIcon from '../../../assets/images/icons/upload.svg'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
-import { PROVIDERS } from '../../../ethrpc'
 
 interface AddDeclarativeDetailsInterface {
   addDeclarativeDetail: (key: string, content: string) => Promise<any>
-  providerName?: PROVIDERS
 }
 
-const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDeclarativeDetail, providerName }) => {
+const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDeclarativeDetail }) => {
   const [type, setType] = useState('')
   const [content, setContent] = useState('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -41,12 +39,6 @@ const AddDeclarativeDetails: React.FC<AddDeclarativeDetailsInterface> = ({ addDe
 
   return (
     <Panel title={title} className="add-declarative">
-      {providerName !== PROVIDERS.METAMASK && (
-        <div className="alert warning">
-          <h2>Warning!</h2>
-          <p>Your wallet does not support encrypted content in your data vault. You can still add content, but it will be saved as plaintext.</p>
-        </div>
-      )}
       <div className="container">
         <div className="column">
           <p className="title">Type</p>
