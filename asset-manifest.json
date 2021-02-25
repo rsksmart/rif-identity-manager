@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/rif-identity-manager/static/css/main.255bd4e6.chunk.css",
-    "main.js": "/rif-identity-manager/static/js/main.5036fd0a.chunk.js",
-    "main.js.map": "/rif-identity-manager/static/js/main.5036fd0a.chunk.js.map",
+    "main.js": "/rif-identity-manager/static/js/main.e7c1c16b.chunk.js",
+    "main.js.map": "/rif-identity-manager/static/js/main.e7c1c16b.chunk.js.map",
     "runtime-main.js": "/rif-identity-manager/static/js/runtime-main.dd185aee.js",
     "runtime-main.js.map": "/rif-identity-manager/static/js/runtime-main.dd185aee.js.map",
-    "static/js/2.49449437.chunk.js": "/rif-identity-manager/static/js/2.49449437.chunk.js",
-    "static/js/2.49449437.chunk.js.map": "/rif-identity-manager/static/js/2.49449437.chunk.js.map",
+    "static/js/2.3803e655.chunk.js": "/rif-identity-manager/static/js/2.3803e655.chunk.js",
+    "static/js/2.3803e655.chunk.js.map": "/rif-identity-manager/static/js/2.3803e655.chunk.js.map",
     "static/js/3.deeda8f7.chunk.js": "/rif-identity-manager/static/js/3.deeda8f7.chunk.js",
     "static/js/3.deeda8f7.chunk.js.map": "/rif-identity-manager/static/js/3.deeda8f7.chunk.js.map",
     "index.html": "/rif-identity-manager/index.html",
     "static/css/main.255bd4e6.chunk.css.map": "/rif-identity-manager/static/css/main.255bd4e6.chunk.css.map",
-    "static/js/2.49449437.chunk.js.LICENSE.txt": "/rif-identity-manager/static/js/2.49449437.chunk.js.LICENSE.txt",
+    "static/js/2.3803e655.chunk.js.LICENSE.txt": "/rif-identity-manager/static/js/2.3803e655.chunk.js.LICENSE.txt",
     "static/media/computer.de8f038b.svg": "/rif-identity-manager/static/media/computer.de8f038b.svg",
     "static/media/copy.713b200d.svg": "/rif-identity-manager/static/media/copy.713b200d.svg",
     "static/media/credential.436c18a7.svg": "/rif-identity-manager/static/media/credential.436c18a7.svg",
@@ -31,8 +31,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.dd185aee.js",
-    "static/js/2.49449437.chunk.js",
+    "static/js/2.3803e655.chunk.js",
     "static/css/main.255bd4e6.chunk.css",
-    "static/js/main.5036fd0a.chunk.js"
+    "static/js/main.e7c1c16b.chunk.js"
   ]
 }
