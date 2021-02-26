@@ -9,6 +9,15 @@ import { getProviderName, PROVIDERS } from '../../../ethrpc'
 import { IEncryptionManager } from '@rsksmart/ipfs-cpinner-client/lib/encryption-manager/types'
 
 /**
+ * Helper function that returns the correct encryption method
+ * @param provider web3 provider
+ */
+const getEncryptionManager = async (provider: any) =>
+  getProviderName(provider) === PROVIDERS.METAMASK
+    ? await AsymmetricEncryptionManager.fromWeb3Provider(provider)
+    : await SignerEncryptionManager.fromWeb3Provider(provider)
+
+/**
  * Create DataVault Clinet
  * @param provider web3 provider
  * @param address address of the user
@@ -20,21 +29,9 @@ export const createClient = (provider: any, address: string, chainId: number) =>
   const personalSign = (data: string) => provider.request({ method: 'personal_sign', params: [data, address] })
   const authManager = new AuthManager({ did, serviceUrl, personalSign })
 
-  if (getProviderName(provider) === PROVIDERS.METAMASK) {
-    return Promise.resolve(new DataVaultWebClient({
-      serviceUrl,
-      authManager,
-      encryptionManager: new AsymmetricEncryptionManager(provider)
-    }))
-  }
-
-  return SignerEncryptionManager.fromWeb3Provider(provider)
+  return getEncryptionManager(provider)
     .then((encryptionManager: IEncryptionManager) =>
-      new DataVaultWebClient({
-        serviceUrl,
-        authManager,
-        encryptionManager
-      }))
+      new DataVaultWebClient({ serviceUrl, authManager, encryptionManager }))
 }
 
 /**
