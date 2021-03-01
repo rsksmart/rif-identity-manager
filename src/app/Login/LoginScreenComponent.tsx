@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BaseButton } from '../../components/Buttons'
 import logo from '../../assets/images/rif-id-manager.svg'
 
@@ -7,6 +7,12 @@ interface LoginScreenInterface {
 }
 
 const LoginScreenComponent: React.FC<LoginScreenInterface> = ({ handleLogin }) => {
+  useEffect(() => {
+    if (localStorage.getItem('WEB3_CONNECT_CACHED_PROVIDER')) {
+      handleLogin()
+    }
+  }, [])
+
   return (
     <div className="container login-screen">
       <div className="column">

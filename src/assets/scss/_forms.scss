@@ -1,4 +1,4 @@
-::-webkit-input-placeholder {
+::-webkit-input-placeholder, ::-webkit-textarea-placeholder {
   text-align: center;
 }
 
@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-input[type=text].line {
+input[type=text].line, textarea.line, select.line {
   margin-left: 5px;
   border-top: none;
   border-right: none;
@@ -15,3 +15,35 @@ input[type=text].line {
   font-size: 16px;
 }
 
+input:disabled, textarea:disabled {
+  cursor: not-allowed;
+}
+
+fieldset {
+  border: none;
+
+  p {
+    display: flex;
+    flex-direction: row;
+
+    label {
+      flex: 1;
+      text-align: right;
+      padding-right: 10px;
+
+      span {
+        display: block;
+        font-size: 12px;
+      }
+    }
+
+    input, textarea, select {
+      flex: 3;
+      width: 100%;
+    }
+  }
+}
+
+input.fullWidth {
+  width: 100%
+}

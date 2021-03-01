@@ -1,15 +1,41 @@
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button:focus{
+  outline: none;
+}
+
 button.blue {
   color: $white;
   background-color: $blue;
 }
 
-button.blue:hover {
+button.blue:hover:not(:disabled) {
   background-color: $turquoise;
 }
 
 button.blue:disabled, button[disabled].blue {
   background-color: gray !important;
-  cursor: not-allowed;
+}
+
+button.turquoise {
+  background-color: $turquoise;
+}
+
+button.turquoise:hover:not(:disabled) {
+  color: $white;
+  background-color: $blue;
+}
+
+button.full {
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 button.circle-plus {
@@ -22,10 +48,36 @@ button.circle-plus {
   vertical-align: middle;
   background: $lightGray;
   border: 1px solid $gray;
-  cursor: pointer;
 }
 
 button.circle-plus:hover {
   background-color: $turquoise;
   color: $white;
+}
+
+button.icon {
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 5px;
+}
+
+button.icon:hover {
+  background-color: $lightGray;
+}
+
+button.icon:disabled {
+  opacity: .25;
+}
+
+button.small {
+  padding: 5px 25px;
+  font-size: 14px;
+}
+
+button.link {
+  color: $turquoise;
+  border: none;
+  background-color: transparent;
 }

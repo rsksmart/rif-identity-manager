@@ -1,0 +1,30 @@
+.balance-row {
+  padding-bottom: 20px;
+
+  .heading-symbol {
+    color: $gray;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  .balance {
+    color: $turquoise;
+    font-size: 45px;
+
+    .hover-content {
+      font-size: 16px;
+    }
+  }
+
+  .symbol {
+    color: $turquoise;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+  .conversion {
+    margin-left: 25px;
+    color: $gray;
+    font-size: 20px;
+  }
+}

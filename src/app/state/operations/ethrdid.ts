@@ -1,6 +1,6 @@
 import { Dispatch } from 'react'
 import EthrDID from '@rsksmart/ethr-did'
-import { getAccountAndNetwork } from '../../../ethrpc'
+import { getAccountAndNetwork, transactionListener, transactionListenerI } from '../../../ethrpc'
 import { resolveDid } from '../reducers/ethrdid'
 import { getResolver } from 'ethr-did-resolver'
 import { DIDDocument, Resolver } from 'did-resolver'
@@ -17,6 +17,9 @@ const Secp256k1VerificationKey2018 = '0x73696741757468'
  */
 export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispatch<any>) =>
   new Promise((resolve, reject) => {
+    const callback = (response: transactionListenerI) =>
+      response.error ? reject(response.error) : resolve(dispatch(resolveDidDocument(provider)))
+
     getAccountAndNetwork(provider).then(([address, chainId]) =>
       new EthrDID({
         address: address,
@@ -24,7 +27,7 @@ export const setDidOwner = (provider: any, newOwner: string) => (dispatch: Dispa
         registry: getDIDRegistryAddress(parseInt(chainId))
       })
         .changeOwner(newOwner.toLowerCase())
-        .then(() => resolve(dispatch(resolveDidDocument(provider))))
+        .then((tx: string) => transactionListener(provider, tx, callback))
         .catch((err: Error) => reject(err))
     )
   })
@@ -38,13 +41,21 @@ export const resolveDidDocument = (provider: any) => (dispatch: Dispatch<any>) =
     getAccountAndNetwork(provider).then(([address, chainId]) => {
       const didResolver = new Resolver(getResolver(resolverProviderConfig))
 
-      const did = createDidFormat(address, chainId, true)
+      const did = createDidFormat(address, chainId)
       didResolver.resolve(did).then((data: DIDDocument) => resolve(dispatch(resolveDid({ data }))))
     })
   })
 
+/**
+ * Add Delegate to a persona
+ * @param provider web3 provider
+ * @param delegate address of the new delegate
+ */
 export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispatch<any>) =>
   new Promise((resolve, reject) => {
+    const callback = (response: transactionListenerI) =>
+      response.error ? reject(response.error) : resolve(dispatch(resolveDidDocument(provider)))
+
     getAccountAndNetwork(provider).then(([address, chainId]) =>
       new EthrDID({
         address: address,
@@ -54,10 +65,31 @@ export const addDelegate = (provider: any, delegate: string) => (dispatch: Dispa
         .addDelegate(delegate, {
           delegateType: Secp256k1VerificationKey2018
         })
-        .then((response: any) => {
-          dispatch(resolveDidDocument(provider))
-          resolve(response)
-        })
+        .then((tx: string) => transactionListener(provider, tx, callback))
+        .catch((err: Error) => reject(err))
+    )
+  })
+
+/**
+ * Add Attribute to DID Document
+ * @param provider web3 provider
+ * @param type attribute type
+ * @param value value
+ * @param validity time in seconds valid, optional, defaults to 86400 seconds, or 1 day
+ */
+export const addAttribute = (provider: any, type: string, value: string, validity?: number) => (dispatch: Dispatch<any>) =>
+  new Promise((resolve, reject) => {
+    const callback = (response: transactionListenerI) =>
+      response.error ? reject(response.error) : resolve(dispatch(resolveDidDocument(provider)))
+
+    getAccountAndNetwork(provider).then(([address, chainId]) =>
+      new EthrDID({
+        address: address,
+        provider,
+        registry: getDIDRegistryAddress(parseInt(chainId))
+      })
+        .setAttribute(type, value, validity)
+        .then((tx: string) => transactionListener(provider, tx, callback))
         .catch((err: Error) => reject(err))
     )
   })

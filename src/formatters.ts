@@ -1,30 +1,19 @@
 /**
- * Creates address and truncates it
- * @param address address for the did
- * @param chainId chainId
- */
-export const displayIdentity = (address: string, chainId?: number) => {
-  const addr = `${address.slice(0, 6)}...${address.slice(address.length - 4)}`
-  switch (chainId) {
-    case 1: return `did:eth:${addr}`
-    case 30: return `did:rsk:${addr}`
-    case 31: return `did:rsk:testnet:${addr}`
-    default: return addr
-  }
-}
-
-/**
  * Create Identity
  * @param address address for the did
  * @param chainId chainId
- * @param includeEthr include eth:, required for some did tools
+
  */
-export const createDidFormat = (address: string, chainId: number, includeEthr?: boolean) => {
+export const createDidFormat = (address: string, chainId: number) => {
   switch (chainId) {
-    case 1: return `did:${includeEthr ? 'ethr:' : ''}mainnet:${address}`
-    case 30: return `did:${includeEthr ? 'ethr:' : ''}rsk:${address}`
-    case 31: return `did:${includeEthr ? 'ethr:' : ''}rsk:testnet:${address}`
-    case 5777: return `did:${includeEthr ? 'ethr:' : ''}development:${address}`
+    case 1: return `did:ethr:${address}`
+    case 3: return `did:ethr:ropsten:${address}`
+    case 4: return `did:ethr:rinkeby:${address}`
+    case 5: return `did:ethr:goerli:${address}`
+    case 30: return `did:ethr:rsk:${address}`
+    case 31: return `did:ethr:rsk:testnet:${address}`
+    case 42: return `did:ethr:kovan:${address}`
+    case 5777: return `did:ethr:development:${address}`
     default: return address
   }
 }

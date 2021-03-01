@@ -70,18 +70,19 @@ const ModalContent = styled.div`
 interface PanelInterface {
   children: ReactNode
   show: boolean
-  title?: string
+  title?: string | ReactNode
+  className?: string
   onClose: () => void
 }
 
-const Modal: React.FC<PanelInterface> = ({ children, show, title, onClose }) => (
+const Modal: React.FC<PanelInterface> = ({ children, show, title, className, onClose }) => (
   show
     ? (
-      <ModalLightbox show={show}>
+      <ModalLightbox show={show} className={className}>
         <ModalBody>
-          <ModalTitle>
+          <ModalTitle className="modal-title">
             {title}
-            <ModalCloseButton onClick={onClose} />
+            <ModalCloseButton className="close" onClick={onClose} />
           </ModalTitle>
           <ModalContent className="modal-content">
             {children}

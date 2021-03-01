@@ -11,8 +11,17 @@
   padding: 10px 20px;
 }
 
+.columnDouble {
+  flex: 2;
+  padding: 10px 20px;
+}
+
 @media screen and (max-width: $breakpoint-phone) {
   .container {
     flex-direction: column; 
+  }
+
+  .column, .columnDouble {
+    padding: 5px 10px;
   }
 }

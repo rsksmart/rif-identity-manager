@@ -8,13 +8,6 @@
       font-size: 14px;
     }
 
-    h2 {
-      font-size: 14px;
-      font-weight: 500 !important;
-      color: $gray;
-      text-transform: uppercase;
-    }
-
     p.value {
       color: $black;
       font-size: 18px;
@@ -30,38 +23,42 @@
     }
   }
 
-  .identity-balance {
-    button.circle-plus {
-      margin-top: -10px;
-      margin-right: -10px;
+  .dataVault {
+    .columnDouble {
+      padding: 0;
+
+      .tooltip-progress {
+        display: block;
+        width: 100%;
+      }
     }
 
-    .token {
-      padding-bottom: 20px;
+    .column {
+      padding: 0;
+      text-align: right;
 
-      .heading-symbol {
-        color: $gray;
-        font-size: 14px;
-        text-transform: uppercase;
+      button {
+        padding: 10px 25px;
       }
-      .balance {
-        color: $turquoise;
-        font-size: 50px;
+    }
+  }
 
-        .hover-content {
-          font-size: 16px;
-        }
-      }
-      .symbol {
-        color: $turquoise;
-        font-size: 30px;
-        margin-left: 15px;
-      }
-      .conversion {
-        margin-left: 25px;
-        color: $gray;
-        font-size: 20px;
-      }
+  .defi {
+    button {
+      float: right;
+    }
+    padding-bottom: 45px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .dashboard {
+    button.panel-cta {
+      display: block;
+      position: relative;
+      bottom: auto;
+      right: auto;
+      margin-top: 15px;
     }
   }
 }

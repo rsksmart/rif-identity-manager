@@ -7,11 +7,34 @@ ul.navigation {
     display: inline-block;
     font-size: 18px;
     margin-right: 35px;
+
+    button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 18px;
+    }
+
+    button:focus {
+      outline: none;
+    }
   }
   
   li.active {
     color: $turquoise;
     border-bottom: 2px solid $turquoise;
+
+    button {
+      cursor: text;
+    }
+  }
+
+  li.disabled {
+    color: $lightGray;
+  }
+
+  li.logout {
+    float: right
   }
 }
 
@@ -22,6 +45,10 @@ ul.navigation {
     li {
       display: block;
       padding: 5px 0;
+    }
+
+    li.logout {
+      float: none
     }
   }
 }

@@ -1,46 +1,42 @@
 import React from 'react'
-import HeaderComponent from '../../components/Header/HeaderComponent'
-import Navigation from '../../components/Navigation/Navigation'
-import IdentityInformationComponent from './panels/IdentityInformation'
-import { Authentication } from 'did-resolver'
-import Balance from './panels/Balance'
-import { Token } from '../state/reducers/tokens'
+import IdentitySummary from './panels/IdentitySummary'
+import DataVaultSummary from './panels/DataVaultSummary'
+import { screens } from '../Authenticated/components/Navigation'
+import { DataVaultStorageState } from '../state/reducers/datavault'
+import DeFiSummary from './panels/DeFiSummary'
+import { Token } from '../state/reducers/defi'
 
 interface DashboardScreenInterface {
   chainId?: number | null
   address: string | null
-  owner?: string | null
-  delegates?: Authentication[]
-  tokens?: Token[]
-  changeOwner: (provider: any, newOwner: string) => any
-  addDelegate: (provider: any, delegateAddr: string) => any
-  addCustomToken: (provider: any, tokenAddr: string) => any
+  storage?: DataVaultStorageState
+  balance: number | null
+  featuredTokens?: Token[]
+  converstion: number | null
+  changeScreen: (screen: string) => void
 }
 
 const DashboardScreen: React.FC<DashboardScreenInterface> = ({
-  chainId, address, owner, delegates, tokens, changeOwner, addDelegate, addCustomToken
+  chainId, address, storage, balance, featuredTokens, converstion, changeScreen
 }) => {
   return (
-    <>
-      <HeaderComponent chainId={chainId} did={address} />
-      <div className="content dashboard">
-        <Navigation />
-        <IdentityInformationComponent
-          address={address}
-          chainId={chainId}
-          owner={owner}
-          delegates={delegates}
-          changeOwner={changeOwner}
-          addDelegate={addDelegate}
-        />
-        <div className="container">
-          <div className="column">
-            <Balance tokens={tokens} addCustomToken={addCustomToken} />
-          </div>
-          <div className="column">&nbsp;</div>
+    <div className="content dashboard">
+      {address && chainId && <IdentitySummary address={address} chainId={chainId} />}
+      <div className="container">
+        <div className="column">
+          <DeFiSummary
+            balance={balance}
+            converstion={converstion}
+            chainId={chainId}
+            featuredToken={featuredTokens ? featuredTokens[0] : undefined}
+            handleButton={() => changeScreen(screens.DEFI)}
+          />
+        </div>
+        <div className="column">
+          <DataVaultSummary storage={storage} handleButton={() => changeScreen(screens.DATAVAULT)} />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

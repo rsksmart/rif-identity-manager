@@ -1,0 +1,45 @@
+table {
+  width: 100%;
+
+  tr {
+    display: table-row;
+
+    th, td {
+      border-bottom: 1px solid $lightGray;
+      margin: 0;
+      padding: 10px 20px;
+    }
+    
+    th {
+      color: $mediumGray;
+      font-size: 16px;
+      text-align: center;
+      font-weight: 500 !important;
+    }
+
+    td {
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  table {
+    thead, th {
+      display: none
+    }
+
+    tr {
+      display: block;
+      border-bottom: 1px solid $lightGray;
+      padding: 10px 0;
+
+      th, td {
+        display: block;
+        width: 100%;
+        border-bottom: none;
+        text-align: left;
+      }
+    }
+  }
+}

@@ -27,10 +27,11 @@ const identitySlice = createSlice({
     },
     changeChainId (state: IdentityState, { payload: { chainId } }: PayloadAction<ChangeChainIdPayload>) {
       state.chainId = chainId
-    }
+    },
+    reset: _state => initialState
   }
 })
 
-export const { changeAccount, changeChainId } = identitySlice.actions
+export const { changeAccount, changeChainId, reset } = identitySlice.actions
 
 export default identitySlice.reducer
