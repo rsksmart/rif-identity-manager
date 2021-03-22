@@ -116,9 +116,8 @@ export const modifyMultipleItems = (client: DataVaultWebClient, values: DataVaul
  * @param client Datavault clinet
  * @param keys string[] keys that you want to decrypt
  */
-export const decryptMultipleKeys = (client: DataVaultWebClient, keys: string[]) => (dispatch: Dispatch<any>) => {
+export const decryptMultipleKeys = (client: DataVaultWebClient, keys: string[]) => (dispatch: Dispatch<any>) =>
   keys.map(key => dispatch(getDataVaultContent(client, key)))
-}
 
 /**
  * Start the Data Vault Client

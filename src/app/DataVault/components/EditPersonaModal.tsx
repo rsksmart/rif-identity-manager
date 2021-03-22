@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '../../../components/Modal/Modal'
 import PersonaIcon from '../../../assets/images/icons/persona.svg'
 import PencilIcon from '../../../assets/images/icons/pencil.svg'
