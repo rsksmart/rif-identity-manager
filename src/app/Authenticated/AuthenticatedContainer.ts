@@ -7,6 +7,7 @@ import AuthenticatedComponent from './AuthenticatedComponent'
 import { decryptMultipleKeys, modifyMultipleItems } from '../state/operations/datavault'
 import { DataVaultKey } from '../state/reducers/datavault'
 import { logout, resetReducers } from '../state/operations/identity'
+import { ENCRYPTED } from '../DataVault/types'
 
 /**
  * Get items that are specifically to the Persona from the DataVault collection
@@ -23,7 +24,7 @@ export const getPersonaDeclarativeDetails = (data: DataVaultKey) => {
 
     // key is loaded, but no content
     if (data[key] && !data[key][0]) {
-      return [{ id: '', content: 'ENCRYPTED' }]
+      return [{ id: '', content: ENCRYPTED }]
     }
 
     // no key

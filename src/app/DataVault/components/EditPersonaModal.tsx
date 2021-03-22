@@ -6,6 +6,7 @@ import { truncateAddressDid } from '../../../formatters'
 import { BaseButton } from '../../../components/Buttons'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
 import { DataVaultKey } from '../../state/reducers/datavault'
+import { ENCRYPTED } from '../types'
 
 interface EditPersonaModalInterface {
   did?: string
@@ -35,7 +36,7 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
   useEffect(() => {
     const localItems: React.SetStateAction<string[]> = []
     Object.keys(initValue).map((item: string) => {
-      if (initValue[item][0].content === 'ENCRYPTED') {
+      if (initValue[item][0].content === ENCRYPTED) {
         localItems.push(item)
       }
     })
@@ -50,6 +51,7 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
       phone: initValue.DD_PHONE[0].content,
       birthdate: initValue.DD_BIRTHDATE[0].content
     })
+
     if (localItems.length === 0) {
       setIsLoading(false)
     }
@@ -115,7 +117,7 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
             <h2>Your persona is encrypted</h2>
             <p>You first need to decrypt the following items. Click the button below and then decrypt them in your wallet.</p>
             <p>{encryptedItems.map(item => `${item.replace('DD_', '')}, `)}</p>
-            <BaseButton className="blue" onClick={handleDecrypt} disabled={isLoading}>Decrypt</BaseButton>
+            <BaseButton className="blue decrypt" onClick={handleDecrypt} disabled={isLoading}>Decrypt</BaseButton>
             {isLoading && <LoadingComponent />}
           </>
         )}

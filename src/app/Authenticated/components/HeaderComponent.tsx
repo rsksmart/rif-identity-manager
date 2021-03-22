@@ -6,6 +6,7 @@ import { truncateAddressDid } from '../../../formatters'
 import UserIcon from '../../../components/UserIcon/UserIcon'
 import EditPersonaModal from '../../DataVault/components/EditPersonaModal'
 import { DataVaultKey } from '../../state/reducers/datavault'
+import { ENCRYPTED } from '../../DataVault/types'
 
 interface HeaderComponentInterface {
   did?: string
@@ -26,7 +27,7 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
         {did && (
           <>
             <UserIcon value={did} size={40} />
-            {persona.DD_NAME[0].content !== '' && persona.DD_NAME[0].content !== 'ENCRYPTED'
+            {persona.DD_NAME[0].content !== '' && persona.DD_NAME[0].content !== ENCRYPTED
               ? <div>{persona.DD_NAME[0].content}</div>
               : <ToolTip hoverContent={did}><div>{truncateAddressDid(did)}</div></ToolTip>
             }
