@@ -16,7 +16,7 @@ interface AuthenticatedComponentInterface {
   persona: DataVaultKey
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) => any
   logoutOrSwitchAccounts: (isLoggingOut: boolean) => void
-  decryptPersona: (client: DataVaultWebClient | null) => any
+  decryptPersona: (client: DataVaultWebClient | null, keys: string[]) => any
 }
 
 const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logoutOrSwitchAccounts, decryptPersona }) => {
@@ -46,7 +46,7 @@ const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ cha
         persona={persona}
         hasDataVault={!!context.dvClient}
         updatePersona={updatePersona}
-        decryptPersona={() => decryptPersona(context.dvClient)}
+        decryptPersona={(keys: string[]) => decryptPersona(context.dvClient, keys)}
       />
       <Navigation
         selected={screen}

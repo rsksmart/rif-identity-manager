@@ -13,7 +13,7 @@ interface HeaderComponentInterface {
   persona: DataVaultKey
   hasDataVault: boolean
   updatePersona: (items: DataVaultKey) => Promise<any>
-  decryptPersona: () => Promise<any>
+  decryptPersona: (keys: string[]) => Promise<any>
 }
 
 const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, hasDataVault, updatePersona, decryptPersona }) => (

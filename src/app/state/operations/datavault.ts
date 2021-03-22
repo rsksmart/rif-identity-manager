@@ -112,6 +112,15 @@ export const modifyMultipleItems = (client: DataVaultWebClient, values: DataVaul
 }
 
 /**
+ * Decrypt multiple keys at one time
+ * @param client Datavault clinet
+ * @param keys string[] keys that you want to decrypt
+ */
+export const decryptMultipleKeys = (client: DataVaultWebClient, keys: string[]) => (dispatch: Dispatch<any>) => {
+  keys.map(key => dispatch(getDataVaultContent(client, key)))
+}
+
+/**
  * Start the Data Vault Client
  * Request StorageInformation first, which will save the access token with the DataVault Service
  * in localStorage. Then request the content from the data vault.

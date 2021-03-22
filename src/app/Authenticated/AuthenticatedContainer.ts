@@ -4,7 +4,7 @@ import { AnyAction } from 'redux'
 import DataVaultWebClient from '@rsksmart/ipfs-cpinner-client'
 import { stateInterface } from '../state/configureStore'
 import AuthenticatedComponent from './AuthenticatedComponent'
-import { modifyMultipleItems } from '../state/operations/datavault'
+import { decryptMultipleKeys, modifyMultipleItems } from '../state/operations/datavault'
 import { DataVaultKey } from '../state/reducers/datavault'
 import { logout, resetReducers } from '../state/operations/identity'
 
@@ -47,10 +47,7 @@ const mapStateToProps = (state: stateInterface) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
   modifyMultipleItems: (client: DataVaultWebClient, items: DataVaultKey) =>
     dispatch(modifyMultipleItems(client, items)),
-  decryptPersona: (client: DataVaultWebClient | null) => {
-    console.log('decryptPersona!')
-    return Promise.resolve('true!')
-  },
+  decryptPersona: (client: DataVaultWebClient | null, keys: string[]) => client && dispatch(decryptMultipleKeys(client, keys)),
   logoutOrSwitchAccounts: (isLoggingOut: boolean) => isLoggingOut ? dispatch(logout()) : dispatch(resetReducers())
 })
 

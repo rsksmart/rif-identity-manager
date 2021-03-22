@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from '../../../components/Modal/Modal'
 import PersonaIcon from '../../../assets/images/icons/persona.svg'
 import PencilIcon from '../../../assets/images/icons/pencil.svg'
@@ -11,7 +11,7 @@ interface EditPersonaModalInterface {
   did?: string
   initValue: DataVaultKey
   updatePersona: (items: DataVaultKey) => Promise<any>
-  decryptPersona: () => Promise<any>;
+  decryptPersona: (keys: string[]) => Promise<any>;
 }
 
 const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue, updatePersona, decryptPersona }) => {
@@ -30,7 +30,30 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
     phone: '',
     birthdate: ''
   })
-  const [hasEncryptedItems, setHasEncryptedItems] = useState<boolean>(false)
+  const [encryptedItems, setEncryptedItems] = useState<string[]>([])
+
+  useEffect(() => {
+    const localItems: React.SetStateAction<string[]> = []
+    Object.keys(initValue).map((item: string) => {
+      if (initValue[item][0].content === 'ENCRYPTED') {
+        localItems.push(item)
+      }
+    })
+
+    setEncryptedItems(localItems)
+
+    setValues({
+      name: initValue.DD_NAME[0].content,
+      email: initValue.DD_EMAIL[0].content,
+      address: initValue.DD_ADDRESS[0].content,
+      idnumber: initValue.DD_IDNUMBER[0].content,
+      phone: initValue.DD_PHONE[0].content,
+      birthdate: initValue.DD_BIRTHDATE[0].content
+    })
+    if (localItems.length === 0) {
+      setIsLoading(false)
+    }
+  }, [initValue])
 
   const changeInputValue = (evt: { target: HTMLInputElement }) =>
     setValues({ ...values, [evt.target.id]: evt.target.value })
@@ -63,35 +86,14 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
   }
 
   const loadAndShowModal = () => {
-    console.log('loadAndShow', initValue)
     setIsError(null)
     setIsLoading(false)
     setShowModal(true)
-
-    setHasEncryptedItems(false)
-    // test if keys exist but no content
-    Object.keys(initValue).map((item: string) => {
-      if (initValue[item][0].content === 'ENCRYPTED') {
-        setHasEncryptedItems(true)
-      }
-    })
-
-    setValues({
-      name: initValue.DD_NAME[0].content,
-      email: initValue.DD_EMAIL[0].content,
-      address: initValue.DD_ADDRESS[0].content,
-      idnumber: initValue.DD_IDNUMBER[0].content,
-      phone: initValue.DD_PHONE[0].content,
-      birthdate: initValue.DD_BIRTHDATE[0].content
-    })
   }
 
   const handleDecrypt = () => {
     setIsLoading(true)
-    decryptPersona()
-      .then(response => {
-        console.log('resp', response)
-      })
+    decryptPersona(encryptedItems)
   }
 
   const dynamicProps = (type:string) => ({ placeholder: `Persona ${type}`, id: type, type: 'text', className: 'line', onChange: changeInputValue, disabled: isLoading })
@@ -108,15 +110,16 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
         title={<><img src={PersonaIcon} alt="pesona" /> Edit persona</>}
         className="edit-personal-modal"
       >
-        {hasEncryptedItems && (
+        {encryptedItems.length !== 0 && (
           <>
             <h2>Your persona is encrypted</h2>
-            <p>You first need to decrypt the persona items to edit them. Click the button below and then decrypt each item.</p>
+            <p>You first need to decrypt the following items. Click the button below and then decrypt them in your wallet.</p>
+            <p>{encryptedItems.map(item => `${item.replace('DD_', '')}, `)}</p>
             <BaseButton className="blue" onClick={handleDecrypt} disabled={isLoading}>Decrypt</BaseButton>
             {isLoading && <LoadingComponent />}
           </>
         )}
-        {!hasEncryptedItems && (
+        {encryptedItems.length === 0 && (
           <div>
             <h2>Edit Persona</h2>
             {truncateAddressDid(did)}
