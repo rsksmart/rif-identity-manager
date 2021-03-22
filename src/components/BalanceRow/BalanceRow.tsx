@@ -15,6 +15,10 @@ const BalanceRow: React.FC<BalanceRowInterface> = ({ name, balance, symbol, clas
     return shorten === original ? original : shorten
   }
 
+  if (!symbol) {
+    return <></>
+  }
+
   return (
     <div className={className ? `balance-row ${className}` : 'balance-row'}>
       <h2>{name}</h2>

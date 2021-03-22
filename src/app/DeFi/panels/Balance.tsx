@@ -54,7 +54,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, convers
       className="identity-balance"
       headerRight={<button onClick={togglePopup}>Watch Asset</button>}
     >
-      {balance && (
+      {balance !== null && (
         <BalanceRow
           name="Balance"
           className="defaultBalance"
