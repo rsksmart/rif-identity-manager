@@ -21,7 +21,13 @@ const BalanceRow: React.FC<BalanceRowInterface> = ({ name, balance, symbol, clas
       <div>
         <span className="balance">{shorten(balance)}</span>
         <span className="symbol">{symbol}</span>
-        {(conversion && balance) && <span className="conversion">${Math.round(conversion * balance * 100) / 100} USD</span>}
+        {(conversion && !!balance) && (
+          <>
+            <span className="conversion">2
+              {Math.round(conversion * balance * 100) / 100} USD
+            </span>
+          </>
+        )}
       </div>
     </div>
   )
