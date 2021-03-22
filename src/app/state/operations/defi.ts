@@ -57,11 +57,12 @@ const getSetTokenList = (provider: any, userAddress: string, chainId: number) =>
 /**
  * Get balance and metadata for a specific token
  * @param provider web3 Provider
- * @param address contract address
+ * @param contractAddress contract address
  * @param userAddress address of the user to query balance
  * @param onComplete callback function to be called
  */
-export const getTokenWithMetadata = (provider: any, address: string, userAddress: string, onComplete?: any) => (dispatch: Dispatch<any>) => {
+export const getTokenWithMetadata = (provider: any, contractAddress: string, userAddress: string, onComplete?: any) => (dispatch: Dispatch<any>) => {
+  const address = contractAddress.toLowerCase().trim()
   const eth = new Eth(provider)
   const ethContract = new EthContract(eth)
   const token = ethContract(erc20abi).at(address)
