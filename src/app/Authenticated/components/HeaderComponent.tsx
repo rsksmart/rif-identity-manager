@@ -6,6 +6,7 @@ import { truncateAddressDid } from '../../../formatters'
 import UserIcon from '../../../components/UserIcon/UserIcon'
 import EditPersonaModal from '../../DataVault/components/EditPersonaModal'
 import { DataVaultKey } from '../../state/reducers/datavault'
+import { ENCRYPTED } from '../../DataVault/types'
 
 interface HeaderComponentInterface {
   did?: string
@@ -13,9 +14,10 @@ interface HeaderComponentInterface {
   persona: DataVaultKey
   hasDataVault: boolean
   updatePersona: (items: DataVaultKey) => Promise<any>
+  decryptPersona: (keys: string[]) => Promise<any>
 }
 
-const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, hasDataVault, updatePersona }) => (
+const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, hasDataVault, updatePersona, decryptPersona }) => (
   <header className="container">
     <div className="columnDouble branding">
       <div className="logo">
@@ -25,7 +27,7 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
         {did && (
           <>
             <UserIcon value={did} size={40} />
-            {persona.DD_NAME[0].content !== ''
+            {persona.DD_NAME[0].content !== '' && persona.DD_NAME[0].content !== ENCRYPTED
               ? <div>{persona.DD_NAME[0].content}</div>
               : <ToolTip hoverContent={did}><div>{truncateAddressDid(did)}</div></ToolTip>
             }
@@ -37,6 +39,7 @@ const Header: React.FC<HeaderComponentInterface> = ({ did, chainId, persona, has
           did={did}
           initValue={persona}
           updatePersona={updatePersona}
+          decryptPersona={decryptPersona}
         />
       )}
     </div>

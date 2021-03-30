@@ -15,13 +15,19 @@ const BalanceRow: React.FC<BalanceRowInterface> = ({ name, balance, symbol, clas
     return shorten === original ? original : shorten
   }
 
+  if (!symbol) {
+    return <></>
+  }
+
   return (
     <div className={className ? `balance-row ${className}` : 'balance-row'}>
       <h2>{name}</h2>
       <div>
         <span className="balance">{shorten(balance)}</span>
         <span className="symbol">{symbol}</span>
-        {(conversion && balance) && <span className="conversion">${Math.round(conversion * balance * 100) / 100} USD</span>}
+        {(conversion && !!balance) && (
+          <span className="conversion">${Math.round(conversion * balance * 100) / 100} USD</span>
+        )}
       </div>
     </div>
   )

@@ -6,7 +6,8 @@ describe('Component: Balace', () => {
   const props = {
     chainId: 4,
     addCustomToken: jest.fn(),
-    balance: 0
+    balance: 0,
+    conversion: 0
   }
 
   it('renders the component', () => {
@@ -24,7 +25,7 @@ describe('Component: Balace', () => {
       { address: '0x123', balance: 4, name: 'test token', symbol: 'TEST' }
     ]
     const wrapper = mount(<Balance {...props} tokens={tokens} />)
-    const token = wrapper.find('.balance-row')
+    const token = wrapper.find('.balance-row').at(1)
     expect(token.length).toBeDefined()
     expect(token.find('h2').text()).toBe('test token')
     expect(token.find('.balance').text()).toBe('4')
@@ -37,6 +38,6 @@ describe('Component: Balace', () => {
       { address: '0x456', balance: 4, name: 'test token', symbol: 'TEST2' }
     ]
     const wrapper = mount(<Balance {...props} tokens={tokens} />)
-    expect(wrapper.find('.balance-row')).toHaveLength(2)
+    expect(wrapper.find('.balance-row')).toHaveLength(3)
   })
 })

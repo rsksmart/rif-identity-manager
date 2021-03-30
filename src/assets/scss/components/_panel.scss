@@ -23,12 +23,13 @@
   }
 
   .panel-right {
-    button {
+    button, a {
       border: none;
       background: none;
       color: $blue;
       cursor: pointer;
       font-size: 14px;
+      text-decoration: none;
     }
 
     button:hover {
