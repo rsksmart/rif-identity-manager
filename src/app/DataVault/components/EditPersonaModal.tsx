@@ -6,14 +6,16 @@ import { truncateAddressDid } from '../../../formatters'
 import { BaseButton } from '../../../components/Buttons'
 import LoadingComponent from '../../../components/Loading/LoadingComponent'
 import { DataVaultKey } from '../../state/reducers/datavault'
+import { ENCRYPTED } from '../types'
 
 interface EditPersonaModalInterface {
   did?: string
   initValue: DataVaultKey
   updatePersona: (items: DataVaultKey) => Promise<any>
+  decryptPersona: (keys: string[]) => Promise<any>;
 }
 
-const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue, updatePersona }) => {
+const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue, updatePersona, decryptPersona }) => {
   if (!did) {
     return <></>
   }
@@ -29,13 +31,17 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
     phone: '',
     birthdate: ''
   })
-
-  const changeInputValue = (evt: { target: HTMLInputElement }) =>
-    setValues({ ...values, [evt.target.id]: evt.target.value })
+  const [encryptedItems, setEncryptedItems] = useState<string[]>([])
 
   useEffect(() => {
-    setIsError(null)
-    setIsLoading(false)
+    const localItems: React.SetStateAction<string[]> = []
+    Object.keys(initValue).map((item: string) => {
+      if (initValue[item][0].content === ENCRYPTED) {
+        localItems.push(item)
+      }
+    })
+
+    setEncryptedItems(localItems)
 
     setValues({
       name: initValue.DD_NAME[0].content,
@@ -45,7 +51,14 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
       phone: initValue.DD_PHONE[0].content,
       birthdate: initValue.DD_BIRTHDATE[0].content
     })
+
+    if (localItems.length === 0) {
+      setIsLoading(false)
+    }
   }, [initValue])
+
+  const changeInputValue = (evt: { target: HTMLInputElement }) =>
+    setValues({ ...values, [evt.target.id]: evt.target.value })
 
   const save = () => {
     setIsLoading(true)
@@ -74,11 +87,22 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
       })
   }
 
+  const loadAndShowModal = () => {
+    setIsError(null)
+    setIsLoading(false)
+    setShowModal(true)
+  }
+
+  const handleDecrypt = () => {
+    setIsLoading(true)
+    decryptPersona(encryptedItems)
+  }
+
   const dynamicProps = (type:string) => ({ placeholder: `Persona ${type}`, id: type, type: 'text', className: 'line', onChange: changeInputValue, disabled: isLoading })
 
   return (
     <>
-      <button className="edit icon" onClick={() => setShowModal(true)}>
+      <button className="edit icon" onClick={loadAndShowModal}>
         <img src={PencilIcon} alt="Edit Persona" />
       </button>
 
@@ -88,28 +112,39 @@ const EditPersonaModal: React.FC<EditPersonaModalInterface> = ({ did, initValue,
         title={<><img src={PersonaIcon} alt="pesona" /> Edit persona</>}
         className="edit-personal-modal"
       >
-        <div>
-          <h2>Edit Persona</h2>
-          {truncateAddressDid(did)}
-          <p>You can edit your personal that be saved in your data vault.</p>
+        {encryptedItems.length !== 0 && (
+          <>
+            <h2>Your persona is encrypted</h2>
+            <p>You first need to decrypt the following items. Click the button below and then decrypt them in your wallet.</p>
+            <p>{encryptedItems.map(item => `${item.replace('DD_', '')}, `)}</p>
+            <BaseButton className="blue decrypt" onClick={handleDecrypt} disabled={isLoading}>Decrypt</BaseButton>
+            {isLoading && <LoadingComponent />}
+          </>
+        )}
+        {encryptedItems.length === 0 && (
+          <div>
+            <h2>Edit Persona</h2>
+            {truncateAddressDid(did)}
+            <p>You can edit your personal that be saved in your data vault.</p>
 
-          <p><label>Name: <input value={values.name} {...dynamicProps('name')} /></label></p>
-          <p><label>Email: <input value={values.email} {...dynamicProps('email')} /></label></p>
-          <p><label>Address: <input value={values.address} {...dynamicProps('address')} /></label></p>
-          <p><label>Id Number: <input value={values.idnumber} {...dynamicProps('idnumber')} /></label></p>
-          <p><label>Phone Number: <input value={values.phone} {...dynamicProps('phone')} /></label></p>
-          <p><label>Birthdate: <input value={values.birthdate} {...dynamicProps('birthdate')} /></label></p>
+            <p><label>Name: <input value={values.name} {...dynamicProps('name')} /></label></p>
+            <p><label>Email: <input value={values.email} {...dynamicProps('email')} /></label></p>
+            <p><label>Address: <input value={values.address} {...dynamicProps('address')} /></label></p>
+            <p><label>Id Number: <input value={values.idnumber} {...dynamicProps('idnumber')} /></label></p>
+            <p><label>Phone Number: <input value={values.phone} {...dynamicProps('phone')} /></label></p>
+            <p><label>Birthdate: <input value={values.birthdate} {...dynamicProps('birthdate')} /></label></p>
 
-          <p>
-            <BaseButton
-              className="save blue"
-              onClick={save}
-              disabled={isLoading}
-            >Save</BaseButton></p>
+            <p>
+              <BaseButton
+                className="save blue"
+                onClick={save}
+                disabled={isLoading}
+              >Save</BaseButton></p>
 
-          {isError && <div className="alert error">{isError}</div>}
-          {isLoading && <LoadingComponent />}
-        </div>
+            {isError && <div className="alert error">{isError}</div>}
+            {isLoading && <LoadingComponent />}
+          </div>
+        )}
       </Modal>
     </>
   )

@@ -18,7 +18,6 @@ interface BalanceInterface {
 
 const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, conversion, addCustomToken }) => {
   const [isAdding, setIsAdding] = useState<boolean>(false)
-  const [newAddress, setNewAddress] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<string | null>(null)
 
@@ -26,18 +25,18 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, convers
 
   const togglePopup = () => {
     setIsAdding(!isAdding)
-    setNewAddress('')
+    setIsError(null)
   }
 
-  const addToken = () => {
+  const addToken = (tokenAddress: string) => {
     setIsLoading(true)
     setIsError(null)
 
-    if (!isValidAddress(newAddress)) {
+    if (!isValidAddress(tokenAddress)) {
       setIsLoading(false)
       return setIsError('Not a valid address!')
     }
-    addCustomToken(context?.provider, newAddress)
+    addCustomToken(context?.provider, tokenAddress)
       .then(() => {
         setIsLoading(false)
         setIsAdding(false)
@@ -54,7 +53,7 @@ const Balance: React.FC<BalanceInterface> = ({ tokens, chainId, balance, convers
       className="identity-balance"
       headerRight={<button onClick={togglePopup}>Watch Asset</button>}
     >
-      {balance && (
+      {balance !== null && (
         <BalanceRow
           name="Balance"
           className="defaultBalance"

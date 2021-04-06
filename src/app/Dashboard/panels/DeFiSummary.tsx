@@ -14,7 +14,7 @@ interface DeFiSummaryInterface {
 }
 
 const DeFiSummary: React.FC<DeFiSummaryInterface> = ({ balance, chainId, featuredToken, converstion, handleButton }) =>
-  balance && chainId
+  (balance !== null) && chainId
     ? (
       <Panel title={<>DeFi Summary</>} className="defi">
         <div className="container balance">

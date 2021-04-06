@@ -6,6 +6,7 @@ import { AnyAction } from 'redux'
 import { addCustomToken } from '../state/operations/defi'
 
 const mapStateToProps = (state: stateInterface) => ({
+  address: state.identity.address,
   tokens: state.defi.tokens,
   chainId: state.identity.chainId,
   balance: state.defi.balance,

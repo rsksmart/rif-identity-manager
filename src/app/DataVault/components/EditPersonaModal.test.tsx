@@ -8,6 +8,7 @@ describe('Component: EditPersonaModal.test', () => {
   const initProps = {
     did: 'did:eth:rsk:0x1234567890',
     updatePersona: jest.fn(),
+    decryptPersona: jest.fn(),
     initValue: {
       DD_NAME: emptyItem,
       DD_EMAIL: emptyItem,
@@ -42,7 +43,7 @@ describe('Component: EditPersonaModal.test', () => {
   })
 
   it('sets the initial values', () => {
-    const wrapper = mount(<EditPersonaModal did={initProps.did} updatePersona={jest.fn()} initValue={initValues} />)
+    const wrapper = mount(<EditPersonaModal {...initProps} initValue={initValues} />)
     wrapper.find('button').simulate('click')
 
     expect(wrapper.find('input#name').props().value).toBe('First Last Name')
@@ -100,5 +101,21 @@ describe('Component: EditPersonaModal.test', () => {
         DD_BIRTHDATE: []
       })
     })
+  })
+
+  it('shows decrypt error if a piece of content is encrypted', () => {
+    const descryptFunc = jest.fn()
+    const localItems = {
+      ...initProps.initValue,
+      DD_NAME: [{ id: 'a156', content: 'ENCRYPTED' }]
+    }
+
+    const wrapper = mount(<EditPersonaModal {...initProps} initValue={localItems} decryptPersona={descryptFunc} />)
+
+    wrapper.find('button').simulate('click')
+    expect(wrapper.find('h2').text()).toBe('Your persona is encrypted')
+
+    wrapper.find('.decrypt').first().simulate('click')
+    expect(descryptFunc).toBeCalledWith(['DD_NAME'])
   })
 })
