@@ -10,7 +10,7 @@
     "test": "react-scripts test --verbose --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --verbose --coverage --watchAll=false",
-    "test:ci": "react-scripts test --verbose --coverage --watchAll=false --maxWorkers=2",
+    "test:ci": "react-scripts test --verbose --coverage --watchAll=false --coverageDirectory=coverage --maxWorkers=2",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:ci": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --format junit --output-file ./reports/eslint.xml"
   },
@@ -99,10 +99,6 @@
       "./src/*/*.types.{ts,tsx}",
       "./src/index.tsx",
       "./src/reportWebVitals.ts"
-    ],
-    "coverageReporters": [
-      "html",
-      "text"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
