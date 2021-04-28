@@ -6,14 +6,17 @@
   Allows users to manager self sovereign identity and persona information.
 </p>
 <p align="middle">
-  <a href="https://circleci.com/gh/rsksmart/rif-identity-manager">
-    <img src="https://img.shields.io/circleci/build/github/rsksmart/rif-identity-manager?label=CircleCI" alt="npm" />
+  <a href="https://github.com/rsksmart/rif-identity-manager/actions/workflows/ci.yml">
+    <img src="https://github.com/rsksmart/rif-identity-manager/actions/workflows/ci.yml/badge.svg" alt="npm" />
   </a>
   <a href="https://lgtm.com/projects/g/rsksmart/rif-identity-manager/alerts/">
     <img src="https://img.shields.io/lgtm/alerts/github/rsksmart/rif-identity-manager" alt="Alerts">
   </a>
   <a href="https://lgtm.com/projects/g/rsksmart/rif-identity-manager/context:javascript">
     <img src="https://img.shields.io/lgtm/grade/javascript/github/rsksmart/rif-identity-manager" alt="Code Quality">
+  </a>
+  <a href='https://coveralls.io/github/rsksmart/rif-identity-manager?branch=develop'>
+    <img src='https://coveralls.io/repos/github/rsksmart/rif-identity-manager/badge.svg?branch=develop' alt='Coverage Status' />
   </a>
 </p>
 
