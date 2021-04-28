@@ -1655,10 +1655,10 @@
     ethjs-query "^0.3.8"
     ethr-did-resolver "^1.0.2"
 
-"@rsksmart/ipfs-cpinner-client@0.1.1-beta.13":
-  version "0.1.1-beta.13"
-  resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.1-beta.13.tgz#9ce4b585dbd8727edf1bae7fdbd4cd2e34c381c7"
-  integrity sha512-FT6uQ5hwYkGqRh+3ix3jwxvyvEMdxebmajEw9JVp6KQJPNFzllcl7KqKe2pN+71dwmwkhNvUNe3wf/JFfAGr3A==
+"@rsksmart/ipfs-cpinner-client@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.1.tgz#f67ad2420ca200e0de0c1eb1029c93e20760dcd7"
+  integrity sha512-XX/K7+pV10IumvYJWbI/bw6qVeFkWkPej2ipBw6k5NTDPZdgLpX5Uz2Jt9shQHbrR3JuenhXDLazwnaVoL4sow==
   dependencies:
     axios "^0.21.1"
     buffer "^6.0.3"

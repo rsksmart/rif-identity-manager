@@ -10,14 +10,14 @@
     "test": "react-scripts test --verbose --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --verbose --coverage --watchAll=false",
-    "test:ci": "react-scripts test --verbose --coverage --watchAll=false --coverageDirectory reports --maxWorkers=2",
+    "test:ci": "react-scripts test --verbose --coverage --watchAll=false --coverageDirectory=coverage --maxWorkers=2",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:ci": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --format junit --output-file ./reports/eslint.xml"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
-    "@rsksmart/ipfs-cpinner-client": "0.1.1-beta.13",
+    "@rsksmart/ipfs-cpinner-client": "0.1.1",
     "@rsksmart/rlogin": "0.1.1",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
@@ -99,10 +99,6 @@
       "./src/*/*.types.{ts,tsx}",
       "./src/index.tsx",
       "./src/reportWebVitals.ts"
-    ],
-    "coverageReporters": [
-      "html",
-      "text"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
