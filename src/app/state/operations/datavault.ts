@@ -53,6 +53,15 @@ export const getDataVaultContent = (client: DataVaultWebClient, key: string) => 
     .then((content: DataVaultContent[]) => dispatch(receiveKeyData({ key, content })))
 
 /**
+ * Get all keys and content. Used for providers that use the less secure encryption
+ * @param client DataVault clinet
+ */
+export const getKeysWithContent = (client: DataVaultWebClient) => (dispatch: Dispatch<any>) =>
+  client.getKeys().then((keys: string[]) => {
+    keys.forEach((key: string) => dispatch(getDataVaultContent(client, key)))
+  })
+
+/**
  * Create Datavault content to an existing key or a new key
  * @param client DataVault client
  * @param key DV key
@@ -134,7 +143,11 @@ export const dataVaultStart = (provider: any, address: string, chainId: number, 
   client.then((client: DataVaultWebClient) => client.getStorageInformation()
     .then((storage: DataVaultStorageState) => {
       dispatch(receiveStorageInformation({ storage }))
-      dispatch(getDataVaultKeys(client))
+
+      // if Metamask, get just the keys, else, get & decrypt all content
+      getProviderName(provider) === PROVIDERS.METAMASK
+        ? dispatch(getDataVaultKeys(client))
+        : dispatch(getKeysWithContent(client))
       callback(client)
     })
     .catch((err: any) => callback(null, err))
