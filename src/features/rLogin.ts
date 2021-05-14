@@ -1,5 +1,6 @@
 import RLogin from '@rsksmart/rlogin'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import Portis from '@portis/web3'
 import { getRPCUrl } from '../config/getConfig'
 
 export const rLogin = new RLogin({
@@ -17,6 +18,16 @@ export const rLogin = new RLogin({
           31: getRPCUrl(31),
           42: getRPCUrl(42),
           5777: getRPCUrl(5777)
+        }
+      }
+    },
+    portis: {
+      package: Portis,
+      options: {
+        id: '26ef5a8d-0226-4e3d-ae69-05707c9a453a',
+        network: {
+          nodeUrl: 'https://public-node.testnet.rsk.co',
+          chainId: 30
         }
       }
     }
