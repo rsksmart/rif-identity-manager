@@ -18,8 +18,9 @@ import { reset as resetEthrDid } from '../reducers/ethrdid'
  * @param context the app context where the provider will be ser
  */
 export const login = (context: any) => (dispatch: Dispatch<any>) =>
-  rLogin.connect().then(({ provider }: any) => {
+  rLogin.connect().then(({ provider, disconnect }: any) => {
     context.setProvider(provider)
+    context.setDisconnect(disconnect)
 
     getAccountAndNetwork(provider).then(([address, chainId]) => {
       dispatch(changeAccount({ address }))
