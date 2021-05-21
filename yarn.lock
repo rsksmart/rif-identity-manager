@@ -1906,17 +1906,6 @@
     ethjs-query "^0.3.8"
     ethr-did-resolver "^1.0.2"
 
-"@rsksmart/ipfs-cpinner-client@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.1.tgz#f67ad2420ca200e0de0c1eb1029c93e20760dcd7"
-  integrity sha512-XX/K7+pV10IumvYJWbI/bw6qVeFkWkPej2ipBw6k5NTDPZdgLpX5Uz2Jt9shQHbrR3JuenhXDLazwnaVoL4sow==
-  dependencies:
-    axios "^0.21.1"
-    buffer "^6.0.3"
-    crypto-js "^4.0.0"
-    did-jwt "^4.6.2"
-    eth-sig-util "^3.0.0"
-
 "@rsksmart/ipfs-cpinner-client@0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@rsksmart/ipfs-cpinner-client/-/ipfs-cpinner-client-0.1.2.tgz#bc4a5f3ef6dab78e7defa04f30f905187f698783"
@@ -1928,12 +1917,12 @@
     did-jwt "^4.6.2"
     eth-sig-util "^3.0.0"
 
-"@rsksmart/rlogin@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@rsksmart/rlogin/-/rlogin-1.0.5.tgz#cdcc974fbf9a47b9c06d4d0a37ec7ddb9be6c27e"
-  integrity sha512-oB4VeZfmX1AaUNvEJHZHPiv0YuEATLjQeOD38+McKp3jj9iGjVzxPmc8OMbeD2BZS7okQOEAOMvfjEggoW1rjQ==
+"@rsksmart/rlogin@1.0.7-beta.1":
+  version "1.0.7-beta.1"
+  resolved "https://registry.yarnpkg.com/@rsksmart/rlogin/-/rlogin-1.0.7-beta.1.tgz#bc79ccbcbce961538669980d70e30614f201cc14"
+  integrity sha512-X1YBPwIs5LHIn5nzbnawlt/bJ0YBx2MWvNC74gvXUeDBhRtN33FzYWihIPG0lhyNY01xVPZ8wKQTlwj1UEFXdQ==
   dependencies:
-    "@rsksmart/ipfs-cpinner-client" "0.1.1"
+    "@rsksmart/ipfs-cpinner-client" "0.1.2"
     "@rsksmart/vc-json-schemas-parser" "^1.0.0"
     "@types/styled-components" "^5.1.3"
     axios "^0.21.1"
@@ -6417,15 +6406,7 @@ ethereum-cryptography@^0.1.3:
     secp256k1 "^4.0.1"
     setimmediate "^1.0.5"
 
-ethereumjs-abi@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz#71bc152db099f70e62f108b7cdfca1b362c6fcae"
-  integrity sha512-Tx0r/iXI6r+lRsdvkFDlut0N08jWMnKRZ6Gkq+Nmw75lZe4e6o3EkSnkaBP5NF6+m5PTGAr9JP43N3LyeoglsA==
-  dependencies:
-    bn.js "^4.11.8"
-    ethereumjs-util "^6.0.0"
-
-"ethereumjs-abi@git+https://github.com/ethereumjs/ethereumjs-abi.git":
+ethereumjs-abi@^0.6.8, "ethereumjs-abi@git+https://github.com/ethereumjs/ethereumjs-abi.git":
   version "0.6.8"
   resolved "git+https://github.com/ethereumjs/ethereumjs-abi.git#1a27c59c15ab1e95ee8e5c4ed6ad814c49cc439e"
   dependencies:
