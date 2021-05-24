@@ -26,8 +26,8 @@ export const rLogin = new RLogin({
       options: {
         id: '26ef5a8d-0226-4e3d-ae69-05707c9a453a',
         network: {
-          nodeUrl: getRPCUrl(30),
-          chainId: 30
+          nodeUrl: getRPCUrl(31),
+          chainId: 31
         }
       }
     }
