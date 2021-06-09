@@ -12,7 +12,7 @@ describe('Component: Rif Footer', () => {
     const wrapper = shallow(<RifFooter isLoggedIn version="0.0.1" />)
 
     expect(wrapper.find('img').props().src).toBe('powered-by-iov-gray.svg')
-    expect(wrapper.find('p').at(0).text()).toBe('Copyright © 2020 IOV Labs. All rights reserved.')
+    expect(wrapper.find('p').at(0).text()).toBe('Copyright © 2021 IOV Labs. All rights reserved.')
   })
 
   it('loads white footer image when not logged in', () => {
