@@ -26,10 +26,10 @@ const CredentialDisplay: React.FC<CredentialDisplayInterface> = ({ credentials, 
       .finally(() => setIsGettingContent(isGettingContent.filter((k: string) => k !== key)))
   }
 
-  const emailCredLink = <a href="https://email-verifier.identity.rifos.org/" target="_blank" rel="noreferrer">Get an Email Credential</a>
+  // const emailCredLink = <a href="https://email-verifier.identity.rifos.org/" target="_blank" rel="noreferrer">Get an Email Credential</a>
 
   return (
-    <Panel title={<><img src={CredentialIcon} /> Credentials</>} className="display credentials" headerRight={emailCredLink}>
+    <Panel title={<><img src={CredentialIcon} /> Credentials</>} className="display credentials" >
       {isDownloadError && <DownloadErrorMessage keyError={isDownloadError} />}
       <table>
         <thead>

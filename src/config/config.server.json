@@ -1,0 +1,5 @@
+{
+    "issuerServerUrl": "http://localhost:8000",
+    "dataVaultUrl": "https://data-vault.identity.rifos.org"
+}
+  

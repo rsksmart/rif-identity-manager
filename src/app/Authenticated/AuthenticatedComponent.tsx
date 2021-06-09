@@ -22,7 +22,6 @@ interface AuthenticatedComponentInterface {
 const AuthenticatedComponent: React.FC<AuthenticatedComponentInterface> = ({ chainId, address, persona, modifyMultipleItems, logoutOrSwitchAccounts, decryptPersona }) => {
   const [screen, setScreen] = useState<screens>(screens.DASHBOARD)
   const context = useContext(Web3ProviderContext)
-
   const changeScreen = (screen: screens) => setScreen(screen)
   const updatePersona = (items: DataVaultKey) => context.dvClient && modifyMultipleItems(context.dvClient, items)
 

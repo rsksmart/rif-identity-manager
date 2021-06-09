@@ -16,6 +16,11 @@
   background-color: $red;
   border-color: $deepRed;
 }
+.alert.info {
+  color: $white;
+  background-color: $blue;
+  border-color: $black;
+}
 
 .alert.warning {
   color: $white;
