@@ -21,77 +21,55 @@ const AddEmail: React.FC<AddEmailInterface> = ({ address, chainId, addVerifiedCr
   const did = createDidFormat(address, chainId)
   const context = useContext(Web3ProviderContext)
 
-  const mailCode = () => {
-    setError(''); setMessage('')
-    let headerStatus = 0
-    fetch(`${ServerConfig.issuerServerUrl}/issuer/mailCode/`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({ email, did })
-    }).then(response => {
-      headerStatus = response.status
-      return response
-    }).then(response => response.json())
-      .then(responseJson => {
-        if (headerStatus !== 200) {
-          throw new Error(responseJson.message)
-        } else {
-          setMessage(responseJson.message)
-          setEmailSent(true)
-        }
-      })
-      .catch(handleError)
-  }
-
   const handleError = (error: Error) => {
     setError(error ? error.message : 'Unhandled error')
   }
 
-  const verifyCode = () => {
-    setError(''); setMessage('')
-    const msg = `code:${emailCode}`
-    context.provider.request({
-      method: 'personal_sign',
-      params: [msg, address]
-    }).then((sig: string) => { issuerAddMail(msg, sig) })
-      .catch((error: any) => { setError(error.message) })
-  }
+  const requestVerification = () => fetch(`${ServerConfig.issuerServerUrl}/requestVerification/` + did, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ emailAddress: email })
+  }).then((res: any) => {
+    setError('')
+    if (res.status === 200) {
+      setEmailSent(true)
+    } else {
+      setError('Email count not be sent')
+    }
+  }).catch(handleError)
 
-  const issuerAddMail = (msg: string, sig: string) => {
-    setError(''); setMessage('')
-    let headerStatus = 0
-    fetch(`${ServerConfig.issuerServerUrl}/issuer/AddMail/`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({ did, msg, sig })
-    }).then(response => {
-      headerStatus = response.status
-      return response
-    }).then(response => response.json())
-      .then(responseJson => {
-        if (headerStatus !== 200) {
-          throw new Error(responseJson.message)
-        } else {
-          setMessage(responseJson.message)
-          setJwt(responseJson.jwt)
-        }
-      })
-      .catch(handleError)
-  }
+  const verify = () => context.provider!.request({
+    method: 'personal_sign',
+    params: [
+      `Verification code: ${emailCode}`, // includes the decoration
+      address
+    ]
+  }).then((sig: string) => fetch(`${ServerConfig.issuerServerUrl}/verify/` + did, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ sig })
+  }))
+    .then((res: any) => {
+      setError('')
+      res.status === 200
+        ? res.json().then(({ jwt }: { jwt: string }) => { setJwt(jwt); setMessage('Verified. Please save') })
+        : res.text().then((error: string) => { handleError(new Error(error)) })
+    })
+    .catch(handleError)
 
   const saveInDataVault = () => {
     setError(''); setMessage('')
@@ -118,7 +96,7 @@ const AddEmail: React.FC<AddEmailInterface> = ({ address, chainId, addVerifiedCr
             placeholder="Email" />
         </div>
         <div className="column submitColumn">
-          <BaseButton className="submit turquoise" onClick={mailCode} disabled={emailSent}>Send</BaseButton>
+          <BaseButton className="submit turquoise" onClick={requestVerification} disabled={emailSent}>Send</BaseButton>
         </div>
         <div className="column">
           <input type="text"
@@ -129,7 +107,7 @@ const AddEmail: React.FC<AddEmailInterface> = ({ address, chainId, addVerifiedCr
             placeholder="Enter code" />
         </div>
         <div className="column submitColumn">
-          <BaseButton className="submit turquoise" onClick={verifyCode} disabled={!emailSent || (jwt !== '') || (emailCode === '')}>Verify</BaseButton>
+          <BaseButton className="submit turquoise" onClick={verify} disabled={!emailSent || (jwt !== '') || (emailCode === '')}>Verify</BaseButton>
         </div>
         <div className="column submitColumn">
           <BaseButton className="submit turquoise" onClick={saveInDataVault} disabled={!jwt}>Save</BaseButton>

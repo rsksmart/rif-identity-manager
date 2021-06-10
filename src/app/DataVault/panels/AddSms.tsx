@@ -21,82 +21,54 @@ const AddSms: React.FC<AddSMSInterface> = ({ address, chainId, addVerifiedCreden
   const did = createDidFormat(address, chainId)
   const context = useContext(Web3ProviderContext)
 
-  const sendSms = () => {
-    setError(''); setMessage('')
-
-    let headerStatus = 0
-    fetch(`${ServerConfig.issuerServerUrl}/issuer/smsCode/`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({ mobile, did })
-    }).then(response => {
-      headerStatus = response.status
-      return response
-    }).then(response => response.json())
-      .then(responseJson => {
-        if (headerStatus !== 200) {
-          throw new Error(responseJson.message)
-        } else {
-          setMessage(responseJson.message)
-          setSmsSent(true)
-        }
-      })
-      .catch(handleError)
-  }
+  const requestVerification = () => fetch(`${ServerConfig.issuerServerUrl}/requestSmsVerification/` + did, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ phoneNumber: mobile })
+  }).then((res: any) => {
+    setError('')
+    if (res.status === 200) {
+      setSmsSent(true)
+    } else {
+      setError('SMS count not be sent')
+    }
+  }).catch(handleError)
 
   const handleError = (error: Error) => {
     setError(error ? error.message : 'Unhandled error')
   }
 
-  const verifyCode = () => {
-    setError('')
-    setMessage('')
-
-    const msg = `code:${smsCode}`
-    context.provider.request({
-      method: 'personal_sign',
-      params: [msg, address]
-    }).then((sig: string) => { issuerAddMobile(msg, sig) })
-      .catch((error: any) => { setError(error.message) })
-  }
-
-  const issuerAddMobile = (msg: string, sig: string) => {
-    setError(''); setMessage('')
-
-    let headerStatus = 0
-    fetch(`${ServerConfig.issuerServerUrl}/issuer/AddMobile/`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({ did, msg, sig })
-    }).then(response => {
-      headerStatus = response.status
-      return response
-    }).then(response => response.json())
-      .then(responseJson => {
-        console.log('responseJson=', responseJson)
-        if (headerStatus !== 200) {
-          throw new Error(responseJson.message)
-        } else {
-          setMessage(responseJson.message)
-          setJwt(responseJson.jwt)
-        }
-      })
-      .catch(handleError)
-  }
+  const verify = () => context.provider!.request({
+    method: 'personal_sign',
+    params: [
+      `Verification code: ${smsCode}`, // includes the decoration
+      address
+    ]
+  }).then((sig: string) => fetch(`${ServerConfig.issuerServerUrl}/verifySms/` + did, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ sig })
+  }))
+    .then((res: any) => {
+      res.status === 200
+        ? res.json().then(({ jwt }: { jwt: string }) => { setJwt(jwt); setMessage('Verified. Please save') })
+        : res.text().then((error: string) => handleError(new Error(error)))
+    })
+    .catch(handleError)
 
   const saveInDataVault = () => {
     setError(''); setMessage('')
@@ -123,7 +95,7 @@ const AddSms: React.FC<AddSMSInterface> = ({ address, chainId, addVerifiedCreden
             placeholder="Mobile number" />
         </div>
         <div className="column submitColumn">
-          <BaseButton className="submit turquoise" onClick={sendSms} disabled={smsSent}>Send</BaseButton>
+          <BaseButton className="submit turquoise" onClick={requestVerification} disabled={smsSent}>Send</BaseButton>
         </div>
         <div className="column">
           <input type="text"
@@ -134,7 +106,7 @@ const AddSms: React.FC<AddSMSInterface> = ({ address, chainId, addVerifiedCreden
             placeholder="Enter code" />
         </div>
         <div className="column submitColumn">
-          <BaseButton className="submit turquoise" onClick={verifyCode} disabled={!smsSent || (jwt !== '') || (smsCode === '')}>Verify</BaseButton>
+          <BaseButton className="submit turquoise" onClick={verify} disabled={!smsSent || (jwt !== '') || (smsCode === '')}>Verify</BaseButton>
         </div>
         <div className="column submitColumn">
           <BaseButton className="submit turquoise" onClick={saveInDataVault} disabled={!jwt}>Save</BaseButton>
