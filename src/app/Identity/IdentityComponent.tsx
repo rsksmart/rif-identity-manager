@@ -29,6 +29,14 @@ const IdentityComponent: React.FC<IdentityComponentInterface> = ({
   const handleAddAttribute = (type: string, value: string, validity: number) =>
     addAttribute(context?.provider, type, value, validity)
 
+  if (context?.provider && context?.provider.isPortis) {
+    return (
+      <div className="container">
+        <p className="alert warning">Sorry, you can not modify your identity using Portis. Please use a different wallet such as Metmask, Nifty, or Wallet Connect.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="content identity">
       <div className="container">

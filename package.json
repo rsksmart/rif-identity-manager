@@ -1,6 +1,6 @@
 {
   "name": "rif-identity-manager",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "private": true,
   "homepage": ".",
   "license": "MIT",
@@ -15,10 +15,11 @@
     "lint:ci": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --format junit --output-file ./reports/eslint.xml"
   },
   "dependencies": {
+    "@portis/web3": "^4.0.0",
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
     "@rsksmart/ipfs-cpinner-client": "0.1.2",
-    "@rsksmart/rlogin": "1.0.5",
+    "@rsksmart/rlogin": "1.0.8",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
     "axios": "^0.21.0",

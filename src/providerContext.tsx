@@ -6,6 +6,7 @@ export interface Web3ProviderContextInterface {
   setProvider?: (value: any) => void
   dvClient: DataVaultWebClient | null,
   setDvClient?: (client: DataVaultWebClient) => void
+  setDisconnect?: (disconnect: any) => void
   reset: () => void
 }
 
@@ -22,15 +23,18 @@ interface Web3ProviderElementInterface {
 export const Web3ProviderElement: React.FC<Web3ProviderElementInterface> = ({ children }) => {
   const [provider, setProvider] = useState<any | null>(null)
   const [dvClient, setDvClient] = useState<DataVaultWebClient | null>(null)
+  const [disconnectMethod, setDisconnectMethod] = useState<any | null>(null)
 
   const initialContext: Web3ProviderContextInterface = {
     provider: provider,
     setProvider: (provider: any) => setProvider(provider),
     dvClient: dvClient,
     setDvClient: (client: DataVaultWebClient | null) => setDvClient(client),
+    setDisconnect: (disFunction: any) => setDisconnectMethod(() => disFunction),
     reset: () => {
       setProvider(null)
       setDvClient(null)
+      disconnectMethod && disconnectMethod().catch(console.log)
     }
   }
 
