@@ -13,8 +13,8 @@ interface AddCredentialInterface {
 }
 
 const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, addVerifiedCredentials }) => {
-  const [credentialType, setCredentialType] = useState<string>('email')
-  const [userInput, setUserInput] = useState('jesse@iovlabs.org') // todo: remove
+  const [credentialType, setCredentialType] = useState<string>('Email')
+  const [userInput, setUserInput] = useState('')
   const [verificationCode, setVerificationCode] = useState<string | null>(null)
   const [verificationSent, setVerificationSent] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +26,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   const handleError = (error: Error) => setError(error ? error.message : 'Unhandled error')
 
   const resetProcess = () => {
-    setCredentialType('email')
+    setCredentialType('Email')
     setUserInput('')
     setVerificationCode(null)
     setVerificationSent(false)
@@ -38,21 +38,21 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   const request = () => {
     setError('')
     requestVerification(did, credentialType, userInput).then((res: any) =>
-      res.status === 200 ? setVerificationSent(true) : setError('Email count not be sent')
+      res.status === 200 ? setVerificationSent(true) : setError('The request could not be sent')
     ).catch(handleError)
   }
 
   const verify = () => {
     setError('')
     context.provider && verificationCode &&
-    verifyCode(context.provider, verificationCode, address, did)
+    verifyCode(context.provider, verificationCode, address, did, credentialType)
       .then((res: AxiosResponse) =>
         res.status === 200 ? setJwt(res.data.jwt) : setError('Credential could not be Issued'))
       .catch(handleError)
   }
 
   const saveInDataVault = () =>
-    jwt && addVerifiedCredentials('EmailVerifiableCredential', jwt)
+    jwt && addVerifiedCredentials(`${credentialType}VerifiableCredential`, jwt)
       .then(() => resetProcess())
       .catch(handleError)
 
@@ -71,20 +71,20 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
               onChange={evt => setCredentialType(evt.target.value)}
               disabled={verificationSent}
             >
-              <option value='email'>Email</option>
-              <option value='phone'>Phone</option>
+              <option value='Email'>Email</option>
+              <option value='Phone'>Phone</option>
             </select>
           </div>
           <div className="columnDouble">
             <p className="title">
-              {credentialType === 'email' ? <>Email Address</> : <>Phone Number</>}
+              {credentialType === 'Email' ? <>Email Address</> : <>Phone Number</>}
             </p>
             <input type="text"
               className="line type fullWidth"
               onChange={(evt) => setUserInput(evt.target.value)}
               disabled={verificationSent}
               value={userInput}
-              placeholder={credentialType === 'email' ? 'email address' : 'phone number'} />
+              placeholder={credentialType} />
           </div>
           <div className="column submitColumn">
             <BaseButton

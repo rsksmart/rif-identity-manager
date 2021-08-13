@@ -6,7 +6,7 @@ export const requestVerification = (did: any, type: string, userInput: string) =
     subject: userInput
   })
 
-export const verifyCode = (provider: any, verificationCode: string, address: string, did: string) =>
+export const verifyCode = (provider: any, verificationCode: string, address: string, did: string, type: string) =>
   provider.request({
     method: 'personal_sign',
     params: [
@@ -15,4 +15,4 @@ export const verifyCode = (provider: any, verificationCode: string, address: str
     ]
   })
     .then((sig: string) =>
-      Axios.post(`${serverConfig.issuerServerUrl}/email/verify/${did}`, { sig }))
+      Axios.post(`${serverConfig.issuerServerUrl}/${type}/verify/${did}`, { sig }))
