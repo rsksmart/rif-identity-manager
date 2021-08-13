@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AddEmail from './AddEmail'
+import AddEmail from './AddCredential'
 
 describe('Component: AddEmail', () => {
   const mockAddress = 'did:ethr:rsk:testnet:0xf7b00cb3e61701a8c7fae1ce8c82728f1f9a241b'

@@ -14,7 +14,7 @@ const mapStateToProps = (state: stateInterface) => ({
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
-  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) =>
+  addDataVaultContent: (client: DataVaultWebClient, key: string, content: string) =>
     dispatch(createDataVaultContent(client, key, content)),
   deleteValue: (client: DataVaultWebClient, key: string, id: string) =>
     dispatch(deleteDataVaultContent(client, key, id)),
@@ -22,9 +22,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyActio
     dispatch(swapDataVaultContent(client, key, content, id)),
   downloadBackup: (client: DataVaultWebClient) => downloadBackup(client),
   getKeyContent: (client: DataVaultWebClient, key: string) =>
-    dispatch(getDataVaultContent(client, key)),
-  addVerifiedCredentials: (client: DataVaultWebClient, key: string, content: string) =>
-    dispatch(createDataVaultContent(client, key, content))
+    dispatch(getDataVaultContent(client, key))
 })
 
 const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => ({
