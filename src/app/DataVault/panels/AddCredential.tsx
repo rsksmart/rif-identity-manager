@@ -1,8 +1,7 @@
 import { AxiosResponse } from 'axios'
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { BaseButton } from '../../../components/Buttons'
 import Panel from '../../../components/Panel/Panel'
-import { Web3ProviderContext } from '../../../providerContext'
 
 interface AddCredentialInterface {
   address: string
@@ -19,8 +18,6 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   const [verificationSent, setVerificationSent] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [jwt, setJwt] = useState<string | null>()
-
-  const context = useContext(Web3ProviderContext)
 
   const handleError = (error: Error) => setError(error ? error.message : 'Unhandled error')
 
@@ -43,8 +40,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
 
   const verify = () => {
     setError('')
-    context.provider && verificationCode &&
-    verifyCode(verificationCode, credentialType)
+    verificationCode && verifyCode(verificationCode, credentialType)
       .then((res: AxiosResponse) =>
         res.status === 200 ? setJwt(res.data.jwt) : setError('Credential could not be Issued'))
       .catch(handleError)
