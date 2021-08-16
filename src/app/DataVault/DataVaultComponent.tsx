@@ -8,6 +8,8 @@ import AddCredential from './panels/AddCredential'
 import CredentialDisplay from './panels/CredentialDisplay'
 import DownloadBackup from './panels/DownloadBackup'
 import { createPresentation } from '../../features/credentials'
+import { requestVerification, verifyCode } from '../state/operations/credentials'
+import { createDidFormat } from '../../formatters'
 
 interface DataVaultComponentProps {
   declarativeDetails: DataVaultKey
@@ -41,6 +43,10 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
   const handleSwap = (key: string, content: string, id: string) => swapValue(dvClient, key, content, id)
   const handleDownload = () => context.dvClient && downloadBackup(dvClient)
   const handleGetKeyContent = (key: string) => getKeyContent(dvClient, key)
+  const requestCredential = (credentialType: string, userInput: string) =>
+    requestVerification(createDidFormat(address, chainId), credentialType, userInput)
+  const verifyRequestCode = (code: string, credentialType: string) =>
+    verifyCode(context.provider, code, address, createDidFormat(address, chainId), credentialType)
 
   return (
     <div className="content data-vault">
@@ -67,6 +73,8 @@ const DataVaultComponent: React.FC<DataVaultComponentProps> = ({
             address={address}
             chainId={chainId}
             addVerifiedCredentials={handleAdd}
+            requestVerification={requestCredential}
+            verifyCode={verifyRequestCode}
           />
         </div>
       </div>

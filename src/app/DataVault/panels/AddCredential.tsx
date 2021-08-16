@@ -2,17 +2,17 @@ import { AxiosResponse } from 'axios'
 import React, { useState, useContext } from 'react'
 import { BaseButton } from '../../../components/Buttons'
 import Panel from '../../../components/Panel/Panel'
-import { createDidFormat } from '../../../formatters'
 import { Web3ProviderContext } from '../../../providerContext'
-import { requestVerification, verifyCode } from '../../state/operations/credentials'
 
 interface AddCredentialInterface {
   address: string
   chainId: number
   addVerifiedCredentials: (key: string, content: string) => Promise<any>
+  requestVerification: (credentialType: string, userInput: string) => Promise<any>
+  verifyCode: (code: string, credentialType: string) => Promise<any>
 }
 
-const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, addVerifiedCredentials }) => {
+const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, addVerifiedCredentials, requestVerification, verifyCode }) => {
   const [credentialType, setCredentialType] = useState<string>('Email')
   const [userInput, setUserInput] = useState('')
   const [verificationCode, setVerificationCode] = useState<string | null>(null)
@@ -20,7 +20,6 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   const [error, setError] = useState<string | null>(null)
   const [jwt, setJwt] = useState<string | null>()
 
-  const did = createDidFormat(address, chainId)
   const context = useContext(Web3ProviderContext)
 
   const handleError = (error: Error) => setError(error ? error.message : 'Unhandled error')
@@ -37,7 +36,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   // Send the verification code to the user
   const request = () => {
     setError('')
-    requestVerification(did, credentialType, userInput).then((res: any) =>
+    requestVerification(credentialType, userInput).then((res: any) =>
       res.status === 200 ? setVerificationSent(true) : setError('The request could not be sent')
     ).catch(handleError)
   }
@@ -45,7 +44,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
   const verify = () => {
     setError('')
     context.provider && verificationCode &&
-    verifyCode(context.provider, verificationCode, address, did, credentialType)
+    verifyCode(verificationCode, credentialType)
       .then((res: AxiosResponse) =>
         res.status === 200 ? setJwt(res.data.jwt) : setError('Credential could not be Issued'))
       .catch(handleError)
@@ -67,6 +66,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
           <div className="column">
             <p className="title">Type</p>
             <select
+              id="credentialType"
               value={credentialType}
               onChange={evt => setCredentialType(evt.target.value)}
               disabled={verificationSent}
@@ -80,6 +80,7 @@ const AddCredential: React.FC<AddCredentialInterface> = ({ address, chainId, add
               {credentialType === 'Email' ? <>Email Address</> : <>Phone Number</>}
             </p>
             <input type="text"
+              id="value"
               className="line type fullWidth"
               onChange={(evt) => setUserInput(evt.target.value)}
               disabled={verificationSent}
