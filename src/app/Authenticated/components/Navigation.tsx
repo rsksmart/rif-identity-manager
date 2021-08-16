@@ -33,7 +33,6 @@ const Navigation: React.FC<NavigationInterface> = ({ selected, showDataVault, ha
         <li className={selected === screens.IDENTITY ? 'active' : ''}>
           <button onClick={() => handleClick(screens.IDENTITY)}>Manage Identity</button>
         </li>
-        <li className="disabled">Request Credentials</li>
         <li className="disabled">My Dapps</li>
         <li className="logout"><button onClick={logout}>Logout</button></li>
       </ul>
