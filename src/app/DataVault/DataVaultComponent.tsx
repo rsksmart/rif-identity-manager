@@ -7,8 +7,7 @@ import { Web3ProviderContext } from '../../providerContext'
 import AddCredential from './panels/AddCredential'
 import CredentialDisplay from './panels/CredentialDisplay'
 import DownloadBackup from './panels/DownloadBackup'
-import { createPresentation } from '../../features/credentials'
-import { requestVerification, verifyCode } from '../state/operations/credentials'
+import { createPresentation, requestVerification, verifyCode } from '../../features/credentials'
 import { createDidFormat } from '../../formatters'
 
 interface DataVaultComponentProps {

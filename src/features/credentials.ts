@@ -1,5 +1,8 @@
 import { createJWT } from 'jesse-did-jwt'
 import { fromRpcSig } from 'ethereumjs-util'
+import Axios from 'axios'
+
+import serverConfig from '../config/config.server.json'
 import { getAccountAndNetwork } from '../ethrpc'
 import { createDidFormat } from '../formatters'
 
@@ -28,3 +31,19 @@ export const createPresentation = (provider: any, jwt: string) => {
     return createJWT(vpPayload, { alg: 'ES256K', issuer: did, signer })
   })
 }
+
+export const requestVerification = (did: any, type: string, userInput: string) =>
+  Axios.post(`${serverConfig.issuerServerUrl}/${type.toLowerCase()}/requestVerification/${did}`, {
+    subject: userInput
+  })
+
+export const verifyCode = (provider: any, verificationCode: string, address: string, did: string, type: string) =>
+  provider.request({
+    method: 'personal_sign',
+    params: [
+      `Verification code: ${verificationCode}`,
+      address
+    ]
+  })
+    .then((sig: string) =>
+      Axios.post(`${serverConfig.issuerServerUrl}/${type}/verify/${did}`, { sig }))
