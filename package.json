@@ -15,11 +15,10 @@
     "lint:ci": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --format junit --output-file ./reports/eslint.xml"
   },
   "dependencies": {
-    "@portis/web3": "^4.0.0",
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
     "@rsksmart/ipfs-cpinner-client": "0.1.2",
-    "@rsksmart/rlogin": "1.0.8",
+    "@rsksmart/rlogin-essentials": "^1.0.0",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
     "axios": "^0.21.0",
@@ -68,7 +67,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-standard": "^4.0.1",
-    "node-sass": "4.14.1",
+    "sass": "^1.43.4",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
