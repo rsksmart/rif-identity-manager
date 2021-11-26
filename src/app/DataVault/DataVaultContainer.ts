@@ -8,11 +8,13 @@ import { createDataVaultContent, deleteDataVaultContent, swapDataVaultContent, d
 
 const mapStateToProps = (state: stateInterface) => ({
   declarativeDetails: state.datavault.declarativeDetails,
-  credentials: state.datavault.credentials
+  credentials: state.datavault.credentials,
+  address: state.identity.address,
+  chainId: state.identity.chainId
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyAction>) => ({
-  addDeclarativeDetail: (client: DataVaultWebClient, key: string, content: string) =>
+  addDataVaultContent: (client: DataVaultWebClient, key: string, content: string) =>
     dispatch(createDataVaultContent(client, key, content)),
   deleteValue: (client: DataVaultWebClient, key: string, id: string) =>
     dispatch(deleteDataVaultContent(client, key, id)),
@@ -23,4 +25,10 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<stateInterface, {}, AnyActio
     dispatch(getDataVaultContent(client, key))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataVaultComponent)
+const mergeProps = (stateProps: any, dispatchProps: any, ownProps: any) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps
+})
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(DataVaultComponent)

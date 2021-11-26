@@ -1,5 +1,5 @@
 .data-vault {
-  .add-declarative {
+  .add-declarative, .add-credential {
     p.title {
       font-weight: 700 !important;
       text-transform: uppercase;
@@ -22,6 +22,20 @@
 
     .submit {
       margin-top: 33px;
+    }
+
+    select {
+      margin-top: 21px;
+      width: 100%;
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+
+    textarea.jwt {
+      width: 80%;
+      height: 150px;
+      padding: 5px;
+      color: $gray
     }
   }
 

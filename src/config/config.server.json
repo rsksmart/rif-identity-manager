@@ -1,0 +1,4 @@
+{
+    "issuerServerUrl": "https://email-verifier-backend.identity.rifos.org",
+    "dataVaultUrl": "https://data-vault.identity.rifos.org"
+}

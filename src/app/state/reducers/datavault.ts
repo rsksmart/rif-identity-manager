@@ -47,7 +47,8 @@ const dataVaultSlice = createSlice({
       state[getBucket(key)][key] = content
     },
     addContentToKey (state: DataVaultState, { payload: { key, content } }: PayloadAction<{ key: string, content: DataVaultContent }>) {
-      state.declarativeDetails[key] ? state.declarativeDetails[key].push(content) : state.declarativeDetails[key] = [content]
+      const type = key.endsWith('Credential') ? 'credentials' : 'declarativeDetails'
+      state[type][key] ? state[type][key].push(content) : state[type][key] = [content]
     },
     removeContentfromKey (state: DataVaultState, { payload: { key, id } }: PayloadAction<{ key: string, id: string }>) {
       const bucket = getBucket(key)

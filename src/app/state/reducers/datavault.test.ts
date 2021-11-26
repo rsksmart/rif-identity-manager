@@ -97,6 +97,15 @@ describe('dataVault slice', () => {
         expect(store.getState().declarativeDetails)
           .toEqual({ NEW_KEY: [{ id: '1', content: 'hello' }] })
       })
+
+      test('adds a credential', () => {
+        const content = { id: '1', content: 'jwt' }
+        store.dispatch(addContentToKey({ key: 'MY_KEYCredential', content }))
+
+        const state = store.getState()
+        expect(state.declarativeDetails).toEqual({})
+        expect(state.credentials).toEqual({ MY_KEYCredential: [content] })
+      })
     })
 
     describe('removeContentfromKey', () => {
