@@ -1,6 +1,6 @@
 {
   "name": "rif-identity-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "homepage": ".",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "@rsksmart/ethr-did": "^1.1.1-beta.1",
     "@rsksmart/ipfs-cpinner-client": "0.1.2",
-    "@rsksmart/rlogin-essentials": "^1.0.1",
+    "@rsksmart/rlogin-essentials": "1.0.3",
     "@rsksmart/rsk-contract-metadata": "^1.0.4",
     "@rsksmart/rsk-testnet-contract-metadata": "^1.0.3",
     "axios": "^0.21.0",
